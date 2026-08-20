@@ -97,6 +97,58 @@ def window(text, pattern, before=0, after=1200):
     return text[max(0, m.start() - before): m.end() + after]
 
 
+def schedule_window(text, after=14000):
+    """Locate the actual Benefit Schedule TABLE.
+
+    re.search on "Benefit Schedule" is not good enough. The phrase appears
+    16-34 times in a certified plan document: once in the table of contents
+    with dot leaders, then repeatedly in prose ("subject to the limits as
+    stated in the Benefit Schedule") and in the definitions section. The real
+    table is almost always LAST.
+
+    Anchoring on the first match meant every numeric field silently came back
+    empty on all 40 real PDFs tested, while the scraper still reported "ok".
+    So walk the matches backwards and take the first one that actually looks
+    like the table: its own column header plus the mandated opening row.
+    """
+    cands = [m.start() for m in re.finditer(r"Benefit\s+Schedule", text, re.I)]
+    if not cands:
+        return None
+    for start in reversed(cands):
+        head = squash(text[start:start + 3000])
+        if (re.search(r"Benefit\s+items?", head, re.I)
+                and re.search(r"Room\s+and\s+board", head, re.I)):
+            return squash(text[start:start + after])
+    # No match looked like the table. Fall back to the last occurrence rather
+    # than the first, which is still the better bet, but the caller should
+    # treat anything parsed out of it with suspicion.
+    return squash(text[cands[-1]:cands[-1] + after])
+
+
+# Plausibility bounds. A regex that drifts onto a footnote marker or a clause
+# number will happily return 75 as an annual benefit limit. These are wide
+# enough to admit every real VHIS value and narrow enough to catch that.
+BOUNDS = {
+    "annual_benefit_limit": (50_000, 100_000_000),
+    "room_board_per_day": (100, 100_000),
+    "misc_charges_limit": (1_000, 10_000_000),
+    "surgeon_complex_limit": (5_000, 10_000_000),
+    "psychiatric_limit": (1_000, 5_000_000),
+    "deductible_amount": (0, 1_000_000),
+    "coinsurance_pct": (0, 100),
+}
+
+
+def bounded(key, value):
+    """Return value if it is plausible for this field, else None."""
+    if value is None:
+        return None
+    lo, hi = BOUNDS.get(key, (None, None))
+    if lo is None:
+        return value
+    return value if lo <= value <= hi else None
+
+
 # ---------------------------------------------------------------------------
 # tier 1: Option A / Option B binaries
 # ---------------------------------------------------------------------------
@@ -194,15 +246,87 @@ def extract_cost_sharing(text):
     else:
         tier = "tier3"
 
+    # The AMOUNT is usually NOT in this document.
+    #
+    # Certified plan documents overwhelmingly say the deductible is "as stated
+    # in ... the Policy Schedule" - a per-policy form filled in at sale, not
+    # part of the certified terms. On the 40 real PDFs tested, this pattern
+    # recovered an amount 0 times; all 12 plans flagged has_deductible=Y left
+    # it blank. The reliable source is the plan-level label in the JSON
+    # ("HKD16,000 Deductible"), which build_vhis.py already parses.
+    #
+    # So try, but never let a miss here look like a scrape failure.
     m = re.search(r"Deductible[^.]{0,120}?(?:HKD?|USD?|\$)\s*([\d,]{3,})", s, re.I)
     if m:
-        out["deductible_amount"] = int(m.group(1).replace(",", ""))
-        tier = "tier2"
+        val = bounded("deductible_amount", int(m.group(1).replace(",", "")))
+        if val is not None:
+            out["deductible_amount"] = val
+            tier = "tier2"
 
-    m = re.search(r"(\d{1,3})\s*%\s*Coinsurance", s, re.I)
-    if m:
-        out["coinsurance_pct"] = int(m.group(1))
+    # Wording varies: "20% Coinsurance", "Coinsurance of 20%", "subject to
+    # 20% Coinsurance". The original pattern only matched the first form.
+    pct = coinsurance_from(s)
+    if pct is not None:
+        out["coinsurance_pct"] = pct
     return out, tier, s[:240]
+
+
+# Percentages that are NOT coinsurance and must not be mistaken for it:
+#   "Anaesthetist's fee 35% of Surgeon's fee payable"
+#   "Second Policy Year 25% reimbursement"
+# Requiring the literal word "Coinsurance" adjacent to the number rules these
+# out, which a bare r"(\d+)\s*%" would not.
+COINSURANCE_PATTERNS = (
+    r"(?:Subject\s+to\s+)?(\d{1,3})\s*%\s*Coinsurance",
+    r"Coinsurance\s*(?:of|:)?\s*(\d{1,3})\s*%",
+)
+
+
+def coinsurance_from(squashed):
+    for pat in COINSURANCE_PATTERNS:
+        m = re.search(pat, squashed, re.I)
+        if m:
+            val = bounded("coinsurance_pct", int(m.group(1)))
+            if val is not None:
+                return val
+    return None
+
+
+def extract_coinsurance(text):
+    """Coinsurance rate, wherever the insurer chose to state it.
+
+    Part 6 Section 5 names Coinsurance but almost never quantifies it: on the
+    40 real documents tested, not one carried a percentage inside the
+    cost-sharing window. The number is in the Benefit Schedule instead, against
+    the benefit it applies to:
+
+        (i) Prescribed Diagnostic Imaging Tests  $20,000 per Policy Year
+                                                 Subject to 30% Coinsurance
+
+    Prefer the Prescribed Diagnostic Imaging line, because that is the
+    VHIS-mandated one every certified plan must carry. A plan may separately
+    apply a different rate to SMM, which is a distinct figure and not what this
+    column reports.
+    """
+    sec = window(text, r"Cost[\s\-]?sharing\s+requirement", after=1400)
+    if sec:
+        pct = coinsurance_from(squash(sec))
+        if pct is not None:
+            return pct, "tier1"
+
+    sched = schedule_window(text)
+    if not sched:
+        return None, "tier3"
+
+    m = re.search(r"Prescribed\s+Diagnostic.{0,300}?"
+                  r"(?:Subject\s+to\s+)?(\d{1,3})\s*%\s*Coinsurance", sched, re.I)
+    if m:
+        val = bounded("coinsurance_pct", int(m.group(1)))
+        if val is not None:
+            return val, "tier2"
+
+    pct = coinsurance_from(sched)
+    return (pct, "tier2") if pct is not None else (None, "tier3")
 
 
 # ---------------------------------------------------------------------------
@@ -215,37 +339,46 @@ def extract_cost_sharing(text):
 MONEY = r"(?:HKD?|USD?|\$)?\s*(?<![\d,])(\d[\d,]*\d)"
 
 
+SCHEDULE_PATTERNS = {
+    "annual_benefit_limit":
+        r"Annual\s+Benefit\s+Limit[^$%]{0,150}?" + MONEY,
+    "room_board_per_day":
+        r"Room\s+and\s+board\s*" + MONEY + r"\s*per\s*day",
+    "misc_charges_limit":
+        r"Miscellaneous\s+charges\s*" + MONEY,
+    "surgeon_complex_limit":
+        r"Surgeon'?s?\s+fee.{0,400}?Complex[^\d]{0,20}?" + MONEY,
+    "psychiatric_limit":
+        r"Psychiatric\s+treatments?\s*" + MONEY,
+}
+
+
 def extract_benefit_schedule(text):
-    sec = window(text, r"Benefit\s+Schedule", before=200, after=9000)
-    if not sec:
+    s = schedule_window(text)
+    if not s:
         return {}, "tier3", ""
-    out = {}
-    s = squash(sec)
+    out, rejected = {}, []
 
-    m = re.search(r"Annual\s+Benefit\s+Limit[^%]{0,200}?" + MONEY, s, re.I)
-    if m:
-        out["annual_benefit_limit"] = int(m.group(1).replace(",", ""))
-
-    m = re.search(r"Room\s+and\s+board[^A-Za-z]{0,40}?" + MONEY + r"\s*per\s*day", s, re.I)
-    if m:
-        out["room_board_per_day"] = int(m.group(1).replace(",", ""))
-
-    m = re.search(r"Miscellaneous\s+charges[^A-Za-z]{0,40}?" + MONEY, s, re.I)
-    if m:
-        out["misc_charges_limit"] = int(m.group(1).replace(",", ""))
-
-    m = re.search(r"Surgeon'?s?\s+fee.{0,400}?Complex[^\d]{0,20}?" + MONEY, s, re.I)
-    if m:
-        out["surgeon_complex_limit"] = int(m.group(1).replace(",", ""))
-
-    m = re.search(r"Psychiatric\s+treatments?[^A-Za-z]{0,40}?" + MONEY, s, re.I)
-    if m:
-        out["psychiatric_limit"] = int(m.group(1).replace(",", ""))
+    for key, pat in SCHEDULE_PATTERNS.items():
+        m = re.search(pat, s, re.I)
+        if not m:
+            continue
+        raw = int(m.group(1).replace(",", ""))
+        val = bounded(key, raw)
+        if val is None:
+            # Keep the miss visible instead of writing a wrong number.
+            rejected.append(f"{key}={raw}")
+        else:
+            out[key] = val
 
     if re.search(r"no\s+sub[\s\-]?limit", s, re.I):
         out["no_sublimits"] = "Y"
 
-    return out, ("tier2" if out else "tier3"), s[:240]
+    tier = "tier2" if out else "tier3"
+    note = s[:240]
+    if rejected:
+        note = "REJECTED[" + ",".join(rejected) + "] " + note
+    return out, tier, note
 
 
 # ---------------------------------------------------------------------------
@@ -296,7 +429,11 @@ def extract_premium_meta(text):
 # ---------------------------------------------------------------------------
 # orchestration
 # ---------------------------------------------------------------------------
-FIELDS = ["certification_no", "insurer", "plan_name", "plan_level_raw",
+# plan_date is load-bearing, not decoration. The refresh workflow re-scrapes a
+# plan only when its plan_date has moved, so if this column is absent every
+# cert compares unequal to "" and all 579 PDFs are re-downloaded every week.
+FIELDS = ["certification_no", "plan_date", "insurer", "plan_name",
+          "plan_level_raw",
           "geographical_coverage", "geo_tier",
           "ward_restriction", "ward_tier",
           "provider_restriction",
@@ -304,7 +441,14 @@ FIELDS = ["certification_no", "insurer", "plan_name", "plan_level_raw",
           "lifetime_benefit_limit", "lifetime_tier",
           "annual_benefit_limit", "room_board_per_day", "misc_charges_limit",
           "surgeon_complex_limit", "psychiatric_limit", "no_sublimits",
-          "schedule_tier", "overall_tier", "scrape_status", "source_url"]
+          "schedule_tier", "overall_tier", "fields_missing", "scrape_status",
+          "source_url"]
+
+# Fields worth failing a row over. The benefit-schedule numbers are useful but
+# genuinely absent from some documents; these three are in the mandated Part 6
+# of every certified plan, so a blank means the parse missed, not that the
+# document is silent.
+CORE_FIELDS = ("geographical_coverage", "ward_restriction", "has_deductible")
 
 
 def scrape_one(row, cache_dir, sleep=1.0):
@@ -313,6 +457,7 @@ def scrape_one(row, cache_dir, sleep=1.0):
     rec = {f: "" for f in FIELDS}
     rec.update({
         "certification_no": cert,
+        "plan_date": row.get("plan_date", ""),
         "insurer": row.get("insurer", ""),
         "plan_name": row.get("plan_name", ""),
         "plan_level_raw": row.get("plan_level_raw", ""),
@@ -344,6 +489,13 @@ def scrape_one(row, cache_dir, sleep=1.0):
     life, lt, _ = extract_lifetime_limit(text)
     sched, st, _ = extract_benefit_schedule(text)
 
+    # Coinsurance is stated in the Benefit Schedule far more often than in the
+    # cost-sharing clause, so it gets its own two-place lookup.
+    if cost.get("coinsurance_pct") is None:
+        pct, _ = extract_coinsurance(text)
+        if pct is not None:
+            cost["coinsurance_pct"] = pct
+
     rec.update({
         "geographical_coverage": geo or "", "geo_tier": gt or "tier3",
         "ward_restriction": ward or "", "ward_tier": wt or "tier3",
@@ -362,10 +514,24 @@ def scrape_one(row, cache_dir, sleep=1.0):
         "schedule_tier": st,
         "scrape_status": "ok",
     })
-    tiers = [gt, wt, ct, lt, st]
-    rec["overall_tier"] = ("tier3" if all(t == "tier3" for t in tiers)
-                           else "tier2" if "tier2" in tiers or "tier3" in tiers
-                           else "tier1")
+
+    # Grade on what was actually extracted, not on which code paths ran.
+    #
+    # The previous rule collapsed to tier2 whenever any section returned
+    # tier3, so a document that yielded nothing but a geography string still
+    # scored tier2 and never reached the review queue. Across 40 real PDFs
+    # that produced "40 x tier2, review queue: 0 rows" while every benefit
+    # number was empty.
+    missing = [f for f in CORE_FIELDS if not str(rec.get(f, "")).strip()]
+    rec["fields_missing"] = ";".join(missing)
+
+    core_tiers = [t for t in (gt, wt, ct) if t]
+    if missing:
+        rec["overall_tier"] = "tier3"
+    elif all(t == "tier1" for t in core_tiers):
+        rec["overall_tier"] = "tier1"
+    else:
+        rec["overall_tier"] = "tier2"
     return rec
 
 
@@ -453,6 +619,36 @@ def selftest():
     ck("has deductible", c2.get("has_deductible"), "Y")
     ck("deductible amount", c2.get("deductible_amount"), 25000)
     ck("coinsurance", c2.get("coinsurance_pct"), 20)
+
+    # --- regression: the anchor bug -------------------------------------
+    # "Benefit Schedule" appears in the table of contents and in prose long
+    # before the real table. Anchoring on the first hit returned nothing on
+    # every real document. Reproduce that shape here so it cannot come back.
+    decoy = ("Table of contents Benefit Schedule ......................... 28 "
+             "Ensuring Clause These Terms together with the Benefit Schedule "
+             "shall be read as one. " + "filler text. " * 400
+             + "subject to the limits stated in the Benefit Schedule. "
+             + "filler. " * 400 + tpl_worldwide)
+    s3, _, _ = extract_benefit_schedule(decoy)
+    ck("anchor past TOC/prose", s3.get("annual_benefit_limit"), 420000)
+    ck("anchor past TOC (room)", s3.get("room_board_per_day"), 750)
+
+    # --- regression: implausible values must be rejected, not stored -----
+    junk = ("Benefit Schedule Benefit items(1) Benefit limit (in HKD) "
+            "(a) Room and board $750 per day "
+            "Annual Benefit Limit for benefit items (a) - (l) 76 per Policy Year")
+    s4, _, note4 = extract_benefit_schedule(junk)
+    ck("implausible limit dropped", s4.get("annual_benefit_limit"), None)
+    ck("rejection is recorded", "REJECTED" in note4, True)
+    ck("good value still kept", s4.get("room_board_per_day"), 750)
+
+    # --- regression: coinsurance phrasing variants -----------------------
+    for wording, want in (("subject to 20% Coinsurance.", 20),
+                          ("Coinsurance of 30% shall apply.", 30)):
+        c3, _, _ = extract_cost_sharing(
+            "5. Cost-sharing requirement The Policy Holder is required to pay "
+            "Coinsurance and/or Deductible as stated. " + wording)
+        ck(f"coinsurance {want}%", c3.get("coinsurance_pct"), want)
 
     p = extract_premium_meta(prem)
     ck("age basis", p.get("age_basis_stated"), "R")

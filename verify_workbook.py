@@ -30,7 +30,10 @@ import sys
 import tempfile
 from pathlib import Path
 
+import re
+
 from openpyxl import load_workbook
+from openpyxl.utils import column_index_from_string
 
 # The seven values Excel and LibreOffice use to signal a broken formula.
 ERROR_VALUES = {
@@ -99,8 +102,11 @@ def recalculate(path: Path, timeout: int):
     soffice = find_soffice()
     if not soffice:
         raise RuntimeError(
-            "LibreOffice not found on PATH. Install libreoffice-calc, or skip "
-            "verification with --no-recalc (not recommended for CI).")
+            "LibreOffice not found on PATH.\n"
+            "  Ubuntu/Debian : sudo apt-get install -y libreoffice-calc\n"
+            "  macOS         : brew install --cask libreoffice\n"
+            "Or run with --no-recalc for a weaker static reference check that "
+            "needs no external tools (not recommended for CI).")
 
     with tempfile.TemporaryDirectory(prefix="verify-lo-") as tmp:
         profile = Path(tmp) / "profile"
@@ -163,6 +169,56 @@ def count_formulas(path: Path):
     return n
 
 
+# Sheet!$A$1:$B$2, Sheet!$A$1, 'Long Name'!$A$1:$A$9
+REF_RE = re.compile(
+    r"(?:'([^']+)'|([A-Za-z_][A-Za-z0-9_.]*))!"
+    r"\$?([A-Z]{1,3})\$?(\d+)(?::\$?([A-Z]{1,3})\$?(\d+))?")
+
+
+def static_check(path: Path, max_locations=100):
+    """Bounds-check every cross-sheet reference without evaluating anything.
+
+    This is what --no-recalc runs. It cannot prove a formula returns the right
+    number - only a real engine can do that - but it does catch the two error
+    classes that actually bite when this workbook is regenerated: a reference
+    to a sheet that no longer exists (#NAME?/#REF!) and a range that runs past
+    the end of the sheet it points at (#REF!), which is exactly what happens
+    when a row count changes and a hardcoded range does not follow it.
+    """
+    wb = load_workbook(path, data_only=False)
+    dims = {ws.title: (ws.max_row, ws.max_column) for ws in wb.worksheets}
+    problems = []
+
+    for ws in wb.worksheets:
+        for row in ws.iter_rows():
+            for cell in row:
+                v = cell.value
+                if not (isinstance(v, str) and v.startswith("=")):
+                    continue
+                for m in REF_RE.finditer(v):
+                    sheet = m.group(1) or m.group(2)
+                    if sheet not in dims:
+                        problems.append(
+                            f"{ws.title}!{cell.coordinate} -> unknown sheet "
+                            f"'{sheet}'")
+                        continue
+                    max_row, max_col = dims[sheet]
+                    rows = [int(m.group(4))]
+                    cols = [column_index_from_string(m.group(3))]
+                    if m.group(6):
+                        rows.append(int(m.group(6)))
+                        cols.append(column_index_from_string(m.group(5)))
+                    if max(rows) > max_row or max(cols) > max_col:
+                        problems.append(
+                            f"{ws.title}!{cell.coordinate} -> "
+                            f"{sheet}!{m.group(0).split('!')[-1]} exceeds "
+                            f"{sheet} ({max_row} rows x {max_col} cols)")
+                if len(problems) >= max_locations:
+                    break
+    wb.close()
+    return problems
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("workbook")
@@ -170,6 +226,10 @@ def main():
     ap.add_argument("--json", action="store_true")
     ap.add_argument("--keep", action="store_true",
                     help="keep the recalculated copy for inspection")
+    ap.add_argument("--no-recalc", action="store_true",
+                    help="skip LibreOffice and run the static reference check "
+                         "only. Weaker: catches broken references, not wrong "
+                         "answers. Not recommended for CI.")
     args = ap.parse_args()
 
     path = Path(args.workbook)
@@ -178,6 +238,31 @@ def main():
         sys.exit(2)
 
     formulas = count_formulas(path)
+
+    if args.no_recalc:
+        problems = static_check(path)
+        result = {
+            "status": "success" if not problems else "errors_found",
+            "mode": "static-only (no recalculation)",
+            "workbook": str(path),
+            "total_formulas": formulas,
+            "total_errors": len(problems),
+            "locations": problems,
+        }
+        if args.json:
+            print(json.dumps(result, indent=2))
+        else:
+            print(f"workbook : {path}")
+            print(f"formulas : {formulas:,}")
+            print(f"mode     : static reference check, NOT a recalculation")
+            print(f"problems : {len(problems)}")
+            for p in problems[:20]:
+                print("  ", p)
+            if not problems:
+                print("\nAll cross-sheet references resolve and are in bounds.")
+                print("This does NOT prove the formulas compute correct values.")
+        sys.exit(0 if not problems else 1)
+
     recalced = recalculate(path, args.timeout)
     counts, locations, cells = scan(recalced)
     if not args.keep:

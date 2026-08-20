@@ -127,7 +127,7 @@ def sheet_client(wb, catalog_n, prem_date_max):
     steps = [
         "1. Set the four yellow cells above.",
         "2. Go to the Compare sheet. Every premium column has already recalculated.",
-        "3. Use the filter arrows on row 4 to narrow by ward, deductible, geography, insurer.",
+        "3. Filter row 4: set Available = Open first, then narrow by ward, deductible, geography.",
         "4. Sort by 10-Year Avg, not First Year. See the warning below.",
         "5. Copy the shortlisted rows into a fresh sheet for the client.",
     ]
@@ -151,8 +151,11 @@ def sheet_client(wb, catalog_n, prem_date_max):
     ws["B23"] = "READ BEFORE QUOTING"
     ws["B23"].font = Font(name=ARIAL, size=11, bold=True, color="C00000")
     warns = [
-        "Age 72 and above: the source data stops at each insurer's new-application age ceiling, "
-        "so the 10-year window is incomplete for most plans. Check the Years Avail column.",
+        "Age 75 and above: the source data stops at each insurer's new-application age ceiling, "
+        "so the 10-year window is incomplete for 546 of 579 plans. Check the Years Avail column.",
+        "The Available column shows whether a plan can still be sold to a NEW client. "
+        "69 plans are de-registered, withdrawn or renewal-only. They price normally, so filter "
+        "Available = Open before shortlisting.",
         "Premiums exclude the Insurance Authority levy, underwriting loading, and any discounts. "
         "They are portfolio-basis standard premiums, not quotes.",
         "Paying monthly typically costs about 8% more per year than annual. Not reflected here.",
@@ -178,13 +181,24 @@ def sheet_client(wb, catalog_n, prem_date_max):
 
 
 COMPARE_COLS = OrderedDict([
-    ("Insurer", 26), ("Plan Name", 34), ("Type", 8), ("Plan Level", 30),
+    ("Insurer", 26), ("Plan Name", 34), ("Type", 8), ("Available", 17),
+    ("Plan Level", 30),
     ("Ward", 14), ("Deductible", 12), ("Geography", 18), ("Ccy", 6),
     ("First Year", 12), ("10-Year Total", 14), ("10-Year Avg", 13),
     ("Years Avail", 11), ("Age Basis", 11), ("Basis Used", 11),
     ("Smoker Rated", 12), ("Annual Limit", 13), ("Coinsurance %", 12),
     ("Cert No", 22), ("_tableage", 10), ("_key", 30), ("_row", 8),
 ])
+
+# name -> 1-based column index, and name -> column letter.
+#
+# Everything below addresses columns through these maps rather than through
+# literal numbers and letters. Inserting "Available" into the middle of the
+# layout above previously meant hand-renumbering ws.cell(r, 13) and every $M /
+# $R / $S reference inside the formula strings, where one missed substitution
+# produces a workbook that opens cleanly and quietly reads the wrong column.
+CIDX = {name: i for i, name in enumerate(COMPARE_COLS, start=1)}
+CL = {name: get_column_letter(i) for name, i in CIDX.items()}
 
 
 def sheet_compare(wb, catalog, n_prem_rows):
@@ -215,83 +229,125 @@ def sheet_compare(wb, catalog, n_prem_rows):
     smoker = "Client!$C$8"
     basis = "Client!$C$9"
 
-    ben_last = len(catalog) + 1
-    ben_keys = f"Benefits!$A$2:$A${ben_last}"
+    # The Benefits sheet carries a note in row 1 and its header in row 2, so
+    # its data starts at row 3. Ranges anchored at row 2 lined up with each
+    # other and so returned correct values, but silently excluded the last
+    # plan in the catalog, which never received any scraped benefit data.
+    ben_first = 3
+    ben_last = len(catalog) + 2
+    ben_keys = f"Benefits!$A${ben_first}:$A${ben_last}"
+
+    # Column letters, resolved by name.
+    L_cert = CL["Cert No"]
+    L_age = CL["Age Basis"]
+    L_basis = CL["Basis Used"]
+    L_tage = CL["_tableage"]
+    L_key = CL["_key"]
+    L_rowno = CL["_row"]
+    L_total = CL["10-Year Total"]
+    L_years = CL["Years Avail"]
+
+    def ben_lookup(ben_col):
+        return (f'INDEX(Benefits!${ben_col}${ben_first}:${ben_col}${ben_last},'
+                f'MATCH(${L_cert}{{r}},{ben_keys},0))')
 
     r = 5
     for row in catalog:
         cert = row["certification_no"]
-        ws.cell(r, 1, row["insurer"]).font = BLACK
-        ws.cell(r, 2, row["plan_name"]).font = BLACK
-        ws.cell(r, 3, row["plan_type"]).font = BLACK
-        ws.cell(r, 4, row["plan_level_raw"]).font = BLACK
+        ws.cell(r, CIDX["Insurer"], row["insurer"]).font = BLACK
+        ws.cell(r, CIDX["Plan Name"], row["plan_name"]).font = BLACK
+        ws.cell(r, CIDX["Type"], row["plan_type"]).font = BLACK
+        ws.cell(r, CIDX["Plan Level"], row["plan_level_raw"]).font = BLACK
+
+        # Withdrawn and renewal-only plans price exactly like live ones, so
+        # without this column they sort into a shortlist indistinguishably.
+        av = ws.cell(r, CIDX["Available"], row.get("availability", ""))
+        av.font = BLACK
+        if row.get("sellable_new") != "Y":
+            av.fill = WARN_FILL
 
         # Ward / deductible / geography: prefer the Benefits sheet (scraped or
         # hand-entered), fall back to what we parsed from the plan-level label.
-        for col, ben_col, fallback in (
-                (5, "B", row["ward_type"]),
-                (6, "C", row["deductible_amount"]),
-                (7, "D", row["geographical_coverage"])):
-            fb = f'"{fallback}"' if fallback != "" else '""'
-            f = (f'=IFERROR(IF(INDEX(Benefits!${ben_col}$2:${ben_col}${ben_last},'
-                 f'MATCH($R{r},{ben_keys},0))="",{fb},'
-                 f'INDEX(Benefits!${ben_col}$2:${ben_col}${ben_last},'
-                 f'MATCH($R{r},{ben_keys},0))),{fb})')
-            c = ws.cell(r, col, f)
+        #
+        # numeric=True emits the fallback bare rather than quoted. Quoting it
+        # made Excel return the text "16000", which looks identical in the cell
+        # but drops out of numeric sorts and "greater than" filters - on the
+        # column most likely to be filtered.
+        for name, ben_col, fallback, numeric in (
+                ("Ward", "B", row["ward_type"], False),
+                ("Deductible", "C", row["deductible_amount"], True),
+                ("Geography", "D", row["geographical_coverage"], False)):
+            if fallback == "" or fallback is None:
+                fb = '""'
+            elif numeric:
+                fb = str(fallback)
+            else:
+                fb = '"{}"'.format(str(fallback).replace('"', '""'))
+            idx = ben_lookup(ben_col).format(r=r)
+            c = ws.cell(r, CIDX[name],
+                        f'=IFERROR(IF({idx}="",{fb},{idx}),{fb})')
             c.font = BLACK
-        ws.cell(r, 6).number_format = money()
+        ws.cell(r, CIDX["Deductible"]).number_format = money()
 
-        ws.cell(r, 8, row["currency"]).font = BLACK
-        ws.cell(r, 13, row["age_counting_method"]).font = BLACK
-        ws.cell(r, 15, row["smoker_rated"]).font = BLACK
-        ws.cell(r, 18, cert).font = Font(name=ARIAL, size=9, color="808080")
+        ws.cell(r, CIDX["Ccy"], row["currency"]).font = BLACK
+        ws.cell(r, CIDX["Age Basis"], row["age_counting_method"]).font = BLACK
+        ws.cell(r, CIDX["Smoker Rated"], row["smoker_rated"]).font = BLACK
+        ws.cell(r, CIDX["Cert No"], cert).font = Font(name=ARIAL, size=9,
+                                                      color="808080")
 
-        # helper: table age per insurer's own age-counting convention
-        ws.cell(r, 19, f'=IF($M{r}="N",{age}+1,{age})').font = BLACK
+        # helper: table age per insurer's own age-counting convention.
+        # Clamped to the last age column: an age-next-birthday insurer at
+        # client age 100 would otherwise index age 101 and return #REF!.
+        ws.cell(r, CIDX["_tableage"],
+                f'=MIN(IF(${L_age}{r}="N",{age}+1,{age}),{MAX_AGE})').font = BLACK
 
         # helper: basis actually used, with automatic fallback
-        ws.cell(r, 14,
-                f'=IF(COUNTIF({keys},$R{r}&"|"&{basis}&"|"&{gender}&"|"&{smoker})>0,'
-                f'{basis},IF({basis}="S","R","S"))').font = BLACK
+        ws.cell(r, CIDX["Basis Used"],
+                f'=IF(COUNTIF({keys},${L_cert}{r}&"|"&{basis}&"|"&{gender}&"|"'
+                f'&{smoker})>0,{basis},IF({basis}="S","R","S"))').font = BLACK
 
-        ws.cell(r, 20,
-                f'=$R{r}&"|"&$N{r}&"|"&{gender}&"|"&{smoker}').font = BLACK
-        ws.cell(r, 21, f'=IFERROR(MATCH($T{r},{keys},0),"")').font = BLACK
+        ws.cell(r, CIDX["_key"],
+                f'=${L_cert}{r}&"|"&${L_basis}{r}&"|"&{gender}&"|"&{smoker}'
+                ).font = BLACK
+        ws.cell(r, CIDX["_row"],
+                f'=IFERROR(MATCH(${L_key}{r},{keys},0),"")').font = BLACK
 
-        col_first = f"$S{r}+1"
-        col_last = f"MIN($S{r}+10,{N_AGE_COLS})"
+        col_first = f"${L_tage}{r}+1"
+        col_last = f"MIN(${L_tage}{r}+10,{N_AGE_COLS})"
+        rowno = f"${L_rowno}{r}"
 
         # First year. INDEX returns 0 on a blank cell, so gate on COUNT.
-        ws.cell(r, 9,
-                f'=IF($U{r}="","",IF(COUNT(INDEX({grid},$U{r},{col_first}))=0,"",'
-                f'INDEX({grid},$U{r},{col_first})))').number_format = money()
-        ws.cell(r, 10,
-                f'=IF($U{r}="","",IF($L{r}=0,"",'
-                f'SUM(INDEX({grid},$U{r},{col_first}):'
-                f'INDEX({grid},$U{r},{col_last}))))').number_format = money()
-        ws.cell(r, 11,
-                f'=IF($J{r}="","",IF($L{r}=0,"",$J{r}/$L{r}))').number_format = money()
-        ws.cell(r, 12,
-                f'=IF($U{r}="",0,COUNT(INDEX({grid},$U{r},{col_first}):'
-                f'INDEX({grid},$U{r},{col_last})))')
+        ws.cell(r, CIDX["First Year"],
+                f'=IF({rowno}="","",IF(COUNT(INDEX({grid},{rowno},{col_first}))=0,'
+                f'"",INDEX({grid},{rowno},{col_first})))').number_format = money()
+        ws.cell(r, CIDX["10-Year Total"],
+                f'=IF({rowno}="","",IF(${L_years}{r}=0,"",'
+                f'SUM(INDEX({grid},{rowno},{col_first}):'
+                f'INDEX({grid},{rowno},{col_last}))))').number_format = money()
+        ws.cell(r, CIDX["10-Year Avg"],
+                f'=IF(${L_total}{r}="","",IF(${L_years}{r}=0,"",'
+                f'${L_total}{r}/${L_years}{r}))').number_format = money()
+        ws.cell(r, CIDX["Years Avail"],
+                f'=IF({rowno}="",0,COUNT(INDEX({grid},{rowno},{col_first}):'
+                f'INDEX({grid},{rowno},{col_last})))')
 
-        for col, ben_col in ((16, "E"), (17, "F")):
-            idx = (f'INDEX(Benefits!${ben_col}$2:${ben_col}${ben_last},'
-                   f'MATCH($R{r},{ben_keys},0))')
-            ws.cell(r, col, f'=IFERROR(IF(COUNT({idx})=0,"",{idx}),"")')
-        ws.cell(r, 16).number_format = money()
+        for name, ben_col in (("Annual Limit", "E"), ("Coinsurance %", "F")):
+            idx = ben_lookup(ben_col).format(r=r)
+            ws.cell(r, CIDX[name], f'=IFERROR(IF(COUNT({idx})=0,"",{idx}),"")')
+        ws.cell(r, CIDX["Annual Limit"]).number_format = money()
 
-        for col in range(9, 13):
-            ws.cell(r, col).font = BLACK
+        for name in ("First Year", "10-Year Total", "10-Year Avg", "Years Avail"):
+            ws.cell(r, CIDX[name]).font = BLACK
         r += 1
 
     last = r - 1
-    ws.auto_filter.ref = f"A4:U{last}"
+    ws.auto_filter.ref = f"A4:{get_column_letter(len(COMPARE_COLS))}{last}"
 
     # Hide the helper columns. They must stay inside the filter range for the
     # formulas to resolve, but nobody needs to look at them.
-    for letter in ("S", "T", "U"):
-        ws.column_dimensions[letter].hidden = True
+    for name in COMPARE_COLS:
+        if name.startswith("_"):
+            ws.column_dimensions[CL[name]].hidden = True
     return ws, last
 
 
@@ -418,11 +474,17 @@ def sheet_notes(wb, stats):
                     "Bureau data dictionary for the Standard Premium dataset. "
                     "Present for 530 of 579 variants."),
         ("Basis R", "RIDER / supplementary benefit attached to another policy "
-                    "(附屬保單). Same source. Present for 184 variants, all from "
-                    "insurers that also sell VHIS on top of a life policy. Never "
-                    "priced above the standalone rate: lower on 87, identical on "
-                    "42, higher on 0. Quote R only when the plan is genuinely "
-                    "being sold as a rider."),
+                    "(附屬保單). Present for 184 variants, all from insurers that "
+                    "also sell VHIS on top of a life policy. Of the 135 variants "
+                    "priced on both bases: R is lower at every age on 87, "
+                    "identical on 42, and HIGHER at one or more ages on 6. Quote "
+                    "R only when the plan is genuinely being sold as a rider, "
+                    "and do not assume it is the cheaper option."),
+        ("Basis S/R caveat", "This standalone/rider reading is inferred from the "
+                             "data, not read off a published data dictionary: "
+                             "an 'S' series appears on 497 Flexi variants, which "
+                             "rules out S meaning 'Standard Plan'. Confirm with "
+                             "the Health Bureau before relying on it in a quote."),
         ("Basis fallback", "If the chosen basis has no table for a plan, the "
                            "other basis is used. See the Basis Used column."),
         ("", ""),
@@ -446,7 +508,8 @@ def sheet_notes(wb, stats):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--data-dir", default="/mnt/user-data/uploads")
+    ap.add_argument("--data-dir", default="current",
+                    help="directory holding the four source JSON files")
     ap.add_argument("--out", default="VHIS_Compare.xlsx")
     ap.add_argument("--benefits", default="data/plan_benefits.csv")
     ap.add_argument("--overrides", default="data/manual_overrides.csv")

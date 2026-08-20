@@ -1,0 +1,17 @@
+# Python dependencies for the VHIS comparison pipeline.
+#     pip install -r requirements.txt
+#
+# Two non-Python tools are also needed and are NOT installable from here:
+#   poppler-utils     provides pdftotext, used by scrape_plans.py.
+#                     Without it the scraper falls back to pdfplumber, which
+#                     works but is roughly 50x slower.
+#                       Ubuntu  sudo apt-get install -y poppler-utils
+#                       macOS   brew install poppler
+#   libreoffice-calc  used by verify_workbook.py to actually evaluate the
+#                     workbook's formulas. Without it, run the weaker
+#                     `verify_workbook.py --no-recalc` static check.
+#                       Ubuntu  sudo apt-get install -y libreoffice-calc
+#                       macOS   brew install --cask libreoffice
+
+openpyxl>=3.1
+pdfplumber>=0.11

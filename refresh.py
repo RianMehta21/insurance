@@ -67,6 +67,15 @@ STATE_DB = "vhis_state.db"
 SNAPSHOT_DIR = "snapshots"
 CURRENT_DIR = "current"
 
+# Reduced form of the source data, committed so the next run has something to
+# diff against. See write_state_file(). Roughly 60 KB versus 5 MB per snapshot.
+STATE_FILE = os.path.join("data", "plan_state.json")
+
+# Exit codes. CI distinguishes these, so do not renumber casually.
+EXIT_NO_CHANGE = 0
+EXIT_CHANGED = 1
+EXIT_FETCH_FAILED = 2
+
 UA = {"User-Agent": "vhis-compare/1.0 (personal plan comparison tool)"}
 
 
@@ -130,24 +139,39 @@ def fetch_resource(url, want_name, timeout=90):
 
 # ---------------------------------------------------------------------------
 # signal 1: content hash
+#
+# probe() is deliberately READ-ONLY with respect to the state DB.
+#
+# The state must not move until we have actually committed to the new data.
+# An earlier version updated the stored hash inside --check, which meant the
+# --pull that CI runs immediately afterwards compared the new bytes against the
+# hash --check had just written, concluded "unchanged", and returned before
+# snapshotting or diffing. The workbook still built, so it looked fine, but the
+# change report was empty on every single run.
 # ---------------------------------------------------------------------------
-def check_hashes(con, pull=False):
-    """Download each resource and compare hashes. Returns list of changed files."""
-    now = datetime.now().isoformat(timespec="seconds")
-    changed = []
+class FetchError(Exception):
+    """A resource could not be fetched or was not valid JSON."""
 
-    os.makedirs(CURRENT_DIR, exist_ok=True)
+
+def probe(con):
+    """Download every resource and classify it against stored state.
+
+    Returns (results, failures) where results is a list of dicts. Writes
+    nothing. Raising is left to the caller so that --check and --pull can
+    report identically but act differently.
+    """
+    results, failures = [], []
 
     for fname, url in RESOURCES.items():
         if url.startswith("PASTE_"):
             print(f"  {fname:<32} SKIPPED (no URL configured)")
+            failures.append((fname, "no URL configured"))
             continue
         try:
             blob, note = fetch_resource(url, fname)
         except Exception as e:
             print(f"  {fname:<32} FETCH FAILED: {e}")
-            con.execute("INSERT INTO refresh_log VALUES (?,?,?,?)",
-                        (now, fname, "fetch_failed", str(e)))
+            failures.append((fname, f"fetch failed: {e}"))
             continue
 
         # Reject anything that is not parseable JSON. A 200 response carrying
@@ -156,46 +180,66 @@ def check_hashes(con, pull=False):
             json.loads(blob)
         except Exception:
             print(f"  {fname:<32} REJECTED (response is not valid JSON)")
-            con.execute("INSERT INTO refresh_log VALUES (?,?,?,?)",
-                        (now, fname, "invalid_json", f"{len(blob)} bytes"))
+            failures.append((fname, f"not valid JSON ({len(blob)} bytes)"))
             continue
 
         digest = sha256_bytes(blob)
         row = con.execute("SELECT sha256 FROM file_state WHERE filename=?",
                           (fname,)).fetchone()
-
         if row is None:
-            status, changed_at = "NEW", now
-            changed.append(fname)
+            status = "NEW"
         elif row[0] != digest:
-            status, changed_at = "CHANGED", now
-            changed.append(fname)
+            status = "CHANGED"
         else:
             status = "unchanged"
-            changed_at = con.execute(
-                "SELECT changed_at FROM file_state WHERE filename=?",
-                (fname,)).fetchone()[0]
 
         print(f"  {fname:<32} {status:<10} {len(blob):>10,} bytes  "
               f"{digest[:12]}  {note}")
+        results.append({"filename": fname, "blob": blob, "digest": digest,
+                        "status": status, "note": note})
+    return results, failures
 
-        if pull and status != "unchanged":
-            with open(os.path.join(CURRENT_DIR, fname), "wb") as f:
-                f.write(blob)
-        elif pull and not os.path.exists(os.path.join(CURRENT_DIR, fname)):
-            with open(os.path.join(CURRENT_DIR, fname), "wb") as f:
-                f.write(blob)
 
+def persist(con, results):
+    """Record hashes. Called only once the new bytes are actually on disk."""
+    now = datetime.now().isoformat(timespec="seconds")
+    for r in results:
+        fname, digest, status = r["filename"], r["digest"], r["status"]
+        if status == "unchanged":
+            prev = con.execute("SELECT changed_at FROM file_state WHERE filename=?",
+                               (fname,)).fetchone()
+            changed_at = prev[0] if prev else now
+        else:
+            changed_at = now
         con.execute(
             "INSERT INTO file_state VALUES (?,?,?,?,?) "
             "ON CONFLICT(filename) DO UPDATE SET "
             "sha256=excluded.sha256, bytes=excluded.bytes, "
             "checked_at=excluded.checked_at, changed_at=excluded.changed_at",
-            (fname, digest, len(blob), now, changed_at))
+            (fname, digest, len(r["blob"]), now, changed_at))
         con.execute("INSERT INTO refresh_log VALUES (?,?,?,?)",
                     (now, fname, status.lower(), digest[:12]))
     con.commit()
-    return changed
+
+
+def log_failures(con, failures):
+    now = datetime.now().isoformat(timespec="seconds")
+    for fname, note in failures:
+        con.execute("INSERT INTO refresh_log VALUES (?,?,?,?)",
+                    (now, fname, "failed", note))
+    con.commit()
+
+
+def write_current(results):
+    """Write every fetched resource into current/, whatever its status.
+
+    Unconditional on purpose: current/ is gitignored, so on a fresh CI checkout
+    it is empty even when the hashes say nothing changed.
+    """
+    os.makedirs(CURRENT_DIR, exist_ok=True)
+    for r in results:
+        with open(os.path.join(CURRENT_DIR, r["filename"]), "wb") as f:
+            f.write(r["blob"])
 
 
 # ---------------------------------------------------------------------------
@@ -244,6 +288,36 @@ def snapshot():
     return dest
 
 
+# ---------------------------------------------------------------------------
+# compact state: what the diff actually reads
+#
+# diff_snapshots() only ever looks at five fields per plan variant. Keeping
+# full 5 MB copies of the source JSON purely to recompute those is why the repo
+# would have grown ~260 MB/year. STATE_FILE holds the reduced form instead:
+# ~60 KB, committed on every run, and enough to diff against next week.
+# ---------------------------------------------------------------------------
+def write_state_file(state, path=STATE_FILE):
+    os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
+    payload = {
+        "generated_at": datetime.now().isoformat(timespec="seconds"),
+        "variants": state,
+    }
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(payload, f, indent=1, sort_keys=True, ensure_ascii=False)
+    print(f"Plan state written to {path} ({len(state)} variants)")
+
+
+def read_state_file(path=STATE_FILE):
+    if not os.path.exists(path):
+        return None
+    try:
+        with open(path, encoding="utf-8") as f:
+            return json.load(f).get("variants") or {}
+    except Exception as e:
+        print(f"  could not read {path}: {e}")
+        return None
+
+
 def load_variants(directory):
     """cert-no -> (plan_name, insurer, level, prem_date, first-adult-premium)."""
     out = {}
@@ -279,9 +353,12 @@ def load_variants(directory):
     return out
 
 
-def diff_snapshots(old_dir, new_dir):
-    """The report you read before quoting anyone."""
-    a, b = load_variants(old_dir), load_variants(new_dir)
+def diff_states(a, b):
+    """The report you read before quoting anyone.
+
+    Takes two reduced state dicts (cert -> fields), not directories, so it
+    works against the committed state file as well as against snapshots.
+    """
     added = sorted(set(b) - set(a))
     removed = sorted(set(a) - set(b))
     repriced, recertified = [], []
@@ -338,11 +415,15 @@ def latest_snapshot_before(new_dir):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true",
-                    help="detect changes only; exit 1 if anything changed")
+                    help="detect changes only; exit 1 if anything changed. "
+                         "Never writes state.")
     ap.add_argument("--pull", action="store_true",
-                    help="download, snapshot, and diff")
+                    help="download, write current/, diff, and record state")
     ap.add_argument("--history", type=int, metavar="DAYS",
                     help="list archived versions from data.gov.hk")
+    ap.add_argument("--snapshot", action="store_true",
+                    help="also keep a full dated copy of the source JSON in "
+                         "snapshots/ (not needed for the diff; see STATE_FILE)")
     args = ap.parse_args()
 
     con = init_state()
@@ -352,26 +433,63 @@ def main():
         return
 
     print("Checking data.gov.hk resources...")
-    changed = check_hashes(con, pull=args.pull)
+    results, failures = probe(con)
+    log_failures(con, failures)
 
-    if not changed:
-        print("\nNo changes. Nothing to rebuild.")
-        sys.exit(0)
+    # A failed download is not "no change". Saying so would let the pipeline
+    # publish last week's workbook forever while reporting success, which is
+    # the one failure mode nobody would notice.
+    if failures:
+        print(f"\n{len(failures)} of {len(RESOURCES)} resource(s) could not be "
+              f"retrieved:")
+        for fname, note in failures:
+            print(f"  {fname}: {note}")
+        print("\nRefusing to report a result from incomplete data.")
+        sys.exit(EXIT_FETCH_FAILED)
 
-    print(f"\n{len(changed)} file(s) changed: {', '.join(changed)}")
+    changed = [r["filename"] for r in results if r["status"] != "unchanged"]
 
     if args.check:
-        sys.exit(1)
+        # Read-only by contract. Report and leave the state exactly as found.
+        if changed:
+            print(f"\n{len(changed)} file(s) changed: {', '.join(changed)}")
+            sys.exit(EXIT_CHANGED)
+        print("\nNo changes. Nothing to rebuild.")
+        sys.exit(EXIT_NO_CHANGE)
 
-    if args.pull:
-        new_dir = snapshot()
-        old_dir = latest_snapshot_before(new_dir)
-        if old_dir:
-            diff_snapshots(old_dir, new_dir)
-        else:
-            print("\nFirst snapshot, nothing to diff against.")
-        print("\nNext: python build_vhis.py --data-dir current --out-dir out")
-        print("      then re-scrape PDFs for any NEW variants listed above.")
+    if not args.pull:
+        print("\nNothing to do. Pass --check or --pull.")
+        sys.exit(EXIT_NO_CHANGE)
+
+    # ---- --pull -----------------------------------------------------------
+    # Read the previous state BEFORE overwriting it, or there is nothing left
+    # to diff against.
+    old_state = read_state_file()
+    write_current(results)
+    new_state = load_variants(CURRENT_DIR)
+
+    if changed:
+        print(f"\n{len(changed)} file(s) changed: {', '.join(changed)}")
+    else:
+        print("\nNo content change, but current/ has been refreshed.")
+
+    if old_state is None:
+        print("\nNo previous state on record, so there is nothing to diff "
+              "against. This run establishes the baseline.")
+    else:
+        diff_states(old_state, new_state)
+
+    if args.snapshot:
+        snapshot()
+
+    write_state_file(new_state)
+    persist(con, results)
+
+    print("\nNext: python build_vhis.py --data-dir current --out-dir out")
+    # --pull exits 0 whenever it completed its work. Whether anything changed
+    # is what --check is for; conflating the two here would make the CI step
+    # fail on exactly the runs that did the most.
+    sys.exit(EXIT_NO_CHANGE)
 
 
 if __name__ == "__main__":

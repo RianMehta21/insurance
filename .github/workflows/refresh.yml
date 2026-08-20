@@ -34,24 +34,37 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y poppler-utils libreoffice-calc
-          pip install openpyxl pdfplumber
+          pip install -r requirements.txt
 
       # ------------------------------------------------------------------
       # 1. Has anything actually changed?
+      #
+      # refresh.py --check is read-only: it does not touch vhis_state.db, so
+      # the --pull below still sees the change and produces a real diff.
+      #
+      # Exit codes: 0 no change, 1 changed, 2 a download failed. Code 2 must
+      # fail the job. Treating it as "no change" would let the workflow go
+      # green forever while publishing increasingly stale data.
       # ------------------------------------------------------------------
       - name: Check data.gov.hk
         id: check
         run: |
-          if python refresh.py --check; then
-            echo "changed=false" >> $GITHUB_OUTPUT
-            echo "No upstream changes."
-          else
-            echo "changed=true" >> $GITHUB_OUTPUT
-          fi
+          set +e
+          python refresh.py --check
+          rc=$?
+          set -e
+          case $rc in
+            0) echo "changed=false" >> $GITHUB_OUTPUT; echo "No upstream changes." ;;
+            1) echo "changed=true"  >> $GITHUB_OUTPUT; echo "Upstream data changed." ;;
+            *) echo "refresh.py --check failed with exit $rc"; exit $rc ;;
+          esac
 
+      # pipefail so a failing refresh.py is not masked by tee's exit status.
       - name: Pull and diff
         if: steps.check.outputs.changed == 'true' || inputs.force_full_scrape
+        shell: bash
         run: |
+          set -o pipefail
           python refresh.py --pull | tee change_report.txt
 
       # ------------------------------------------------------------------
@@ -92,8 +105,14 @@ jobs:
           fi
           echo "count=$(tr ',' '\n' < scrape_targets.txt | grep -c . || true)" >> $GITHUB_OUTPUT
 
+      # The guard on `changed` is not redundant. Without it, a no-change run
+      # skips the targets step, leaves steps.targets.outputs.count as the empty
+      # string, and '' != '0' is true - so the scraper ran on every quiet week,
+      # crashed on the missing catalog, and was hidden by continue-on-error.
       - name: Scrape plan PDFs
-        if: steps.targets.outputs.count != '0'
+        if: >-
+          (steps.check.outputs.changed == 'true' || inputs.force_full_scrape)
+          && steps.targets.outputs.count != '0'
         continue-on-error: true    # a bad PDF must not block the premium refresh
         run: |
           TARGETS=$(cat scrape_targets.txt)
@@ -108,18 +127,25 @@ jobs:
               --review data/review_queue.csv --sleep 1.5
             python - <<'EOF'
           import csv, os
-          base = {}
+          base, old_fields = {}, []
           if os.path.exists("data/plan_benefits.csv"):
               rd = csv.DictReader(open("data/plan_benefits.csv", encoding="utf-8-sig"))
               base = {r["certification_no"]: r for r in rd}
-              fields = rd.fieldnames
+              old_fields = list(rd.fieldnames or [])
           new = list(csv.DictReader(open("data/plan_benefits_new.csv", encoding="utf-8-sig")))
-          fields = fields if base else (new[0].keys() if new else [])
+          new_fields = list(new[0].keys()) if new else []
+          # Union, new columns first. Taking the OLD header verbatim would drop
+          # any column added since the last run - including plan_date, whose
+          # absence silently forces a full 579-PDF re-scrape every week.
+          fields = new_fields + [f for f in old_fields if f not in new_fields]
+          if not fields:
+              raise SystemExit("no columns to write; refusing to truncate the file")
           for r in new:
               base[r["certification_no"]] = r
           with open("data/plan_benefits.csv", "w", newline="", encoding="utf-8-sig") as f:
-              w = csv.DictWriter(f, fieldnames=list(fields), extrasaction="ignore")
+              w = csv.DictWriter(f, fieldnames=fields, extrasaction="ignore")
               w.writeheader(); w.writerows(base.values())
+          print(f"merged {len(new)} scraped row(s); {len(base)} total")
           EOF
           fi
 
@@ -148,14 +174,32 @@ jobs:
       # ------------------------------------------------------------------
       # 5. Publish. The download URL never changes, so he can bookmark it.
       # ------------------------------------------------------------------
+      # git add aborts on the FIRST pathspec that matches nothing and stages
+      # nothing at all. `snapshots` never existed, so this used to be a silent
+      # no-op: vhis_state.db and data/plan_benefits.csv were never committed,
+      # every run then saw all four files as NEW, and the full 40-minute PDF
+      # scrape repeated weekly forever. Add each path only if it exists, and
+      # let the push fail loudly rather than `|| true`.
       - name: Commit
         if: steps.check.outputs.changed == 'true' || inputs.force_full_scrape
         run: |
           git config user.name  "vhis-bot"
           git config user.email "vhis-bot@users.noreply.github.com"
-          git add -A data snapshots VHIS_Compare.xlsx vhis_state.db out || true
-          git commit -m "Refresh $(date +%Y-%m-%d)" || echo "nothing to commit"
-          git push || true
+          for p in data VHIS_Compare.xlsx vhis_state.db; do
+            if [ -e "$p" ]; then
+              git add -A "$p"
+            else
+              echo "skipping $p (not present)"
+            fi
+          done
+          git status --short
+          if git diff --cached --quiet; then
+            echo "Nothing staged; leaving the repo untouched."
+          else
+            git commit -m "Refresh $(date +%Y-%m-%d)"
+            git pull --rebase --autostash origin main
+            git push origin HEAD:main
+          fi
 
       - name: Publish release
         if: steps.check.outputs.changed == 'true' || inputs.force_full_scrape

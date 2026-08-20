@@ -53,6 +53,31 @@ AGE_METHOD_LABEL = {
     "R": "Age nearest birthday",
 }
 
+
+def availability(plan, plan_info):
+    """Can this variant actually be sold to a new client today?
+
+    The source data carries three separate withdrawal signals and none of them
+    is the absence of a premium table, so a de-registered plan still prices
+    perfectly and looks identical to a live one in a sorted list. Collapsing
+    them into one column keeps a withdrawn plan from being quoted by accident.
+
+      de-reg       certification withdrawn by the Health Bureau
+      unavailable  insurer has stopped offering it
+      renewal-only 'Y' existing policyholders may renew, no new business
+                   'P' partially restricted (some levels closed)
+    """
+    ro = str(plan_info.get("renewal-only", "") or plan.get("renewal-only", "")).upper()
+    if str(plan.get("de-reg", "")).upper() == "Y":
+        return "De-registered", "N"
+    if str(plan.get("unavailable", "")).upper() == "Y":
+        return "Withdrawn", "N"
+    if ro == "Y":
+        return "Renewal only", "N"
+    if ro == "P":
+        return "Partly restricted", "P"
+    return "Open", "Y"
+
 # ---------------------------------------------------------------------------
 # plan-level free-text parsing
 # ---------------------------------------------------------------------------
@@ -231,6 +256,8 @@ def build_catalog(std, flexi, prem_by_cert, providers):
                     "has_standard_basis": "Y" if series["SMN"] or series["SFN"] else "N",
                     "has_renewal_basis": "Y" if series["RMN"] or series["RFN"] else "N",
                     "smoker_rated": "",  # filled below
+                    "availability": availability(plan, pi)[0],
+                    "sellable_new": availability(plan, pi)[1],
                     "renewal_only": pi.get("renewal-only", "") or plan.get("renewal-only", ""),
                     "de_reg": plan.get("de-reg", ""),
                     "unavailable": plan.get("unavailable", ""),
@@ -376,8 +403,9 @@ def write_csv(path, rows, fieldnames=None):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--data-dir", default="/mnt/user-data/uploads")
-    ap.add_argument("--out-dir", default="/mnt/user-data/outputs")
+    ap.add_argument("--data-dir", default="current",
+                    help="directory holding the four source JSON files")
+    ap.add_argument("--out-dir", default="out")
     ap.add_argument("--age", type=int, default=35)
     ap.add_argument("--gender", choices=["M", "F"], default="M")
     ap.add_argument("--smoker", choices=["N", "Y"], default="N")

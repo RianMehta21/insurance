@@ -54,17 +54,22 @@ txt_cache/
 ~$*.xlsx
 .~lock.*#
 
+# Full dated copies of the source JSON, written only by `refresh.py --snapshot`.
+# The change report does NOT need these: it diffs against data/plan_state.json,
+# which holds the same information the diff actually reads in ~60 KB instead of
+# ~5 MB per run. Keep them locally if you want an audit trail; committing them
+# would add roughly 260 MB a year for nothing.
+snapshots/
+
 # ---------------------------------------------------------------------------
 # DELIBERATELY NOT IGNORED — these must stay in git or the pipeline breaks:
 #
-#   vhis_state.db            the SHA-256 hashes from the last run. Without it,
-#                            every CI run thinks all four files are NEW.
-#   data/plan_benefits.csv   accumulated PDF scrape results. Re-scraping all
-#                            579 PDFs takes ~40 minutes.
+#   vhis_state.db              SHA-256 hashes from the last run. Without it,
+#                              every CI run thinks all four files are NEW and
+#                              re-scrapes all 579 PDFs.
+#   data/plan_state.json       reduced prior-week state. Without it the change
+#                              report has nothing to diff against.
+#   data/plan_benefits.csv     accumulated PDF scrape results (~40 min to rebuild).
 #   data/manual_overrides.csv  hand-entered corrections. Irreplaceable.
-#   snapshots/               previous dated copies of the source JSON. The
-#                            change report diffs against these, so if they are
-#                            not committed, CI has nothing to compare to and
-#                            the diff is empty forever.
-#   VHIS_Compare.xlsx        the workbook the GitHub Action publishes.
+#   VHIS_Compare.xlsx          the workbook the GitHub Action publishes.
 # ---------------------------------------------------------------------------
