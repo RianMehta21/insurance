@@ -1,0 +1,168 @@
+name: Refresh VHIS workbook
+
+# Runs itself. Your uncle does nothing.
+#
+# Weekly on Monday 07:00 Hong Kong time (23:00 UTC Sunday). Checks data.gov.hk,
+# and if nothing changed it stops after four HTTP requests and costs you nothing.
+# If something changed it rebuilds the workbook, scrapes ONLY the plan PDFs whose
+# plan_date actually moved, and publishes a new file at a permanent URL.
+
+on:
+  schedule:
+    - cron: "0 23 * * 0"
+  workflow_dispatch:        # lets you force a run from the Actions tab
+    inputs:
+      force_full_scrape:
+        description: "Re-scrape all 579 plan PDFs (slow, ~40 min)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y poppler-utils libreoffice-calc
+          pip install openpyxl pdfplumber
+
+      # ------------------------------------------------------------------
+      # 1. Has anything actually changed?
+      # ------------------------------------------------------------------
+      - name: Check data.gov.hk
+        id: check
+        run: |
+          if python refresh.py --check; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "No upstream changes."
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Pull and diff
+        if: steps.check.outputs.changed == 'true' || inputs.force_full_scrape
+        run: |
+          python refresh.py --pull | tee change_report.txt
+
+      # ------------------------------------------------------------------
+      # 2. Rebuild the flat data
+      # ------------------------------------------------------------------
+      - name: Build catalog
+        if: steps.check.outputs.changed == 'true' || inputs.force_full_scrape
+        run: python build_vhis.py --data-dir current --out-dir out
+
+      # ------------------------------------------------------------------
+      # 3. Scrape ONLY what needs scraping
+      #
+      # Benefit terms change on recertification, not on a premium revision.
+      # data/plan_benefits.csv is keyed on cert + plan_date, so a routine
+      # premium update re-scrapes nothing.
+      # ------------------------------------------------------------------
+      - name: Determine scrape targets
+        if: steps.check.outputs.changed == 'true' || inputs.force_full_scrape
+        id: targets
+        run: |
+          if [ "${{ inputs.force_full_scrape }}" = "true" ]; then
+            echo "ALL" > scrape_targets.txt
+          else
+            python - <<'EOF'
+          import csv, os
+          have = {}
+          if os.path.exists("data/plan_benefits.csv"):
+              for r in csv.DictReader(open("data/plan_benefits.csv", encoding="utf-8-sig")):
+                  have[r["certification_no"]] = r.get("plan_date", "")
+          need = []
+          for r in csv.DictReader(open("out/plans_catalog.csv", encoding="utf-8-sig")):
+              cert, pd = r["certification_no"], r["plan_date"]
+              if cert not in have or have[cert] != pd:
+                  need.append(cert)
+          open("scrape_targets.txt", "w").write(",".join(need))
+          print(f"{len(need)} variant(s) need a PDF scrape")
+          EOF
+          fi
+          echo "count=$(tr ',' '\n' < scrape_targets.txt | grep -c . || true)" >> $GITHUB_OUTPUT
+
+      - name: Scrape plan PDFs
+        if: steps.targets.outputs.count != '0'
+        continue-on-error: true    # a bad PDF must not block the premium refresh
+        run: |
+          TARGETS=$(cat scrape_targets.txt)
+          if [ "$TARGETS" = "ALL" ]; then
+            python scrape_plans.py --catalog out/plans_catalog.csv \
+              --cache pdf_cache --out data/plan_benefits.csv \
+              --review data/review_queue.csv --sleep 1.5
+          else
+            python scrape_plans.py --catalog out/plans_catalog.csv \
+              --only "$TARGETS" --cache pdf_cache \
+              --out data/plan_benefits_new.csv \
+              --review data/review_queue.csv --sleep 1.5
+            python - <<'EOF'
+          import csv, os
+          base = {}
+          if os.path.exists("data/plan_benefits.csv"):
+              rd = csv.DictReader(open("data/plan_benefits.csv", encoding="utf-8-sig"))
+              base = {r["certification_no"]: r for r in rd}
+              fields = rd.fieldnames
+          new = list(csv.DictReader(open("data/plan_benefits_new.csv", encoding="utf-8-sig")))
+          fields = fields if base else (new[0].keys() if new else [])
+          for r in new:
+              base[r["certification_no"]] = r
+          with open("data/plan_benefits.csv", "w", newline="", encoding="utf-8-sig") as f:
+              w = csv.DictWriter(f, fieldnames=list(fields), extrasaction="ignore")
+              w.writeheader(); w.writerows(base.values())
+          EOF
+          fi
+
+      # ------------------------------------------------------------------
+      # 4. Rebuild the workbook and prove the formulas evaluate
+      # ------------------------------------------------------------------
+      - name: Build workbook
+        if: steps.check.outputs.changed == 'true' || inputs.force_full_scrape
+        run: |
+          python make_workbook.py --data-dir current --out VHIS_Compare.xlsx \
+            --benefits data/plan_benefits.csv --overrides data/manual_overrides.csv
+
+      - name: Verify no formula errors
+        if: steps.check.outputs.changed == 'true' || inputs.force_full_scrape
+        run: |
+          python verify_workbook.py VHIS_Compare.xlsx --timeout 400 --json | tee recalc.json
+          python - <<'EOF'
+          import json, sys
+          r = json.load(open("recalc.json"))
+          if r.get("status") != "success" or r.get("total_errors", 1) != 0:
+              print("FORMULA ERRORS, refusing to publish:", r)
+              sys.exit(1)
+          print(f"OK: {r['total_formulas']} formulas, 0 errors")
+          EOF
+
+      # ------------------------------------------------------------------
+      # 5. Publish. The download URL never changes, so he can bookmark it.
+      # ------------------------------------------------------------------
+      - name: Commit
+        if: steps.check.outputs.changed == 'true' || inputs.force_full_scrape
+        run: |
+          git config user.name  "vhis-bot"
+          git config user.email "vhis-bot@users.noreply.github.com"
+          git add -A data snapshots VHIS_Compare.xlsx vhis_state.db out || true
+          git commit -m "Refresh $(date +%Y-%m-%d)" || echo "nothing to commit"
+          git push || true
+
+      - name: Publish release
+        if: steps.check.outputs.changed == 'true' || inputs.force_full_scrape
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: "VHIS Compare (latest)"
+          body_path: change_report.txt
+          files: VHIS_Compare.xlsx
+          make_latest: true
