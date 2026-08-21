@@ -196,6 +196,15 @@ jobs:
                   f"re-run the workflow once connectivity is stable.")
           EOF
 
+      # Refresh the hand-entry to-do list. Adds a row for any plan still
+      # missing a key field after scraping, drops nothing, and never touches a
+      # value already typed in. review_queue.csv cannot do this job: it records
+      # which PDFs failed to parse and has no idea what has been corrected by
+      # hand, so entries there reappear forever.
+      - name: Update the manual entry list
+        if: steps.check.outputs.build == 'true'
+        run: python worklist.py
+
       # ------------------------------------------------------------------
       # 4. Rebuild the workbook and prove the formulas evaluate
       # ------------------------------------------------------------------

@@ -78,3 +78,6 @@ snapshots/
 #   data/manual_overrides.csv  hand-entered corrections. Irreplaceable.
 #   VHIS_Compare.xlsx          the workbook the GitHub Action publishes.
 # ---------------------------------------------------------------------------
+
+# worklist.py keeps one backup of the overrides file before rewriting it
+data/manual_overrides.csv.bak

@@ -7,18 +7,26 @@ These four are not, and losing them costs either 40 minutes or real work.
 |---|---|---|
 | `plan_state.json` | Reduced form of last run's source data: one entry per plan variant with its premium date and its premium at age 40. | The next change report has nothing to diff against and comes out empty. Rebuilds itself the run after. |
 | `plan_benefits.csv` | Everything `scrape_plans.py` pulled out of the plan PDFs. Keyed on `certification_no` + `plan_date`. | All 579 PDFs get re-downloaded and re-parsed, roughly 40 minutes. |
-| `review_queue.csv` | The subset of the above where the scraper could not find the core fields. This is the worklist. | Regenerated on the next scrape. |
-| `manual_overrides.csv` | Corrections typed by hand. **Wins over anything scraped.** | Gone for good. Nothing else knows these values. |
+| `review_queue.csv` | Technical record of which PDFs the parser struggled with. **Not** the worklist — it does not know about your corrections, so entries stay after you fix them. | Regenerated on the next scrape. |
+| `manual_overrides.csv` | The to-do list *and* the corrections file. Maintained by `worklist.py`: a row appears for every plan still missing a key field, and your typed values are never overwritten. **Wins over anything scraped.** | Gone for good. Nothing else knows these values. |
 
 ## manual_overrides.csv
 
-The one file here meant to be edited by a person. Add a row per plan you want
-to correct; leave any column blank to leave that field alone.
+The one file here meant to be edited by a person, and the only to-do list worth
+working from. `worklist.py` keeps it current on every run: it appends a row for
+each plan still missing a key field and refreshes the read-only context columns,
+but never changes or removes a value you typed.
+
+Each row identifies the plan and links to its PDF. `still_missing` says what to
+fill; leave any other column blank to leave that field alone.
 
 ```csv
-certification_no,ward,deductible,geography,annual_limit,coinsurance,lifetime,note
-F00022-01-000-03,Semi-private,25000,Asia,1000000,20,,checked against brochure 2026-08
+certification_no,insurer,plan_name,plan_level,plan_doc_url,still_missing,ward,deductible,...
+F00022-01-000-03,AIA International,VHIS Flexi,Semi-private (HKD),https://...,deductible,,25000,...
 ```
+
+To correct something that is wrong rather than missing, add the certification
+number as a new row and type the right values.
 
 Two things worth knowing:
 
