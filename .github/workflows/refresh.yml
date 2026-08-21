@@ -118,14 +118,19 @@ jobs:
           TARGETS=$(cat scrape_targets.txt)
           if [ "$TARGETS" = "ALL" ]; then
             python scrape_plans.py --catalog out/plans_catalog.csv \
-              --cache pdf_cache --out data/plan_benefits.csv \
+              --cache pdf_cache --out data/plan_benefits_new.csv \
               --review data/review_queue.csv --sleep 1.5
           else
             python scrape_plans.py --catalog out/plans_catalog.csv \
               --only "$TARGETS" --cache pdf_cache \
               --out data/plan_benefits_new.csv \
               --review data/review_queue.csv --sleep 1.5
-            python - <<'EOF'
+          fi
+          # Always merge, never write data/plan_benefits.csv directly. A full
+          # scrape that writes in place replaces good rows with failed ones the
+          # moment the network wavers, and continue-on-error means the run
+          # still goes green and still publishes.
+          python - <<'EOF'
           import csv, os
           base, old_fields = {}, []
           if os.path.exists("data/plan_benefits.csv"):
@@ -140,14 +145,32 @@ jobs:
           fields = new_fields + [f for f in old_fields if f not in new_fields]
           if not fields:
               raise SystemExit("no columns to write; refusing to truncate the file")
+
+          kept = replaced = 0
           for r in new:
-              base[r["certification_no"]] = r
+              cert = r["certification_no"]
+              prev = base.get(cert)
+              # A download that failed tells us nothing about the plan. Keeping
+              # last week's successful parse is strictly better than storing an
+              # empty row and calling it current.
+              if (r.get("scrape_status") != "ok"
+                      and prev is not None and prev.get("scrape_status") == "ok"):
+                  kept += 1
+                  continue
+              base[cert] = r
+              replaced += 1
           with open("data/plan_benefits.csv", "w", newline="", encoding="utf-8-sig") as f:
               w = csv.DictWriter(f, fieldnames=fields, extrasaction="ignore")
               w.writeheader(); w.writerows(base.values())
-          print(f"merged {len(new)} scraped row(s); {len(base)} total")
+          failed = sum(1 for r in new if r.get("scrape_status") != "ok")
+          print(f"scraped {len(new)}: {replaced} written, {kept} kept from previous run")
+          print(f"{len(base)} rows total; {failed} download/parse failure(s) this run")
+          if new and failed / len(new) > 0.5:
+              raise SystemExit(
+                  f"ABORT: {failed}/{len(new)} scrapes failed. That is a network "
+                  f"problem, not a data problem. Previous benefits were preserved; "
+                  f"re-run the workflow once connectivity is stable.")
           EOF
-          fi
 
       # ------------------------------------------------------------------
       # 4. Rebuild the workbook and prove the formulas evaluate

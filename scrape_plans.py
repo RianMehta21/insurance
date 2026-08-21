@@ -69,19 +69,42 @@ def pdf_to_text(path):
         return f"__EXTRACTION_FAILED__ {e}"
 
 
-def download(url, cache_dir, cert):
+def download(url, cache_dir, cert, attempts=4):
+    """Fetch one plan PDF, retrying transient network failures.
+
+    All 579 documents come from a single host (www.vhis.gov.hk), so a brief
+    DNS or connectivity blip does not fail one plan, it fails every plan
+    remaining in the run. That is not hypothetical: a full scrape here lost
+    483 of 579 to `[Errno 8] nodename nor servname provided` when the machine
+    dropped its network partway through, and without retries each of those was
+    recorded as a permanent failure.
+
+    Backoff is exponential (2s, 4s, 8s) to give a flapping resolver time to
+    recover rather than hammering it.
+    """
     os.makedirs(cache_dir, exist_ok=True)
     dest = os.path.join(cache_dir, f"{cert}.pdf")
     if os.path.exists(dest) and os.path.getsize(dest) > 1000:
         return dest, "cached"
-    req = urllib.request.Request(url, headers=UA)
-    with urllib.request.urlopen(req, timeout=90) as r:
-        blob = r.read()
-    if not blob.startswith(b"%PDF"):
-        raise ValueError("not a PDF")
-    with open(dest, "wb") as f:
-        f.write(blob)
-    return dest, "downloaded"
+
+    last = None
+    for attempt in range(attempts):
+        try:
+            req = urllib.request.Request(url, headers=UA)
+            with urllib.request.urlopen(req, timeout=90) as r:
+                blob = r.read()
+            if not blob.startswith(b"%PDF"):
+                raise ValueError("not a PDF")
+            with open(dest, "wb") as f:
+                f.write(blob)
+            return dest, "downloaded" if attempt == 0 else f"downloaded (retry {attempt})"
+        except ValueError:
+            raise                      # a non-PDF will not become a PDF
+        except Exception as e:
+            last = e
+            if attempt < attempts - 1:
+                time.sleep(2 ** (attempt + 1))
+    raise last
 
 
 def squash(t):
