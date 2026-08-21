@@ -409,6 +409,7 @@ def load_benefits(benefits_csv, overrides_csv):
                 if not cert:
                     continue
                 cur = merged.setdefault(cert, {})
+                supplied = False
                 # Accept the scraper's long column names AND plain short ones,
                 # so a hand-written overrides file does not silently no-op.
                 for src, dst in (("ward_restriction", "ward"),
@@ -427,8 +428,20 @@ def load_benefits(benefits_csv, overrides_csv):
                     v = (row.get(src) or "").strip()
                     if v:
                         cur[dst] = v
-                if any(cur.get(k) for k in ("ward", "deductible", "geography")):
-                    cur["tier"] = tag if tag == "override" else row.get("overall_tier", "scraped")
+                        supplied = True
+
+                # Credit the row only if it actually supplied something.
+                #
+                # manual_overrides.csv doubles as the to-do list, so it holds a
+                # mostly-blank placeholder row for every plan still awaiting
+                # hand entry. Keying off "does this plan have values by now"
+                # instead of "did THIS row provide them" stamped 229 plans as
+                # override when the numbers came from the scraper - and the
+                # Source column is exactly what you would check to decide
+                # whether a figure had been verified by a person.
+                if supplied:
+                    cur["tier"] = ("override" if tag == "override"
+                                   else row.get("overall_tier", "scraped"))
     return merged
 
 
