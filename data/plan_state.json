@@ -1,0 +1,4058 @@
+{
+ "generated_at": "2026-08-20T21:14:53",
+ "variants": {
+  "F00012-01-000-03": {
+   "age40": 7671,
+   "insurer": "CIGNA Worldwide General Insurance Company Limited",
+   "level": "Flexi Plan SMM",
+   "plan": "Cigna VHIS Series - Flexi Plan (SMM)",
+   "prem_date": "20260701"
+  },
+  "F00013-01-000-06": {
+   "age40": 4494.07,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "Ward (HKD)",
+   "plan": "PRUHealth FlexiChoice Medical Plan",
+   "prem_date": "20251001"
+  },
+  "F00013-01-001-06": {
+   "age40": 6984.07,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "Ward with SMM 1 (HKD)",
+   "plan": "PRUHealth FlexiChoice Medical Plan",
+   "prem_date": "20251001"
+  },
+  "F00013-01-002-06": {
+   "age40": 8379.38,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "Ward with SMM 2 (HKD)",
+   "plan": "PRUHealth FlexiChoice Medical Plan",
+   "prem_date": "20251001"
+  },
+  "F00013-02-000-06": {
+   "age40": 8625.6,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "Semi-private Room (HKD)",
+   "plan": "PRUHealth FlexiChoice Medical Plan",
+   "prem_date": "20251001"
+  },
+  "F00013-02-001-06": {
+   "age40": 12474.4,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "Semi-private Room with SMM 1 (HKD)",
+   "plan": "PRUHealth FlexiChoice Medical Plan",
+   "prem_date": "20251001"
+  },
+  "F00013-02-002-06": {
+   "age40": 14344.48,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "Semi-private Room with SMM 2 (HKD)",
+   "plan": "PRUHealth FlexiChoice Medical Plan",
+   "prem_date": "20251001"
+  },
+  "F00013-03-000-06": {
+   "age40": 15875.1,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "Private Room (HKD)",
+   "plan": "PRUHealth FlexiChoice Medical Plan",
+   "prem_date": "20251001"
+  },
+  "F00013-03-001-06": {
+   "age40": 25287.55,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "Private Room with SMM (HKD)",
+   "plan": "PRUHealth FlexiChoice Medical Plan",
+   "prem_date": "20251001"
+  },
+  "F00013-04-000-06": {
+   "age40": 579.88,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "Ward (USD)",
+   "plan": "PRUHealth FlexiChoice Medical Plan",
+   "prem_date": "20251001"
+  },
+  "F00013-04-001-06": {
+   "age40": 901.17,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "Ward with SMM 1 (USD)",
+   "plan": "PRUHealth FlexiChoice Medical Plan",
+   "prem_date": "20251001"
+  },
+  "F00013-04-002-06": {
+   "age40": 1081.21,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "Ward with SMM 2 (USD)",
+   "plan": "PRUHealth FlexiChoice Medical Plan",
+   "prem_date": "20251001"
+  },
+  "F00013-05-000-06": {
+   "age40": 1112.98,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "Semi-private Room (USD)",
+   "plan": "PRUHealth FlexiChoice Medical Plan",
+   "prem_date": "20251001"
+  },
+  "F00013-05-001-06": {
+   "age40": 1609.6,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "Semi-private Room with SMM 1 (USD)",
+   "plan": "PRUHealth FlexiChoice Medical Plan",
+   "prem_date": "20251001"
+  },
+  "F00013-05-002-06": {
+   "age40": 1850.9,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "Semi-private Room with SMM 2 (USD)",
+   "plan": "PRUHealth FlexiChoice Medical Plan",
+   "prem_date": "20251001"
+  },
+  "F00013-06-000-06": {
+   "age40": 2048.4,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "Private Room (USD)",
+   "plan": "PRUHealth FlexiChoice Medical Plan",
+   "prem_date": "20251001"
+  },
+  "F00013-06-001-06": {
+   "age40": 3262.91,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "Private Room with SMM (USD)",
+   "plan": "PRUHealth FlexiChoice Medical Plan",
+   "prem_date": "20251001"
+  },
+  "F00014-01-000-02": {
+   "age40": 8878,
+   "insurer": "Blue Cross (Asia-Pacific) Insurance Limited",
+   "level": "CareForYou",
+   "plan": "CareForYou Flexi Plan for VHIS",
+   "prem_date": "20260101"
+  },
+  "F00015-01-000-03": {
+   "age40": 3836,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "vCare Medical Plan",
+   "plan": "vCare Medical Plan",
+   "prem_date": "20260202"
+  },
+  "F00016-01-000-06": {
+   "age40": 20648,
+   "insurer": "CIGNA Worldwide General Insurance Company Limited",
+   "level": "Semi-Private Room - HKD0 Deductible",
+   "plan": "Cigna VHIS Series - Flexi Plan (Superior)",
+   "prem_date": "20260701"
+  },
+  "F00016-02-000-06": {
+   "age40": 9522,
+   "insurer": "CIGNA Worldwide General Insurance Company Limited",
+   "level": "Semi-Private Room - HKD15,000 Deductible",
+   "plan": "Cigna VHIS Series - Flexi Plan (Superior)",
+   "prem_date": "20260701"
+  },
+  "F00016-03-000-06": {
+   "age40": 7686,
+   "insurer": "CIGNA Worldwide General Insurance Company Limited",
+   "level": "Semi-Private Room - HKD25,000 Deductible",
+   "plan": "Cigna VHIS Series - Flexi Plan (Superior)",
+   "prem_date": "20260701"
+  },
+  "F00016-04-000-06": {
+   "age40": 7270,
+   "insurer": "CIGNA Worldwide General Insurance Company Limited",
+   "level": "Semi-Private Room - HKD50,000 Deductible",
+   "plan": "Cigna VHIS Series - Flexi Plan (Superior)",
+   "prem_date": "20260701"
+  },
+  "F00016-05-000-05": {
+   "age40": 6009,
+   "insurer": "CIGNA Worldwide General Insurance Company Limited",
+   "level": "Semi-Private Room - HKD75,000 Deductible",
+   "plan": "Cigna VHIS Series - Flexi Plan (Superior)",
+   "prem_date": "20260701"
+  },
+  "F00016-06-000-04": {
+   "age40": 14672,
+   "insurer": "CIGNA Worldwide General Insurance Company Limited",
+   "level": "Standard Ward - HKD0 Deductible",
+   "plan": "Cigna VHIS Series - Flexi Plan (Superior)",
+   "prem_date": "20260701"
+  },
+  "F00016-07-000-04": {
+   "age40": 6794,
+   "insurer": "CIGNA Worldwide General Insurance Company Limited",
+   "level": "Standard Ward - HKD15,000 Deductible",
+   "plan": "Cigna VHIS Series - Flexi Plan (Superior)",
+   "prem_date": "20260701"
+  },
+  "F00016-08-000-04": {
+   "age40": 6096,
+   "insurer": "CIGNA Worldwide General Insurance Company Limited",
+   "level": "Standard Ward - HKD25,000 Deductible",
+   "plan": "Cigna VHIS Series - Flexi Plan (Superior)",
+   "prem_date": "20260701"
+  },
+  "F00017-01-000-04": {
+   "age40": 3645,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Regular (HKD)",
+   "plan": "Smart Medicare",
+   "prem_date": "20260702"
+  },
+  "F00017-01-001-04": {
+   "age40": 5583,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Regular with SMM (HKD)",
+   "plan": "Smart Medicare",
+   "prem_date": "20260702"
+  },
+  "F00017-02-000-04": {
+   "age40": 7754,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Superior (HKD)",
+   "plan": "Smart Medicare",
+   "prem_date": "20260702"
+  },
+  "F00017-02-001-04": {
+   "age40": 11845,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Superior with SMM (HKD)",
+   "plan": "Smart Medicare",
+   "prem_date": "20260702"
+  },
+  "F00017-03-000-04": {
+   "age40": 15243,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Premier (HKD)",
+   "plan": "Smart Medicare",
+   "prem_date": "20260702"
+  },
+  "F00017-03-001-04": {
+   "age40": 23284,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Premier with SMM (HKD)",
+   "plan": "Smart Medicare",
+   "prem_date": "20260702"
+  },
+  "F00017-04-000-04": {
+   "age40": 443,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Regular (USD)",
+   "plan": "Smart Medicare",
+   "prem_date": "20260702"
+  },
+  "F00017-04-001-04": {
+   "age40": 685.2,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Regular with SMM (USD)",
+   "plan": "Smart Medicare",
+   "prem_date": "20260702"
+  },
+  "F00017-05-000-04": {
+   "age40": 956.9,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Superior (USD)",
+   "plan": "Smart Medicare",
+   "prem_date": "20260702"
+  },
+  "F00017-05-001-04": {
+   "age40": 1468.1,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Superior with SMM (USD)",
+   "plan": "Smart Medicare",
+   "prem_date": "20260702"
+  },
+  "F00017-06-000-04": {
+   "age40": 1892.8,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Premier (USD)",
+   "plan": "Smart Medicare",
+   "prem_date": "20260702"
+  },
+  "F00017-06-001-04": {
+   "age40": 2897.9,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Premier with SMM (USD)",
+   "plan": "Smart Medicare",
+   "prem_date": "20260702"
+  },
+  "F00018-01-000-03": {
+   "age40": 3645,
+   "insurer": "AXA China Region Insurance Company Limited",
+   "level": "Regular (HKD)",
+   "plan": "Smart Medicare",
+   "prem_date": "20260702"
+  },
+  "F00018-01-001-03": {
+   "age40": 5583,
+   "insurer": "AXA China Region Insurance Company Limited",
+   "level": "Regular with SMM (HKD)",
+   "plan": "Smart Medicare",
+   "prem_date": "20260702"
+  },
+  "F00018-02-000-03": {
+   "age40": 7754,
+   "insurer": "AXA China Region Insurance Company Limited",
+   "level": "Superior (HKD)",
+   "plan": "Smart Medicare",
+   "prem_date": "20260702"
+  },
+  "F00018-02-001-03": {
+   "age40": 11845,
+   "insurer": "AXA China Region Insurance Company Limited",
+   "level": "Superior with SMM (HKD)",
+   "plan": "Smart Medicare",
+   "prem_date": "20260702"
+  },
+  "F00018-03-000-03": {
+   "age40": 15243,
+   "insurer": "AXA China Region Insurance Company Limited",
+   "level": "Premier (HKD)",
+   "plan": "Smart Medicare",
+   "prem_date": "20260702"
+  },
+  "F00018-03-001-03": {
+   "age40": 23284,
+   "insurer": "AXA China Region Insurance Company Limited",
+   "level": "Premier with SMM (HKD)",
+   "plan": "Smart Medicare",
+   "prem_date": "20260702"
+  },
+  "F00018-04-000-03": {
+   "age40": 443,
+   "insurer": "AXA China Region Insurance Company Limited",
+   "level": "Regular (USD)",
+   "plan": "Smart Medicare",
+   "prem_date": "20260702"
+  },
+  "F00018-04-001-03": {
+   "age40": 685.2,
+   "insurer": "AXA China Region Insurance Company Limited",
+   "level": "Regular with SMM (USD)",
+   "plan": "Smart Medicare",
+   "prem_date": "20260702"
+  },
+  "F00018-05-000-03": {
+   "age40": 956.9,
+   "insurer": "AXA China Region Insurance Company Limited",
+   "level": "Superior (USD)",
+   "plan": "Smart Medicare",
+   "prem_date": "20260702"
+  },
+  "F00018-05-001-03": {
+   "age40": 1468.1,
+   "insurer": "AXA China Region Insurance Company Limited",
+   "level": "Superior with SMM (USD)",
+   "plan": "Smart Medicare",
+   "prem_date": "20260702"
+  },
+  "F00018-06-000-03": {
+   "age40": 1892.8,
+   "insurer": "AXA China Region Insurance Company Limited",
+   "level": "Premier (USD)",
+   "plan": "Smart Medicare",
+   "prem_date": "20260702"
+  },
+  "F00018-06-001-03": {
+   "age40": 2897.9,
+   "insurer": "AXA China Region Insurance Company Limited",
+   "level": "Premier with SMM (USD)",
+   "plan": "Smart Medicare",
+   "prem_date": "20260702"
+  },
+  "F00019-01-000-07": {
+   "age40": 3952,
+   "insurer": "Manulife (International) Limited",
+   "level": "Ward",
+   "plan": "Manulife First VHIS Flexi Plan",
+   "prem_date": "20260629"
+  },
+  "F00019-01-001-07": {
+   "age40": 6726,
+   "insurer": "Manulife (International) Limited",
+   "level": "Ward with SMM",
+   "plan": "Manulife First VHIS Flexi Plan",
+   "prem_date": "20260629"
+  },
+  "F00019-01-002-07": {
+   "age40": 7946,
+   "insurer": "Manulife (International) Limited",
+   "level": "Ward with SMM Plus",
+   "plan": "Manulife First VHIS Flexi Plan",
+   "prem_date": "20260629"
+  },
+  "F00019-02-000-07": {
+   "age40": 8104,
+   "insurer": "Manulife (International) Limited",
+   "level": "Semi-private Room",
+   "plan": "Manulife First VHIS Flexi Plan",
+   "prem_date": "20260629"
+  },
+  "F00019-02-001-07": {
+   "age40": 11290,
+   "insurer": "Manulife (International) Limited",
+   "level": "Semi-private Room with SMM",
+   "plan": "Manulife First VHIS Flexi Plan",
+   "prem_date": "20260629"
+  },
+  "F00019-02-002-07": {
+   "age40": 14113,
+   "insurer": "Manulife (International) Limited",
+   "level": "Semi-private Room with SMM Plus",
+   "plan": "Manulife First VHIS Flexi Plan",
+   "prem_date": "20260629"
+  },
+  "F00019-03-000-07": {
+   "age40": 15713,
+   "insurer": "Manulife (International) Limited",
+   "level": "Private Room",
+   "plan": "Manulife First VHIS Flexi Plan",
+   "prem_date": "20260629"
+  },
+  "F00019-03-001-07": {
+   "age40": 21169,
+   "insurer": "Manulife (International) Limited",
+   "level": "Private Room with SMM",
+   "plan": "Manulife First VHIS Flexi Plan",
+   "prem_date": "20260629"
+  },
+  "F00019-03-002-07": {
+   "age40": 25414,
+   "insurer": "Manulife (International) Limited",
+   "level": "Private Room with SMM Plus",
+   "plan": "Manulife First VHIS Flexi Plan",
+   "prem_date": "20260629"
+  },
+  "F00020-01-000-03": {
+   "age40": 5859,
+   "insurer": "YF Life Insurance International Limited",
+   "level": "Plan 1",
+   "plan": "TaxVantage Plus Medical Plan",
+   "prem_date": "20260101"
+  },
+  "F00020-01-001-03": {
+   "age40": 6748,
+   "insurer": "YF Life Insurance International Limited",
+   "level": "Plan 1M",
+   "plan": "TaxVantage Plus Medical Plan",
+   "prem_date": "20260101"
+  },
+  "F00020-02-000-03": {
+   "age40": 9228,
+   "insurer": "YF Life Insurance International Limited",
+   "level": "Plan 2",
+   "plan": "TaxVantage Plus Medical Plan",
+   "prem_date": "20260101"
+  },
+  "F00020-02-001-03": {
+   "age40": 10941,
+   "insurer": "YF Life Insurance International Limited",
+   "level": "Plan 2M",
+   "plan": "TaxVantage Plus Medical Plan",
+   "prem_date": "20260101"
+  },
+  "F00020-03-000-03": {
+   "age40": 15409,
+   "insurer": "YF Life Insurance International Limited",
+   "level": "Plan 3",
+   "plan": "TaxVantage Plus Medical Plan",
+   "prem_date": "20260101"
+  },
+  "F00020-03-001-03": {
+   "age40": 18095,
+   "insurer": "YF Life Insurance International Limited",
+   "level": "Plan 3M",
+   "plan": "TaxVantage Plus Medical Plan",
+   "prem_date": "20260101"
+  },
+  "F00020-04-000-03": {
+   "age40": 20280,
+   "insurer": "YF Life Insurance International Limited",
+   "level": "Plan 4",
+   "plan": "TaxVantage Plus Medical Plan",
+   "prem_date": "20260101"
+  },
+  "F00020-04-001-03": {
+   "age40": 27202,
+   "insurer": "YF Life Insurance International Limited",
+   "level": "Plan 4M",
+   "plan": "TaxVantage Plus Medical Plan",
+   "prem_date": "20260101"
+  },
+  "F00020-05-000-01": {
+   "age40": 5128,
+   "insurer": "YF Life Insurance International Limited",
+   "level": "Plan X",
+   "plan": "TaxVantage Plus Medical Plan",
+   "prem_date": "20260101"
+  },
+  "F00020-05-001-01": {
+   "age40": 5906,
+   "insurer": "YF Life Insurance International Limited",
+   "level": "Plan XM",
+   "plan": "TaxVantage Plus Medical Plan",
+   "prem_date": "20260101"
+  },
+  "F00021-01-000-03": {
+   "age40": 7010.71,
+   "insurer": "Chow Tai Fook Life Insurance Co Ltd",
+   "level": "Benefit Level 1 with SMM (HKD)",
+   "plan": "''BetterCare'' Medical Insurance Plan",
+   "prem_date": "20251123"
+  },
+  "F00021-02-000-03": {
+   "age40": 11829.76,
+   "insurer": "Chow Tai Fook Life Insurance Co Ltd",
+   "level": "Benefit Level 2 with SMM (HKD)",
+   "plan": "''BetterCare'' Medical Insurance Plan",
+   "prem_date": "20251123"
+  },
+  "F00021-03-000-03": {
+   "age40": 21671.43,
+   "insurer": "Chow Tai Fook Life Insurance Co Ltd",
+   "level": "Benefit Level 3 with SMM (HKD)",
+   "plan": "''BetterCare'' Medical Insurance Plan",
+   "prem_date": "20251123"
+  },
+  "F00021-04-000-03": {
+   "age40": 904.76,
+   "insurer": "Chow Tai Fook Life Insurance Co Ltd",
+   "level": "Benefit Level 1 with SMM (USD)",
+   "plan": "''BetterCare'' Medical Insurance Plan",
+   "prem_date": "20251123"
+  },
+  "F00021-05-000-03": {
+   "age40": 1526.19,
+   "insurer": "Chow Tai Fook Life Insurance Co Ltd",
+   "level": "Benefit Level 2 with SMM (USD)",
+   "plan": "''BetterCare'' Medical Insurance Plan",
+   "prem_date": "20251123"
+  },
+  "F00021-06-000-03": {
+   "age40": 2796.43,
+   "insurer": "Chow Tai Fook Life Insurance Co Ltd",
+   "level": "Benefit Level 3 with SMM (USD)",
+   "plan": "''BetterCare'' Medical Insurance Plan",
+   "prem_date": "20251123"
+  },
+  "F00022-01-000-03": {
+   "age40": 6810.4,
+   "insurer": "AIA International Limited",
+   "level": "Ward (HKD)",
+   "plan": "AIA Voluntary Health Insurance Flexi Scheme",
+   "prem_date": "20260715"
+  },
+  "F00022-02-000-03": {
+   "age40": 12744.8,
+   "insurer": "AIA International Limited",
+   "level": "Semi-private (HKD)",
+   "plan": "AIA Voluntary Health Insurance Flexi Scheme",
+   "prem_date": "20260715"
+  },
+  "F00022-03-000-03": {
+   "age40": 21924.8,
+   "insurer": "AIA International Limited",
+   "level": "Standard Private (HKD)",
+   "plan": "AIA Voluntary Health Insurance Flexi Scheme",
+   "prem_date": "20260715"
+  },
+  "F00022-04-000-03": {
+   "age40": 860,
+   "insurer": "AIA International Limited",
+   "level": "Ward (USD)",
+   "plan": "AIA Voluntary Health Insurance Flexi Scheme",
+   "prem_date": "20260715"
+  },
+  "F00022-05-000-03": {
+   "age40": 1593.1,
+   "insurer": "AIA International Limited",
+   "level": "Semi-private (USD)",
+   "plan": "AIA Voluntary Health Insurance Flexi Scheme",
+   "prem_date": "20260715"
+  },
+  "F00022-06-000-03": {
+   "age40": 2740.6,
+   "insurer": "AIA International Limited",
+   "level": "Standard Private (USD)",
+   "plan": "AIA Voluntary Health Insurance Flexi Scheme",
+   "prem_date": "20260715"
+  },
+  "F00023-01-000-02": {
+   "age40": 8316,
+   "insurer": "MSIG Insurance (Hong Kong) Limited",
+   "level": "Plan A",
+   "plan": "VHIS Prestige Care",
+   "prem_date": "20190401"
+  },
+  "F00023-01-001-02": {
+   "age40": 10746,
+   "insurer": "MSIG Insurance (Hong Kong) Limited",
+   "level": "Plan A with SMM",
+   "plan": "VHIS Prestige Care",
+   "prem_date": "20190401"
+  },
+  "F00023-02-000-02": {
+   "age40": 12852,
+   "insurer": "MSIG Insurance (Hong Kong) Limited",
+   "level": "Plan B",
+   "plan": "VHIS Prestige Care",
+   "prem_date": "20190401"
+  },
+  "F00023-02-001-02": {
+   "age40": 16578,
+   "insurer": "MSIG Insurance (Hong Kong) Limited",
+   "level": "Plan B with SMM",
+   "plan": "VHIS Prestige Care",
+   "prem_date": "20190401"
+  },
+  "F00023-03-000-02": {
+   "age40": 20034,
+   "insurer": "MSIG Insurance (Hong Kong) Limited",
+   "level": "Plan C",
+   "plan": "VHIS Prestige Care",
+   "prem_date": "20190401"
+  },
+  "F00023-03-001-02": {
+   "age40": 25866,
+   "insurer": "MSIG Insurance (Hong Kong) Limited",
+   "level": "Plan C with SMM",
+   "plan": "VHIS Prestige Care",
+   "prem_date": "20190401"
+  },
+  "F00024-01-000-03": {
+   "age40": 4086,
+   "insurer": "China Life Insurance (Overseas) Company Limited",
+   "level": "Healthy Life Medical Insurance Plan",
+   "plan": "Healthy Life Medical Insurance Plan",
+   "prem_date": "20260601"
+  },
+  "F00025-01-000-03": {
+   "age40": 21144,
+   "insurer": "AIA International Limited",
+   "level": "HKD0 Deductible",
+   "plan": "AIA Voluntary Health Insurance Prime Scheme",
+   "prem_date": "20260715"
+  },
+  "F00025-02-000-03": {
+   "age40": 9952,
+   "insurer": "AIA International Limited",
+   "level": "HKD16,000 Deductible",
+   "plan": "AIA Voluntary Health Insurance Prime Scheme",
+   "prem_date": "20260715"
+  },
+  "F00025-03-000-03": {
+   "age40": 8600,
+   "insurer": "AIA International Limited",
+   "level": "HKD25,000 Deductible",
+   "plan": "AIA Voluntary Health Insurance Prime Scheme",
+   "prem_date": "20260715"
+  },
+  "F00025-04-000-03": {
+   "age40": 2643,
+   "insurer": "AIA International Limited",
+   "level": "USD0 Deductible",
+   "plan": "AIA Voluntary Health Insurance Prime Scheme",
+   "prem_date": "20260715"
+  },
+  "F00025-05-000-03": {
+   "age40": 1244,
+   "insurer": "AIA International Limited",
+   "level": "USD2,000 Deductible",
+   "plan": "AIA Voluntary Health Insurance Prime Scheme",
+   "prem_date": "20260715"
+  },
+  "F00025-06-000-03": {
+   "age40": 1075,
+   "insurer": "AIA International Limited",
+   "level": "USD3,125 Deductible",
+   "plan": "AIA Voluntary Health Insurance Prime Scheme",
+   "prem_date": "20260715"
+  },
+  "F00026-01-000-03": {
+   "age40": 3471,
+   "insurer": "Sun Life Hong Kong Limited",
+   "level": "Scheme 1",
+   "plan": "WeHealth Plus",
+   "prem_date": "20250901"
+  },
+  "F00026-01-001-03": {
+   "age40": 4730,
+   "insurer": "Sun Life Hong Kong Limited",
+   "level": "Scheme 2",
+   "plan": "WeHealth Plus",
+   "prem_date": "20250901"
+  },
+  "F00027-01-000-03": {
+   "age40": 6339,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "Classic (HKD)",
+   "plan": "Chubb VHIS - Flexi Plan",
+   "prem_date": "20250401"
+  },
+  "F00027-01-001-03": {
+   "age40": 8009,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "Classic with Top-up benefit (HKD)",
+   "plan": "Chubb VHIS - Flexi Plan",
+   "prem_date": "20250401"
+  },
+  "F00027-02-000-03": {
+   "age40": 7492,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "Ward (HKD)",
+   "plan": "Chubb VHIS - Flexi Plan",
+   "prem_date": "20250401"
+  },
+  "F00027-02-001-03": {
+   "age40": 9392,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "Ward with Top-up benefit (HKD)",
+   "plan": "Chubb VHIS - Flexi Plan",
+   "prem_date": "20250401"
+  },
+  "F00027-03-000-03": {
+   "age40": 10007,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "Semi-Private (HKD)",
+   "plan": "Chubb VHIS - Flexi Plan",
+   "prem_date": "20250401"
+  },
+  "F00027-03-001-03": {
+   "age40": 14749,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "Semi-Private with Top-up benefit (HKD)",
+   "plan": "Chubb VHIS - Flexi Plan",
+   "prem_date": "20250401"
+  },
+  "F00027-04-000-03": {
+   "age40": 18494,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "Private (HKD)",
+   "plan": "Chubb VHIS - Flexi Plan",
+   "prem_date": "20250401"
+  },
+  "F00027-04-001-03": {
+   "age40": 24036,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "Private with Top-up benefit (HKD)",
+   "plan": "Chubb VHIS - Flexi Plan",
+   "prem_date": "20250401"
+  },
+  "F00027-05-000-03": {
+   "age40": 813,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "Classic (USD)",
+   "plan": "Chubb VHIS - Flexi Plan",
+   "prem_date": "20250401"
+  },
+  "F00027-05-001-03": {
+   "age40": 1027,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "Classic with Top-up benefit (USD)",
+   "plan": "Chubb VHIS - Flexi Plan",
+   "prem_date": "20250401"
+  },
+  "F00027-06-000-03": {
+   "age40": 961,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "Ward (USD)",
+   "plan": "Chubb VHIS - Flexi Plan",
+   "prem_date": "20250401"
+  },
+  "F00027-06-001-03": {
+   "age40": 1204,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "Ward with Top-up benefit (USD)",
+   "plan": "Chubb VHIS - Flexi Plan",
+   "prem_date": "20250401"
+  },
+  "F00027-07-000-03": {
+   "age40": 1283,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "Semi-Private (USD)",
+   "plan": "Chubb VHIS - Flexi Plan",
+   "prem_date": "20250401"
+  },
+  "F00027-07-001-03": {
+   "age40": 1891,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "Semi-Private with Top-up benefit (USD)",
+   "plan": "Chubb VHIS - Flexi Plan",
+   "prem_date": "20250401"
+  },
+  "F00027-08-000-03": {
+   "age40": 2371,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "Private (USD)",
+   "plan": "Chubb VHIS - Flexi Plan",
+   "prem_date": "20250401"
+  },
+  "F00027-08-001-03": {
+   "age40": 3082,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "Private with Top-up benefit (USD)",
+   "plan": "Chubb VHIS - Flexi Plan",
+   "prem_date": "20250401"
+  },
+  "F00028-01-000-02": {
+   "age40": 4368,
+   "insurer": "Bank of China Group Insurance Company Limited",
+   "level": "Basic plan",
+   "plan": "BOC Flexi Voluntary Health Insurance Scheme Certified Plan",
+   "prem_date": "20190628"
+  },
+  "F00028-01-001-02": {
+   "age40": 5342,
+   "insurer": "Bank of China Group Insurance Company Limited",
+   "level": "Basic plan with upgraded benefits 1",
+   "plan": "BOC Flexi Voluntary Health Insurance Scheme Certified Plan",
+   "prem_date": "20190628"
+  },
+  "F00028-01-002-02": {
+   "age40": 5755,
+   "insurer": "Bank of China Group Insurance Company Limited",
+   "level": "Basic plan with upgraded benefits 2",
+   "plan": "BOC Flexi Voluntary Health Insurance Scheme Certified Plan",
+   "prem_date": "20190628"
+  },
+  "F00028-01-003-02": {
+   "age40": 6203,
+   "insurer": "Bank of China Group Insurance Company Limited",
+   "level": "Basic plan with upgraded benefits 3",
+   "plan": "BOC Flexi Voluntary Health Insurance Scheme Certified Plan",
+   "prem_date": "20190628"
+  },
+  "F00028-01-004-02": {
+   "age40": 6768,
+   "insurer": "Bank of China Group Insurance Company Limited",
+   "level": "Basic plan with SMM",
+   "plan": "BOC Flexi Voluntary Health Insurance Scheme Certified Plan",
+   "prem_date": "20190628"
+  },
+  "F00028-01-005-02": {
+   "age40": 7510,
+   "insurer": "Bank of China Group Insurance Company Limited",
+   "level": "Basic plan with SMM & upgraded benefits 1",
+   "plan": "BOC Flexi Voluntary Health Insurance Scheme Certified Plan",
+   "prem_date": "20190628"
+  },
+  "F00028-01-006-02": {
+   "age40": 7928,
+   "insurer": "Bank of China Group Insurance Company Limited",
+   "level": "Basic plan with SMM & upgraded benefits 2",
+   "plan": "BOC Flexi Voluntary Health Insurance Scheme Certified Plan",
+   "prem_date": "20190628"
+  },
+  "F00028-01-007-02": {
+   "age40": 8383,
+   "insurer": "Bank of China Group Insurance Company Limited",
+   "level": "Basic plan with SMM & upgraded benefits 3",
+   "plan": "BOC Flexi Voluntary Health Insurance Scheme Certified Plan",
+   "prem_date": "20190628"
+  },
+  "F00029-01-000-06": {
+   "age40": 7363,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Standard",
+   "plan": "Bupa MyFlexi VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00029-01-001-06": {
+   "age40": 10411,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Standard Plus",
+   "plan": "Bupa MyFlexi VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00029-02-000-06": {
+   "age40": 13081,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Advance",
+   "plan": "Bupa MyFlexi VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00029-02-001-06": {
+   "age40": 18622,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Advance Plus",
+   "plan": "Bupa MyFlexi VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00029-03-000-06": {
+   "age40": 20469,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Deluxe",
+   "plan": "Bupa MyFlexi VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00029-03-001-06": {
+   "age40": 30551,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Deluxe Plus",
+   "plan": "Bupa MyFlexi VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00030-01-000-03": {
+   "age40": 4307,
+   "insurer": "China Life Insurance (Overseas) Company Limited",
+   "level": "Semi-private",
+   "plan": "Healthy Life Premier Medical Insurance Plan",
+   "prem_date": "20260601"
+  },
+  "F00030-01-001-03": {
+   "age40": 5990,
+   "insurer": "China Life Insurance (Overseas) Company Limited",
+   "level": "Semi-private with SMM",
+   "plan": "Healthy Life Premier Medical Insurance Plan",
+   "prem_date": "20260601"
+  },
+  "F00030-02-000-03": {
+   "age40": 7168,
+   "insurer": "China Life Insurance (Overseas) Company Limited",
+   "level": "Private",
+   "plan": "Healthy Life Premier Medical Insurance Plan",
+   "prem_date": "20260601"
+  },
+  "F00030-02-001-03": {
+   "age40": 9685,
+   "insurer": "China Life Insurance (Overseas) Company Limited",
+   "level": "Private with SMM",
+   "plan": "Healthy Life Premier Medical Insurance Plan",
+   "prem_date": "20260601"
+  },
+  "F00031-01-000-08": {
+   "age40": 4284,
+   "insurer": "Bowtie Life Insurance Company Limited",
+   "level": "Regular",
+   "plan": "Bowtie VHIS Flexi",
+   "prem_date": "20251229"
+  },
+  "F00031-02-000-08": {
+   "age40": 7764,
+   "insurer": "Bowtie Life Insurance Company Limited",
+   "level": "Plus",
+   "plan": "Bowtie VHIS Flexi",
+   "prem_date": "20251229"
+  },
+  "F00032-01-000-05": {
+   "age40": 5571,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "vCare Supreme Medical Plan",
+   "plan": "vCare Supreme Medical Plan",
+   "prem_date": "20250602"
+  },
+  "F00033-01-000-02": {
+   "age40": 6408,
+   "insurer": "Allianz Global Corporate & Specialty SE",
+   "level": "Silver Plan",
+   "plan": "Allianz Ultra Medical Protect",
+   "prem_date": "20190729"
+  },
+  "F00033-01-001-02": {
+   "age40": 8340,
+   "insurer": "Allianz Global Corporate & Specialty SE",
+   "level": "Silver Plan with SMM",
+   "plan": "Allianz Ultra Medical Protect",
+   "prem_date": "20190729"
+  },
+  "F00033-02-000-02": {
+   "age40": 9144,
+   "insurer": "Allianz Global Corporate & Specialty SE",
+   "level": "Gold Plan",
+   "plan": "Allianz Ultra Medical Protect",
+   "prem_date": "20190729"
+  },
+  "F00033-02-001-02": {
+   "age40": 11892,
+   "insurer": "Allianz Global Corporate & Specialty SE",
+   "level": "Gold Plan with SMM",
+   "plan": "Allianz Ultra Medical Protect",
+   "prem_date": "20190729"
+  },
+  "F00034-01-000-05": {
+   "age40": 12463,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Regular (HKD0 Deductible)",
+   "plan": "AXA WiseGuard Pro Medical Insurance Plan",
+   "prem_date": "20250909"
+  },
+  "F00034-02-000-05": {
+   "age40": 7029,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Regular (HKD20,000 Deductible)",
+   "plan": "AXA WiseGuard Pro Medical Insurance Plan",
+   "prem_date": "20250909"
+  },
+  "F00034-03-000-05": {
+   "age40": 4173,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Regular (HKD50,000 Deductible)",
+   "plan": "AXA WiseGuard Pro Medical Insurance Plan",
+   "prem_date": "20250909"
+  },
+  "F00034-04-000-05": {
+   "age40": 17288,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Enhance (HKD0 Deductible)",
+   "plan": "AXA WiseGuard Pro Medical Insurance Plan",
+   "prem_date": "20250909"
+  },
+  "F00034-05-000-05": {
+   "age40": 8113,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Enhance (HKD20,000 Deductible)",
+   "plan": "AXA WiseGuard Pro Medical Insurance Plan",
+   "prem_date": "20250909"
+  },
+  "F00034-06-000-05": {
+   "age40": 5585,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Enhance (HKD50,000 Deductible)",
+   "plan": "AXA WiseGuard Pro Medical Insurance Plan",
+   "prem_date": "20250909"
+  },
+  "F00034-07-000-05": {
+   "age40": 20562,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Premier (HKD0 Deductible)",
+   "plan": "AXA WiseGuard Pro Medical Insurance Plan",
+   "prem_date": "20250909"
+  },
+  "F00034-08-000-05": {
+   "age40": 14183,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Premier (HKD20,000 Deductible)",
+   "plan": "AXA WiseGuard Pro Medical Insurance Plan",
+   "prem_date": "20250909"
+  },
+  "F00034-09-000-05": {
+   "age40": 10042,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Premier (HKD50,000 Deductible)",
+   "plan": "AXA WiseGuard Pro Medical Insurance Plan",
+   "prem_date": "20250909"
+  },
+  "F00034-10-000-05": {
+   "age40": 1557.9,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Regular (USD0 Deductible)",
+   "plan": "AXA WiseGuard Pro Medical Insurance Plan",
+   "prem_date": "20250909"
+  },
+  "F00034-11-000-05": {
+   "age40": 878.6,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Regular (USD2,500 Deductible)",
+   "plan": "AXA WiseGuard Pro Medical Insurance Plan",
+   "prem_date": "20250909"
+  },
+  "F00034-12-000-05": {
+   "age40": 521.6,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Regular (USD6,250 Deductible)",
+   "plan": "AXA WiseGuard Pro Medical Insurance Plan",
+   "prem_date": "20250909"
+  },
+  "F00034-13-000-05": {
+   "age40": 2161,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Enhance (USD0 Deductible)",
+   "plan": "AXA WiseGuard Pro Medical Insurance Plan",
+   "prem_date": "20250909"
+  },
+  "F00034-14-000-05": {
+   "age40": 1014.1,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Enhance (USD2,500 Deductible)",
+   "plan": "AXA WiseGuard Pro Medical Insurance Plan",
+   "prem_date": "20250909"
+  },
+  "F00034-15-000-05": {
+   "age40": 698.1,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Enhance (USD6,250 Deductible)",
+   "plan": "AXA WiseGuard Pro Medical Insurance Plan",
+   "prem_date": "20250909"
+  },
+  "F00034-16-000-05": {
+   "age40": 2570.3,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Premier (USD0 Deductible)",
+   "plan": "AXA WiseGuard Pro Medical Insurance Plan",
+   "prem_date": "20250909"
+  },
+  "F00034-17-000-05": {
+   "age40": 1772.9,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Premier (USD2,500 Deductible)",
+   "plan": "AXA WiseGuard Pro Medical Insurance Plan",
+   "prem_date": "20250909"
+  },
+  "F00034-18-000-05": {
+   "age40": 1255.3,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Premier (USD6,250 Deductible)",
+   "plan": "AXA WiseGuard Pro Medical Insurance Plan",
+   "prem_date": "20250909"
+  },
+  "F00034-19-000-03": {
+   "age40": 25620,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Noble (HKD0 Deductible)",
+   "plan": "AXA WiseGuard Pro Medical Insurance Plan",
+   "prem_date": "20250909"
+  },
+  "F00034-20-000-03": {
+   "age40": 18202,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Noble (HKD20,000 Deductible)",
+   "plan": "AXA WiseGuard Pro Medical Insurance Plan",
+   "prem_date": "20250909"
+  },
+  "F00034-21-000-03": {
+   "age40": 13669,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Noble (HKD50,000 Deductible)",
+   "plan": "AXA WiseGuard Pro Medical Insurance Plan",
+   "prem_date": "20250909"
+  },
+  "F00034-22-000-03": {
+   "age40": 3202.5,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Noble (USD0 Deductible)",
+   "plan": "AXA WiseGuard Pro Medical Insurance Plan",
+   "prem_date": "20250909"
+  },
+  "F00034-23-000-03": {
+   "age40": 2275.3,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Noble (USD2,500 Deductible)",
+   "plan": "AXA WiseGuard Pro Medical Insurance Plan",
+   "prem_date": "20250909"
+  },
+  "F00034-24-000-03": {
+   "age40": 1708.6,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Noble (USD6,250 Deductible)",
+   "plan": "AXA WiseGuard Pro Medical Insurance Plan",
+   "prem_date": "20250909"
+  },
+  "F00035-01-000-05": {
+   "age40": 55573,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Prime - HKD0 Deductible",
+   "plan": "Global Prestige VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00035-02-000-05": {
+   "age40": 35301,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Prime - HKD12,000 Deductible",
+   "plan": "Global Prestige VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00035-03-000-05": {
+   "age40": 29024,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Prime - HKD40,000 Deductible",
+   "plan": "Global Prestige VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00035-04-000-05": {
+   "age40": 25983,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Prime - HKD80,000 Deductible",
+   "plan": "Global Prestige VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00035-05-000-01": {
+   "age40": 52516,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Signature - HKD0 Deductible",
+   "plan": "Global Prestige VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00035-06-000-01": {
+   "age40": 33360,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Signature - HKD12,000 Deductible",
+   "plan": "Global Prestige VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00035-07-000-01": {
+   "age40": 26122,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Signature - HKD40,000 Deductible",
+   "plan": "Global Prestige VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00035-08-000-01": {
+   "age40": 24554,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Signature - HKD80,000 Deductible",
+   "plan": "Global Prestige VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00036-01-000-02": {
+   "age40": 13500,
+   "insurer": "Zurich Insurance Company Ltd",
+   "level": "HKD0 Deductible (Asia)",
+   "plan": "HealthFlexi Plus Voluntary Health Insurance Plan",
+   "prem_date": "20191016"
+  },
+  "F00036-02-000-02": {
+   "age40": 5940,
+   "insurer": "Zurich Insurance Company Ltd",
+   "level": "HKD60,000 Deductible (Asia)",
+   "plan": "HealthFlexi Plus Voluntary Health Insurance Plan",
+   "prem_date": "20191016"
+  },
+  "F00036-03-000-02": {
+   "age40": 4728,
+   "insurer": "Zurich Insurance Company Ltd",
+   "level": "HKD90,000 Deductible (Asia)",
+   "plan": "HealthFlexi Plus Voluntary Health Insurance Plan",
+   "prem_date": "20191016"
+  },
+  "F00036-04-000-02": {
+   "age40": 2976,
+   "insurer": "Zurich Insurance Company Ltd",
+   "level": "HKD150,000 Deductible (Asia)",
+   "plan": "HealthFlexi Plus Voluntary Health Insurance Plan",
+   "prem_date": "20191016"
+  },
+  "F00036-05-000-02": {
+   "age40": 15408,
+   "insurer": "Zurich Insurance Company Ltd",
+   "level": "HKD0 Deductible (Worldwide excluding the U.S.)",
+   "plan": "HealthFlexi Plus Voluntary Health Insurance Plan",
+   "prem_date": "20191016"
+  },
+  "F00036-06-000-02": {
+   "age40": 6780,
+   "insurer": "Zurich Insurance Company Ltd",
+   "level": "HKD60,000 Deductible (Worldwide excluding the U.S.)",
+   "plan": "HealthFlexi Plus Voluntary Health Insurance Plan",
+   "prem_date": "20191016"
+  },
+  "F00036-07-000-02": {
+   "age40": 5400,
+   "insurer": "Zurich Insurance Company Ltd",
+   "level": "HKD90,000 Deductible (Worldwide excluding the U.S.)",
+   "plan": "HealthFlexi Plus Voluntary Health Insurance Plan",
+   "prem_date": "20191016"
+  },
+  "F00036-08-000-02": {
+   "age40": 3396,
+   "insurer": "Zurich Insurance Company Ltd",
+   "level": "HKD150,000 Deductible (Worldwide excluding the U.S.)",
+   "plan": "HealthFlexi Plus Voluntary Health Insurance Plan",
+   "prem_date": "20191016"
+  },
+  "F00037-01-000-03": {
+   "age40": 6770.24,
+   "insurer": "Chow Tai Fook Life Insurance Co Ltd",
+   "level": "Benefit Level 1 with SMM (HKD)",
+   "plan": "''TopCare'' Medical Insurance Plan",
+   "prem_date": "20251123"
+  },
+  "F00037-02-000-03": {
+   "age40": 8088.1,
+   "insurer": "Chow Tai Fook Life Insurance Co Ltd",
+   "level": "Benefit Level 2 with SMM (HKD)",
+   "plan": "''TopCare'' Medical Insurance Plan",
+   "prem_date": "20251123"
+  },
+  "F00037-03-000-03": {
+   "age40": 11622.62,
+   "insurer": "Chow Tai Fook Life Insurance Co Ltd",
+   "level": "Benefit Level 3 with SMM (HKD)",
+   "plan": "''TopCare'' Medical Insurance Plan",
+   "prem_date": "20251123"
+  },
+  "F00037-04-000-03": {
+   "age40": 21502.38,
+   "insurer": "Chow Tai Fook Life Insurance Co Ltd",
+   "level": "Benefit Level 4 with SMM (HKD)",
+   "plan": "''TopCare'' Medical Insurance Plan",
+   "prem_date": "20251123"
+  },
+  "F00037-05-000-03": {
+   "age40": 873.81,
+   "insurer": "Chow Tai Fook Life Insurance Co Ltd",
+   "level": "Benefit Level 1 with SMM (USD)",
+   "plan": "''TopCare'' Medical Insurance Plan",
+   "prem_date": "20251123"
+  },
+  "F00037-06-000-03": {
+   "age40": 1044.05,
+   "insurer": "Chow Tai Fook Life Insurance Co Ltd",
+   "level": "Benefit Level 2 with SMM (USD)",
+   "plan": "''TopCare'' Medical Insurance Plan",
+   "prem_date": "20251123"
+  },
+  "F00037-07-000-03": {
+   "age40": 1500,
+   "insurer": "Chow Tai Fook Life Insurance Co Ltd",
+   "level": "Benefit Level 3 with SMM (USD)",
+   "plan": "''TopCare'' Medical Insurance Plan",
+   "prem_date": "20251123"
+  },
+  "F00037-08-000-03": {
+   "age40": 2775,
+   "insurer": "Chow Tai Fook Life Insurance Co Ltd",
+   "level": "Benefit Level 4 with SMM (USD)",
+   "plan": "''TopCare'' Medical Insurance Plan",
+   "prem_date": "20251123"
+  },
+  "F00038-01-000-02": {
+   "age40": 9263,
+   "insurer": "Asia Insurance Company, Limited",
+   "level": "Semi-Private Room",
+   "plan": "Asia Elite",
+   "prem_date": "20191002"
+  },
+  "F00038-02-000-02": {
+   "age40": 14957,
+   "insurer": "Asia Insurance Company, Limited",
+   "level": "Standard Private Room",
+   "plan": "Asia Elite",
+   "prem_date": "20191002"
+  },
+  "F00039-01-000-02": {
+   "age40": 3855,
+   "insurer": "Hong Kong Life Insurance Limited",
+   "level": "Plan I",
+   "plan": "Health Supreme Medical Plan",
+   "prem_date": "20250929"
+  },
+  "F00039-01-001-02": {
+   "age40": 5817,
+   "insurer": "Hong Kong Life Insurance Limited",
+   "level": "Plan I with SMM",
+   "plan": "Health Supreme Medical Plan",
+   "prem_date": "20250929"
+  },
+  "F00039-02-000-02": {
+   "age40": 7044,
+   "insurer": "Hong Kong Life Insurance Limited",
+   "level": "Plan II",
+   "plan": "Health Supreme Medical Plan",
+   "prem_date": "20250929"
+  },
+  "F00039-02-001-02": {
+   "age40": 9710,
+   "insurer": "Hong Kong Life Insurance Limited",
+   "level": "Plan II with SMM",
+   "plan": "Health Supreme Medical Plan",
+   "prem_date": "20250929"
+  },
+  "F00039-03-000-02": {
+   "age40": 11169,
+   "insurer": "Hong Kong Life Insurance Limited",
+   "level": "Plan III",
+   "plan": "Health Supreme Medical Plan",
+   "prem_date": "20250929"
+  },
+  "F00039-03-001-02": {
+   "age40": 15190,
+   "insurer": "Hong Kong Life Insurance Limited",
+   "level": "Plan III with SMM",
+   "plan": "Health Supreme Medical Plan",
+   "prem_date": "20250929"
+  },
+  "F00040-01-000-05": {
+   "age40": 21389,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Advance (HKD0 Deductible)",
+   "plan": "Bupa Hero VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00040-02-000-05": {
+   "age40": 12342,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Advance (HKD12,000 Deductible)",
+   "plan": "Bupa Hero VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00040-03-000-05": {
+   "age40": 9798,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Advance (HKD40,000 Deductible)",
+   "plan": "Bupa Hero VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00040-04-000-05": {
+   "age40": 6868,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Advance (HKD80,000 Deductible)",
+   "plan": "Bupa Hero VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00040-05-000-05": {
+   "age40": 25028,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Deluxe (HKD0 Deductible)",
+   "plan": "Bupa Hero VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00040-06-000-05": {
+   "age40": 19814,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Deluxe (HKD12,000 Deductible)",
+   "plan": "Bupa Hero VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00040-07-000-05": {
+   "age40": 14459,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Deluxe (HKD40,000 Deductible)",
+   "plan": "Bupa Hero VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00040-08-000-05": {
+   "age40": 10646,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Deluxe (HKD80,000 Deductible)",
+   "plan": "Bupa Hero VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00040-09-000-03": {
+   "age40": 24041,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Advance Pro (HKD0 Deductible)",
+   "plan": "Bupa Hero VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00040-10-000-03": {
+   "age40": 13873,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Advance Pro (HKD12,000 Deductible)",
+   "plan": "Bupa Hero VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00040-11-000-03": {
+   "age40": 11013,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Advance Pro (HKD40,000 Deductible)",
+   "plan": "Bupa Hero VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00040-12-000-03": {
+   "age40": 7720,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Advance Pro (HKD80,000 Deductible)",
+   "plan": "Bupa Hero VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00040-13-000-03": {
+   "age40": 27806,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Deluxe Pro (HKD0 Deductible)",
+   "plan": "Bupa Hero VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00040-14-000-03": {
+   "age40": 22012,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Deluxe Pro (HKD12,000 Deductible)",
+   "plan": "Bupa Hero VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00040-15-000-03": {
+   "age40": 16065,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Deluxe Pro (HKD40,000 Deductible)",
+   "plan": "Bupa Hero VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00040-16-000-03": {
+   "age40": 11826,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Deluxe Pro (HKD80,000 Deductible)",
+   "plan": "Bupa Hero VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00040-17-000-02": {
+   "age40": 10532,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Core (HKD0 Deductible)",
+   "plan": "Bupa Hero VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00040-18-000-02": {
+   "age40": 6404,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Core (HKD15,000 Deductible)",
+   "plan": "Bupa Hero VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00040-19-000-02": {
+   "age40": 3981,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Core (HKD50,000 Deductible)",
+   "plan": "Bupa Hero VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00040-20-000-02": {
+   "age40": 3419,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Core (HKD80,000 Deductible)",
+   "plan": "Bupa Hero VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00040-21-000-02": {
+   "age40": 12111,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Core Pro (HKD0 Deductible)",
+   "plan": "Bupa Hero VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00040-22-000-02": {
+   "age40": 7465,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Core Pro (HKD15,000 Deductible)",
+   "plan": "Bupa Hero VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00040-23-000-02": {
+   "age40": 4936,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Core Pro (HKD50,000 Deductible)",
+   "plan": "Bupa Hero VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00040-24-000-02": {
+   "age40": 4477,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Core Pro (HKD80,000 Deductible)",
+   "plan": "Bupa Hero VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "F00041-01-000-06": {
+   "age40": 20328,
+   "insurer": "Manulife (International) Limited",
+   "level": "Advance (HKD0 Deductible)",
+   "plan": "Manulife Supreme VHIS Flexi Plan",
+   "prem_date": "20251229"
+  },
+  "F00041-02-000-06": {
+   "age40": 14032,
+   "insurer": "Manulife (International) Limited",
+   "level": "Advance (HKD8,000 Deductible)",
+   "plan": "Manulife Supreme VHIS Flexi Plan",
+   "prem_date": "20251229"
+  },
+  "F00041-03-000-06": {
+   "age40": 8128,
+   "insurer": "Manulife (International) Limited",
+   "level": "Advance (HKD22,800 Deductible)",
+   "plan": "Manulife Supreme VHIS Flexi Plan",
+   "prem_date": "20251229"
+  },
+  "F00041-04-000-04": {
+   "age40": 7088,
+   "insurer": "Manulife (International) Limited",
+   "level": "Advance (HKD45,000 Deductible)",
+   "plan": "Manulife Supreme VHIS Flexi Plan",
+   "prem_date": "20251229"
+  },
+  "F00041-05-000-03": {
+   "age40": 4845,
+   "insurer": "Manulife (International) Limited",
+   "level": "Advance (HKD100,000 Deductible)",
+   "plan": "Manulife Supreme VHIS Flexi Plan",
+   "prem_date": "20251229"
+  },
+  "F00041-06-000-03": {
+   "age40": 13073,
+   "insurer": "Manulife (International) Limited",
+   "level": "Smart (HKD0 Deductible)",
+   "plan": "Manulife Supreme VHIS Flexi Plan",
+   "prem_date": "20251229"
+  },
+  "F00041-07-000-03": {
+   "age40": 6318,
+   "insurer": "Manulife (International) Limited",
+   "level": "Smart (HKD22,800 Deductible)",
+   "plan": "Manulife Supreme VHIS Flexi Plan",
+   "prem_date": "20251229"
+  },
+  "F00041-08-000-03": {
+   "age40": 3942,
+   "insurer": "Manulife (International) Limited",
+   "level": "Smart (HKD45,000 Deductible)",
+   "plan": "Manulife Supreme VHIS Flexi Plan",
+   "prem_date": "20251229"
+  },
+  "F00041-09-000-03": {
+   "age40": 3353,
+   "insurer": "Manulife (International) Limited",
+   "level": "Smart (HKD100,000 Deductible)",
+   "plan": "Manulife Supreme VHIS Flexi Plan",
+   "prem_date": "20251229"
+  },
+  "F00041-10-000-01": {
+   "age40": 35113,
+   "insurer": "Manulife (International) Limited",
+   "level": "Deluxe (HKD0 Deductible)",
+   "plan": "Manulife Supreme VHIS Flexi Plan",
+   "prem_date": "20251229"
+  },
+  "F00041-11-000-01": {
+   "age40": 20757,
+   "insurer": "Manulife (International) Limited",
+   "level": "Deluxe (HKD8,000 Deductible)",
+   "plan": "Manulife Supreme VHIS Flexi Plan",
+   "prem_date": "20251229"
+  },
+  "F00041-12-000-01": {
+   "age40": 16275,
+   "insurer": "Manulife (International) Limited",
+   "level": "Deluxe (HKD22,800 Deductible)",
+   "plan": "Manulife Supreme VHIS Flexi Plan",
+   "prem_date": "20251229"
+  },
+  "F00041-13-000-01": {
+   "age40": 13773,
+   "insurer": "Manulife (International) Limited",
+   "level": "Deluxe (HKD45,000 Deductible)",
+   "plan": "Manulife Supreme VHIS Flexi Plan",
+   "prem_date": "20251229"
+  },
+  "F00041-14-000-01": {
+   "age40": 10043,
+   "insurer": "Manulife (International) Limited",
+   "level": "Deluxe (HKD100,000 Deductible)",
+   "plan": "Manulife Supreme VHIS Flexi Plan",
+   "prem_date": "20251229"
+  },
+  "F00042-01-000-02": {
+   "age40": 4799,
+   "insurer": "Well Link Life Insurance Company Limited",
+   "level": "Ward",
+   "plan": "Well Protect Voluntary Health Insurance Scheme (Flexi)",
+   "prem_date": "20200206"
+  },
+  "F00042-02-000-02": {
+   "age40": 7855,
+   "insurer": "Well Link Life Insurance Company Limited",
+   "level": "Semi-Private",
+   "plan": "Well Protect Voluntary Health Insurance Scheme (Flexi)",
+   "prem_date": "20200206"
+  },
+  "F00042-03-000-02": {
+   "age40": 13860,
+   "insurer": "Well Link Life Insurance Company Limited",
+   "level": "Standard Private",
+   "plan": "Well Protect Voluntary Health Insurance Scheme (Flexi)",
+   "prem_date": "20200206"
+  },
+  "F00043-01-000-02": {
+   "age40": 21830,
+   "insurer": "Blue Cross (Asia-Pacific) Insurance Limited",
+   "level": "Plan A",
+   "plan": "CareForYou Super Flexi Plan for VHIS",
+   "prem_date": "20260101"
+  },
+  "F00043-01-001-02": {
+   "age40": 29893,
+   "insurer": "Blue Cross (Asia-Pacific) Insurance Limited",
+   "level": "Plan A with SMM (No Coinsurance)",
+   "plan": "CareForYou Super Flexi Plan for VHIS",
+   "prem_date": "20260101"
+  },
+  "F00043-01-002-02": {
+   "age40": 27876,
+   "insurer": "Blue Cross (Asia-Pacific) Insurance Limited",
+   "level": "Plan A with SMM (with 20% Coinsurance)",
+   "plan": "CareForYou Super Flexi Plan for VHIS",
+   "prem_date": "20260101"
+  },
+  "F00043-02-000-02": {
+   "age40": 12347,
+   "insurer": "Blue Cross (Asia-Pacific) Insurance Limited",
+   "level": "Plan B",
+   "plan": "CareForYou Super Flexi Plan for VHIS",
+   "prem_date": "20260101"
+  },
+  "F00043-02-001-02": {
+   "age40": 17032,
+   "insurer": "Blue Cross (Asia-Pacific) Insurance Limited",
+   "level": "Plan B with SMM (No Coinsurance)",
+   "plan": "CareForYou Super Flexi Plan for VHIS",
+   "prem_date": "20260101"
+  },
+  "F00043-02-002-02": {
+   "age40": 15862,
+   "insurer": "Blue Cross (Asia-Pacific) Insurance Limited",
+   "level": "Plan B with SMM (with 20% Coinsurance)",
+   "plan": "CareForYou Super Flexi Plan for VHIS",
+   "prem_date": "20260101"
+  },
+  "F00043-03-000-02": {
+   "age40": 7347,
+   "insurer": "Blue Cross (Asia-Pacific) Insurance Limited",
+   "level": "Plan C",
+   "plan": "CareForYou Super Flexi Plan for VHIS",
+   "prem_date": "20260101"
+  },
+  "F00043-03-001-02": {
+   "age40": 10210,
+   "insurer": "Blue Cross (Asia-Pacific) Insurance Limited",
+   "level": "Plan C with SMM (No Coinsurance)",
+   "plan": "CareForYou Super Flexi Plan for VHIS",
+   "prem_date": "20260101"
+  },
+  "F00043-03-002-02": {
+   "age40": 9498,
+   "insurer": "Blue Cross (Asia-Pacific) Insurance Limited",
+   "level": "Plan C with SMM (with 20% Coinsurance)",
+   "plan": "CareForYou Super Flexi Plan for VHIS",
+   "prem_date": "20260101"
+  },
+  "F00043-04-000-02": {
+   "age40": 7716,
+   "insurer": "Blue Cross (Asia-Pacific) Insurance Limited",
+   "level": "Plan D with SMM (with 20% Coinsurance)",
+   "plan": "CareForYou Super Flexi Plan for VHIS",
+   "prem_date": "20260101"
+  },
+  "F00044-01-000-02": {
+   "age40": 4296,
+   "insurer": "Zurich Insurance Company Ltd",
+   "level": "Essential",
+   "plan": "HealthFlexi Voluntary Health Insurance Plan",
+   "prem_date": "20200806"
+  },
+  "F00044-01-001-02": {
+   "age40": 5568,
+   "insurer": "Zurich Insurance Company Ltd",
+   "level": "Essential with SMM",
+   "plan": "HealthFlexi Voluntary Health Insurance Plan",
+   "prem_date": "20200806"
+  },
+  "F00044-02-000-02": {
+   "age40": 5928,
+   "insurer": "Zurich Insurance Company Ltd",
+   "level": "Advanced",
+   "plan": "HealthFlexi Voluntary Health Insurance Plan",
+   "prem_date": "20200806"
+  },
+  "F00044-02-001-02": {
+   "age40": 8016,
+   "insurer": "Zurich Insurance Company Ltd",
+   "level": "Advanced with SMM",
+   "plan": "HealthFlexi Voluntary Health Insurance Plan",
+   "prem_date": "20200806"
+  },
+  "F00045-01-000-05": {
+   "age40": 16771,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "HKD0 Deductible",
+   "plan": "vPrime Medical Plan",
+   "prem_date": "20260202"
+  },
+  "F00045-02-000-05": {
+   "age40": 7890,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "HKD16,000 Deductible",
+   "plan": "vPrime Medical Plan",
+   "prem_date": "20260202"
+  },
+  "F00045-03-000-05": {
+   "age40": 6685,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "HKD25,000 Deductible",
+   "plan": "vPrime Medical Plan",
+   "prem_date": "20260202"
+  },
+  "F00045-04-000-05": {
+   "age40": 4799,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "HKD50,000 Deductible",
+   "plan": "vPrime Medical Plan",
+   "prem_date": "20260202"
+  },
+  "F00045-05-000-03": {
+   "age40": 3731,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "HKD100,000 Deductible",
+   "plan": "vPrime Medical Plan",
+   "prem_date": "20260202"
+  },
+  "F00045-06-000-03": {
+   "age40": 2983,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "HKD250,000 Deductible",
+   "plan": "vPrime Medical Plan",
+   "prem_date": "20260202"
+  },
+  "F00046-01-000-02": {
+   "age40": 13875,
+   "insurer": "Liberty International Insurance Limited",
+   "level": "Flexi Plan (Premium)",
+   "plan": "Liberty Insurance VHIS Series - Flexi Plan (Premium)",
+   "prem_date": "20210701"
+  },
+  "F00047-01-000-02": {
+   "age40": 4857,
+   "insurer": "Liberty International Insurance Limited",
+   "level": "Flexi Plan (Classic)",
+   "plan": "Liberty Insurance VHIS Series - Flexi Plan (Classic)",
+   "prem_date": "20210701"
+  },
+  "F00047-01-001-02": {
+   "age40": 5828,
+   "insurer": "Liberty International Insurance Limited",
+   "level": "Flexi Plan (Classic with SMM)",
+   "plan": "Liberty Insurance VHIS Series - Flexi Plan (Classic)",
+   "prem_date": "20210701"
+  },
+  "F00048-01-000-02": {
+   "age40": 7354,
+   "insurer": "Liberty International Insurance Limited",
+   "level": "Flexi Plan (Plus)",
+   "plan": "Liberty Insurance VHIS Series - Flexi Plan (Plus)",
+   "prem_date": "20210701"
+  },
+  "F00048-01-001-02": {
+   "age40": 8825,
+   "insurer": "Liberty International Insurance Limited",
+   "level": "Flexi Plan (Plus with SMM)",
+   "plan": "Liberty Insurance VHIS Series - Flexi Plan (Plus)",
+   "prem_date": "20210701"
+  },
+  "F00049-01-000-03": {
+   "age40": 10926,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Bronze level (HKD0 Deductible)",
+   "plan": "HSBC Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20200720"
+  },
+  "F00049-02-000-03": {
+   "age40": 6951,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Bronze level (HKD16,000 Deductible)",
+   "plan": "HSBC Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20200720"
+  },
+  "F00049-03-000-03": {
+   "age40": 3702,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Bronze level (HKD50,000 Deductible)",
+   "plan": "HSBC Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20200720"
+  },
+  "F00049-04-000-03": {
+   "age40": 3213,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Bronze level (HKD100,000 Deductible)",
+   "plan": "HSBC Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20200720"
+  },
+  "F00049-05-000-03": {
+   "age40": 14989,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Silver level (HKD0 Deductible)",
+   "plan": "HSBC Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20200720"
+  },
+  "F00049-06-000-03": {
+   "age40": 8156,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Silver level (HKD16,000 Deductible)",
+   "plan": "HSBC Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20200720"
+  },
+  "F00049-07-000-03": {
+   "age40": 4876,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Silver level (HKD50,000 Deductible)",
+   "plan": "HSBC Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20200720"
+  },
+  "F00049-08-000-03": {
+   "age40": 4417,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Silver level (HKD100,000 Deductible)",
+   "plan": "HSBC Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20200720"
+  },
+  "F00049-09-000-03": {
+   "age40": 20186,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Gold level (HKD0 Deductible)",
+   "plan": "HSBC Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20200720"
+  },
+  "F00049-10-000-03": {
+   "age40": 14173,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Gold level (HKD16,000 Deductible)",
+   "plan": "HSBC Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20200720"
+  },
+  "F00049-11-000-03": {
+   "age40": 10116,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Gold level (HKD50,000 Deductible)",
+   "plan": "HSBC Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20200720"
+  },
+  "F00049-12-000-03": {
+   "age40": 7414,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Gold level (HKD100,000 Deductible)",
+   "plan": "HSBC Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20200720"
+  },
+  "F00049-13-000-03": {
+   "age40": 47246,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Diamond level (HKD0 Deductible)",
+   "plan": "HSBC Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20200720"
+  },
+  "F00049-14-000-03": {
+   "age40": 33436,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Diamond level (HKD16,000 Deductible)",
+   "plan": "HSBC Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20200720"
+  },
+  "F00049-15-000-03": {
+   "age40": 23616,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Diamond level (HKD50,000 Deductible)",
+   "plan": "HSBC Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20200720"
+  },
+  "F00049-16-000-03": {
+   "age40": 17320,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Diamond level (HKD100,000 Deductible)",
+   "plan": "HSBC Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20200720"
+  },
+  "F00049-17-000-01": {
+   "age40": 22812,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Platinum level (HKD0 Deductible)",
+   "plan": "HSBC Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20250416"
+  },
+  "F00049-18-000-01": {
+   "age40": 16017,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Platinum level (HKD16,000 Deductible)",
+   "plan": "HSBC Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20250416"
+  },
+  "F00049-19-000-01": {
+   "age40": 11432,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Platinum level (HKD50,000 Deductible)",
+   "plan": "HSBC Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20250416"
+  },
+  "F00049-20-000-01": {
+   "age40": 8379,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Platinum level (HKD100,000 Deductible)",
+   "plan": "HSBC Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20250416"
+  },
+  "F00050-01-000-04": {
+   "age40": 18895.2,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "HKD0 Deductible (Asia)",
+   "plan": "PRUHealth VHIS VIP Plan",
+   "prem_date": "20251001"
+  },
+  "F00050-02-000-04": {
+   "age40": 7228.8,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "HKD20,000 Deductible (Asia)",
+   "plan": "PRUHealth VHIS VIP Plan",
+   "prem_date": "20251001"
+  },
+  "F00050-03-000-04": {
+   "age40": 5836.8,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "HKD50,000 Deductible (Asia)",
+   "plan": "PRUHealth VHIS VIP Plan",
+   "prem_date": "20251001"
+  },
+  "F00050-04-000-04": {
+   "age40": 2361.9,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "USD0 Deductible (Asia)",
+   "plan": "PRUHealth VHIS VIP Plan",
+   "prem_date": "20251001"
+  },
+  "F00050-05-000-04": {
+   "age40": 903.6,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "USD2,500 Deductible (Asia)",
+   "plan": "PRUHealth VHIS VIP Plan",
+   "prem_date": "20251001"
+  },
+  "F00050-06-000-04": {
+   "age40": 729.6,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "USD6,250 Deductible (Asia)",
+   "plan": "PRUHealth VHIS VIP Plan",
+   "prem_date": "20251001"
+  },
+  "F00050-07-000-01": {
+   "age40": 4387.2,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "HKD96,000 Deductible (Asia)",
+   "plan": "PRUHealth VHIS VIP Plan",
+   "prem_date": "20251001"
+  },
+  "F00050-08-000-01": {
+   "age40": 548.4,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "USD12,000 Deductible (Asia)",
+   "plan": "PRUHealth VHIS VIP Plan",
+   "prem_date": "20251001"
+  },
+  "F00050-09-000-01": {
+   "age40": 20784,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "HKD0 Deductible (Worldwide except USA)",
+   "plan": "PRUHealth VHIS VIP Plan",
+   "prem_date": "20251001"
+  },
+  "F00050-10-000-01": {
+   "age40": 7951.2,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "HKD20,000 Deductible (Worldwide except USA)",
+   "plan": "PRUHealth VHIS VIP Plan",
+   "prem_date": "20251001"
+  },
+  "F00050-11-000-01": {
+   "age40": 6420,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "HKD50,000 Deductible (Worldwide except USA)",
+   "plan": "PRUHealth VHIS VIP Plan",
+   "prem_date": "20251001"
+  },
+  "F00050-12-000-01": {
+   "age40": 4825.6,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "HKD96,000 Deductible (Worldwide except USA)",
+   "plan": "PRUHealth VHIS VIP Plan",
+   "prem_date": "20251001"
+  },
+  "F00050-13-000-01": {
+   "age40": 2598,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "USD0 Deductible (Worldwide except USA)",
+   "plan": "PRUHealth VHIS VIP Plan",
+   "prem_date": "20251001"
+  },
+  "F00050-14-000-01": {
+   "age40": 993.9,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "USD2,500 Deductible (Worldwide except USA)",
+   "plan": "PRUHealth VHIS VIP Plan",
+   "prem_date": "20251001"
+  },
+  "F00050-15-000-01": {
+   "age40": 802.5,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "USD6,250 Deductible (Worldwide except USA)",
+   "plan": "PRUHealth VHIS VIP Plan",
+   "prem_date": "20251001"
+  },
+  "F00050-16-000-01": {
+   "age40": 603.2,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "USD12,000 Deductible (Worldwide except USA)",
+   "plan": "PRUHealth VHIS VIP Plan",
+   "prem_date": "20251001"
+  },
+  "F00051-01-000-03": {
+   "age40": 6721,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Standard",
+   "plan": "vCANsurance Medical Plan",
+   "prem_date": "20250602"
+  },
+  "F00051-02-000-03": {
+   "age40": 12707,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Superior",
+   "plan": "vCANsurance Medical Plan",
+   "prem_date": "20250602"
+  },
+  "F00052-01-000-01": {
+   "age40": 4359.72,
+   "insurer": "China Taiping Life Insurance (Hong Kong) Company Limited",
+   "level": "Plan 1 - Ward with SMM",
+   "plan": "Taiping Life VHIS Flexi Plan",
+   "prem_date": "20210707"
+  },
+  "F00052-02-000-01": {
+   "age40": 6482.68,
+   "insurer": "China Taiping Life Insurance (Hong Kong) Company Limited",
+   "level": "Plan 2 - Semi-Private Room",
+   "plan": "Taiping Life VHIS Flexi Plan",
+   "prem_date": "20210707"
+  },
+  "F00052-02-001-01": {
+   "age40": 8926.65,
+   "insurer": "China Taiping Life Insurance (Hong Kong) Company Limited",
+   "level": "Plan 3 - Semi-Private Room with SMM",
+   "plan": "Taiping Life VHIS Flexi Plan",
+   "prem_date": "20210707"
+  },
+  "F00052-03-000-01": {
+   "age40": 10868.65,
+   "insurer": "China Taiping Life Insurance (Hong Kong) Company Limited",
+   "level": "Plan 4 - Standard Private Room",
+   "plan": "Taiping Life VHIS Flexi Plan",
+   "prem_date": "20210707"
+  },
+  "F00052-03-001-01": {
+   "age40": 17651.18,
+   "insurer": "China Taiping Life Insurance (Hong Kong) Company Limited",
+   "level": "Plan 5 - Standard Private Room with SMM",
+   "plan": "Taiping Life VHIS Flexi Plan",
+   "prem_date": "20210707"
+  },
+  "F00053-01-000-02": {
+   "age40": 18000,
+   "insurer": "AIA International Limited",
+   "level": "HKD0 Deductible",
+   "plan": "AIA Voluntary Health Insurance Privilege Scheme",
+   "prem_date": "20260715"
+  },
+  "F00053-02-000-02": {
+   "age40": 8472,
+   "insurer": "AIA International Limited",
+   "level": "HKD16,000 Deductible",
+   "plan": "AIA Voluntary Health Insurance Privilege Scheme",
+   "prem_date": "20260715"
+  },
+  "F00053-03-000-02": {
+   "age40": 7320,
+   "insurer": "AIA International Limited",
+   "level": "HKD25,000 Deductible",
+   "plan": "AIA Voluntary Health Insurance Privilege Scheme",
+   "prem_date": "20260715"
+  },
+  "F00053-04-000-02": {
+   "age40": 2250,
+   "insurer": "AIA International Limited",
+   "level": "USD0 Deductible",
+   "plan": "AIA Voluntary Health Insurance Privilege Scheme",
+   "prem_date": "20260715"
+  },
+  "F00053-05-000-02": {
+   "age40": 1059,
+   "insurer": "AIA International Limited",
+   "level": "USD2,000 Deductible",
+   "plan": "AIA Voluntary Health Insurance Privilege Scheme",
+   "prem_date": "20260715"
+  },
+  "F00053-06-000-02": {
+   "age40": 915,
+   "insurer": "AIA International Limited",
+   "level": "USD3,125 Deductible",
+   "plan": "AIA Voluntary Health Insurance Privilege Scheme",
+   "prem_date": "20260715"
+  },
+  "F00054-01-000-02": {
+   "age40": 22392,
+   "insurer": "AIA International Limited",
+   "level": "HKD0 Deductible",
+   "plan": "AIA Voluntary Health Insurance Privilege Plus Scheme",
+   "prem_date": "20260715"
+  },
+  "F00054-02-000-02": {
+   "age40": 10552,
+   "insurer": "AIA International Limited",
+   "level": "HKD16,000 Deductible",
+   "plan": "AIA Voluntary Health Insurance Privilege Plus Scheme",
+   "prem_date": "20260715"
+  },
+  "F00054-03-000-02": {
+   "age40": 9112,
+   "insurer": "AIA International Limited",
+   "level": "HKD25,000 Deductible",
+   "plan": "AIA Voluntary Health Insurance Privilege Plus Scheme",
+   "prem_date": "20260715"
+  },
+  "F00054-04-000-02": {
+   "age40": 2799,
+   "insurer": "AIA International Limited",
+   "level": "USD0 Deductible",
+   "plan": "AIA Voluntary Health Insurance Privilege Plus Scheme",
+   "prem_date": "20260715"
+  },
+  "F00054-05-000-02": {
+   "age40": 1319,
+   "insurer": "AIA International Limited",
+   "level": "USD2,000 Deductible",
+   "plan": "AIA Voluntary Health Insurance Privilege Plus Scheme",
+   "prem_date": "20260715"
+  },
+  "F00054-06-000-02": {
+   "age40": 1139,
+   "insurer": "AIA International Limited",
+   "level": "USD3,125 Deductible",
+   "plan": "AIA Voluntary Health Insurance Privilege Plus Scheme",
+   "prem_date": "20260715"
+  },
+  "F00055-01-000-02": {
+   "age40": 5551,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "Flexi Plan SMM",
+   "plan": "VHIS Series - Flexi Plan (SMM)",
+   "prem_date": "20221101"
+  },
+  "F00056-01-000-03": {
+   "age40": 12197,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "Semi-Private Room - HKD0 Deductible",
+   "plan": "VHIS Series - Flexi Plan (Superior)",
+   "prem_date": "20221101"
+  },
+  "F00056-02-000-03": {
+   "age40": 7355,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "Semi-Private Room - HKD15,000 Deductible",
+   "plan": "VHIS Series - Flexi Plan (Superior)",
+   "prem_date": "20221101"
+  },
+  "F00056-03-000-03": {
+   "age40": 6526,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "Semi-Private Room - HKD25,000 Deductible",
+   "plan": "VHIS Series - Flexi Plan (Superior)",
+   "prem_date": "20221101"
+  },
+  "F00056-04-000-03": {
+   "age40": 5459,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "Semi-Private Room - HKD50,000 Deductible",
+   "plan": "VHIS Series - Flexi Plan (Superior)",
+   "prem_date": "20221101"
+  },
+  "F00056-05-000-03": {
+   "age40": 4627,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "Semi-Private Room - HKD75,000 Deductible",
+   "plan": "VHIS Series - Flexi Plan (Superior)",
+   "prem_date": "20221101"
+  },
+  "F00056-06-000-02": {
+   "age40": 10977,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "Standard Ward - HKD0 Deductible",
+   "plan": "VHIS Series - Flexi Plan (Superior)",
+   "prem_date": "20220127"
+  },
+  "F00056-07-000-02": {
+   "age40": 5884,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "Standard Ward - HKD15,000 Deductible",
+   "plan": "VHIS Series - Flexi Plan (Superior)",
+   "prem_date": "20220127"
+  },
+  "F00056-08-000-02": {
+   "age40": 5221,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "Standard Ward - HKD25,000 Deductible",
+   "plan": "VHIS Series - Flexi Plan (Superior)",
+   "prem_date": "20220127"
+  },
+  "F00057-01-000-02": {
+   "age40": 16898,
+   "insurer": "BOC Group Life Assurance Company Limited",
+   "level": "HKD0 Deductible",
+   "plan": "SmartViva Flexi VHIS",
+   "prem_date": "20210726"
+  },
+  "F00057-02-000-02": {
+   "age40": 14043,
+   "insurer": "BOC Group Life Assurance Company Limited",
+   "level": "HKD10,000 Deductible",
+   "plan": "SmartViva Flexi VHIS",
+   "prem_date": "20210726"
+  },
+  "F00057-03-000-02": {
+   "age40": 10488,
+   "insurer": "BOC Group Life Assurance Company Limited",
+   "level": "HKD30,000 Deductible",
+   "plan": "SmartViva Flexi VHIS",
+   "prem_date": "20210726"
+  },
+  "F00057-04-000-02": {
+   "age40": 7488,
+   "insurer": "BOC Group Life Assurance Company Limited",
+   "level": "HKD70,000 Deductible",
+   "plan": "SmartViva Flexi VHIS",
+   "prem_date": "20210726"
+  },
+  "F00059-01-000-01": {
+   "age40": 16839,
+   "insurer": "Blue Cross (Asia-Pacific) Insurance Limited",
+   "level": "HKD0 Deductible (Asia & Australia-New Zealand)",
+   "plan": "Blue Cross Dynasty VHIS Plan",
+   "prem_date": "20260101"
+  },
+  "F00059-02-000-01": {
+   "age40": 8756,
+   "insurer": "Blue Cross (Asia-Pacific) Insurance Limited",
+   "level": "HKD20,000 Deductible (Asia & Australia-New Zealand)",
+   "plan": "Blue Cross Dynasty VHIS Plan",
+   "prem_date": "20260101"
+  },
+  "F00059-03-000-01": {
+   "age40": 7579,
+   "insurer": "Blue Cross (Asia-Pacific) Insurance Limited",
+   "level": "HKD40,000 Deductible (Asia & Australia-New Zealand)",
+   "plan": "Blue Cross Dynasty VHIS Plan",
+   "prem_date": "20260101"
+  },
+  "F00059-04-000-01": {
+   "age40": 5389,
+   "insurer": "Blue Cross (Asia-Pacific) Insurance Limited",
+   "level": "HKD80,000 Deductible (Asia & Australia-New Zealand)",
+   "plan": "Blue Cross Dynasty VHIS Plan",
+   "prem_date": "20260101"
+  },
+  "F00059-05-000-01": {
+   "age40": 27305,
+   "insurer": "Blue Cross (Asia-Pacific) Insurance Limited",
+   "level": "HKD0 Deductible (Worldwide )",
+   "plan": "Blue Cross Dynasty VHIS Plan",
+   "prem_date": "20260101"
+  },
+  "F00059-06-000-01": {
+   "age40": 14200,
+   "insurer": "Blue Cross (Asia-Pacific) Insurance Limited",
+   "level": "HKD20,000 Deductible (Worldwide )",
+   "plan": "Blue Cross Dynasty VHIS Plan",
+   "prem_date": "20260101"
+  },
+  "F00059-07-000-01": {
+   "age40": 12289,
+   "insurer": "Blue Cross (Asia-Pacific) Insurance Limited",
+   "level": "HKD40,000 Deductible (Worldwide )",
+   "plan": "Blue Cross Dynasty VHIS Plan",
+   "prem_date": "20260101"
+  },
+  "F00059-08-000-01": {
+   "age40": 8738,
+   "insurer": "Blue Cross (Asia-Pacific) Insurance Limited",
+   "level": "HKD80,000 Deductible (Worldwide )",
+   "plan": "Blue Cross Dynasty VHIS Plan",
+   "prem_date": "20260101"
+  },
+  "F00060-01-000-07": {
+   "age40": 14112,
+   "insurer": "Bowtie Life Insurance Company Limited",
+   "level": "Semi-Private Room - HKD0 Deductible",
+   "plan": "Bowtie Pink VHIS Plan",
+   "prem_date": "20251229"
+  },
+  "F00060-02-000-07": {
+   "age40": 6924,
+   "insurer": "Bowtie Life Insurance Company Limited",
+   "level": "Semi-Private Room - HKD20,000 Deductible",
+   "plan": "Bowtie Pink VHIS Plan",
+   "prem_date": "20251229"
+  },
+  "F00060-03-000-07": {
+   "age40": 5256,
+   "insurer": "Bowtie Life Insurance Company Limited",
+   "level": "Semi-Private Room - HKD50,000 Deductible",
+   "plan": "Bowtie Pink VHIS Plan",
+   "prem_date": "20251229"
+  },
+  "F00060-04-000-07": {
+   "age40": 4632,
+   "insurer": "Bowtie Life Insurance Company Limited",
+   "level": "Semi-Private Room - HKD80,000 Deductible",
+   "plan": "Bowtie Pink VHIS Plan",
+   "prem_date": "20251229"
+  },
+  "F00060-05-000-07": {
+   "age40": 21708,
+   "insurer": "Bowtie Life Insurance Company Limited",
+   "level": "Private Room - HKD0 Deductible",
+   "plan": "Bowtie Pink VHIS Plan",
+   "prem_date": "20251229"
+  },
+  "F00060-06-000-07": {
+   "age40": 15444,
+   "insurer": "Bowtie Life Insurance Company Limited",
+   "level": "Private Room - HKD20,000 Deductible",
+   "plan": "Bowtie Pink VHIS Plan",
+   "prem_date": "20251229"
+  },
+  "F00060-07-000-07": {
+   "age40": 8700,
+   "insurer": "Bowtie Life Insurance Company Limited",
+   "level": "Private Room - HKD50,000 Deductible",
+   "plan": "Bowtie Pink VHIS Plan",
+   "prem_date": "20251229"
+  },
+  "F00060-08-000-07": {
+   "age40": 7776,
+   "insurer": "Bowtie Life Insurance Company Limited",
+   "level": "Private Room - HKD80,000 Deductible",
+   "plan": "Bowtie Pink VHIS Plan",
+   "prem_date": "20251229"
+  },
+  "F00060-09-000-04": {
+   "age40": 10560,
+   "insurer": "Bowtie Life Insurance Company Limited",
+   "level": "Ward Room - HKD0 Deductible",
+   "plan": "Bowtie Pink VHIS Plan",
+   "prem_date": "20251229"
+  },
+  "F00060-10-000-04": {
+   "age40": 5784,
+   "insurer": "Bowtie Life Insurance Company Limited",
+   "level": "Ward Room - HKD20,000 Deductible",
+   "plan": "Bowtie Pink VHIS Plan",
+   "prem_date": "20251229"
+  },
+  "F00060-11-000-04": {
+   "age40": 3636,
+   "insurer": "Bowtie Life Insurance Company Limited",
+   "level": "Ward Room - HKD50,000 Deductible",
+   "plan": "Bowtie Pink VHIS Plan",
+   "prem_date": "20251229"
+  },
+  "F00060-12-000-04": {
+   "age40": 3420,
+   "insurer": "Bowtie Life Insurance Company Limited",
+   "level": "Ward Room - HKD80,000 Deductible",
+   "plan": "Bowtie Pink VHIS Plan",
+   "prem_date": "20251229"
+  },
+  "F00061-01-000-01": {
+   "age40": 7371,
+   "insurer": "Asia Insurance Company, Limited",
+   "level": "Plan 1",
+   "plan": "Asia iCare",
+   "prem_date": "20211122"
+  },
+  "F00061-01-001-01": {
+   "age40": 9639,
+   "insurer": "Asia Insurance Company, Limited",
+   "level": "Plan 1A with SMM",
+   "plan": "Asia iCare",
+   "prem_date": "20211122"
+  },
+  "F00061-02-000-01": {
+   "age40": 5055,
+   "insurer": "Asia Insurance Company, Limited",
+   "level": "Plan 2",
+   "plan": "Asia iCare",
+   "prem_date": "20211122"
+  },
+  "F00061-02-001-01": {
+   "age40": 6345,
+   "insurer": "Asia Insurance Company, Limited",
+   "level": "Plan 2A with SMM",
+   "plan": "Asia iCare",
+   "prem_date": "20211122"
+  },
+  "F00061-02-002-01": {
+   "age40": 5974,
+   "insurer": "Asia Insurance Company, Limited",
+   "level": "Plan 2B with SMM",
+   "plan": "Asia iCare",
+   "prem_date": "20211122"
+  },
+  "F00062-01-000-02": {
+   "age40": 13861,
+   "insurer": "China Taiping Life Insurance (Hong Kong) Company Limited",
+   "level": "HKD0 Deductible",
+   "plan": "Taiping Life VHIS Priority Plan",
+   "prem_date": "20211122"
+  },
+  "F00062-02-000-02": {
+   "age40": 6931,
+   "insurer": "China Taiping Life Insurance (Hong Kong) Company Limited",
+   "level": "HKD20,000 Deductible",
+   "plan": "Taiping Life VHIS Priority Plan",
+   "prem_date": "20211122"
+  },
+  "F00062-03-000-02": {
+   "age40": 5822,
+   "insurer": "China Taiping Life Insurance (Hong Kong) Company Limited",
+   "level": "HKD50,000 Deductible",
+   "plan": "Taiping Life VHIS Priority Plan",
+   "prem_date": "20211122"
+  },
+  "F00062-04-000-02": {
+   "age40": 1733,
+   "insurer": "China Taiping Life Insurance (Hong Kong) Company Limited",
+   "level": "USD0 Deductible",
+   "plan": "Taiping Life VHIS Priority Plan",
+   "prem_date": "20211122"
+  },
+  "F00062-05-000-02": {
+   "age40": 867,
+   "insurer": "China Taiping Life Insurance (Hong Kong) Company Limited",
+   "level": "USD2,500 Deductible",
+   "plan": "Taiping Life VHIS Priority Plan",
+   "prem_date": "20211122"
+  },
+  "F00062-06-000-02": {
+   "age40": 728,
+   "insurer": "China Taiping Life Insurance (Hong Kong) Company Limited",
+   "level": "USD6,250 Deductible",
+   "plan": "Taiping Life VHIS Priority Plan",
+   "prem_date": "20211122"
+  },
+  "F00063-01-000-01": {
+   "age40": 16706,
+   "insurer": "Sun Life Hong Kong Limited",
+   "level": "HKD0 Deductible",
+   "plan": "WeHealth Prestige",
+   "prem_date": "20260401"
+  },
+  "F00063-02-000-01": {
+   "age40": 7672,
+   "insurer": "Sun Life Hong Kong Limited",
+   "level": "HKD20,000 Deductible",
+   "plan": "WeHealth Prestige",
+   "prem_date": "20260401"
+  },
+  "F00063-03-000-01": {
+   "age40": 5935,
+   "insurer": "Sun Life Hong Kong Limited",
+   "level": "HKD50,000 Deductible",
+   "plan": "WeHealth Prestige",
+   "prem_date": "20260401"
+  },
+  "F00063-04-000-01": {
+   "age40": 5067,
+   "insurer": "Sun Life Hong Kong Limited",
+   "level": "HKD80,000 Deductible",
+   "plan": "WeHealth Prestige",
+   "prem_date": "20260401"
+  },
+  "F00064-01-000-02": {
+   "age40": 8411.9,
+   "insurer": "Chow Tai Fook Life Insurance Co Ltd",
+   "level": "Benefit Level 1 (HKD)",
+   "plan": "''FlexiCare'' Medical Insurance Plan",
+   "prem_date": "20251123"
+  },
+  "F00064-02-000-02": {
+   "age40": 12615.48,
+   "insurer": "Chow Tai Fook Life Insurance Co Ltd",
+   "level": "Benefit Level 2 (HKD)",
+   "plan": "''FlexiCare'' Medical Insurance Plan",
+   "prem_date": "20251123"
+  },
+  "F00064-03-000-02": {
+   "age40": 1085.71,
+   "insurer": "Chow Tai Fook Life Insurance Co Ltd",
+   "level": "Benefit Level 1 (USD)",
+   "plan": "''FlexiCare'' Medical Insurance Plan",
+   "prem_date": "20251123"
+  },
+  "F00064-04-000-02": {
+   "age40": 1627.38,
+   "insurer": "Chow Tai Fook Life Insurance Co Ltd",
+   "level": "Benefit Level 2 (USD)",
+   "plan": "''FlexiCare'' Medical Insurance Plan",
+   "prem_date": "20251123"
+  },
+  "F00065-01-000-02": {
+   "age40": 19212,
+   "insurer": "YF Life Insurance International Limited",
+   "level": "HKD0 Deductible",
+   "plan": "TaxVantage Prestige Medical Plan",
+   "prem_date": "20260101"
+  },
+  "F00065-02-000-02": {
+   "age40": 10823,
+   "insurer": "YF Life Insurance International Limited",
+   "level": "HKD15,000 Deductible",
+   "plan": "TaxVantage Prestige Medical Plan",
+   "prem_date": "20260101"
+  },
+  "F00065-03-000-02": {
+   "age40": 8402,
+   "insurer": "YF Life Insurance International Limited",
+   "level": "HKD30,000 Deductible",
+   "plan": "TaxVantage Prestige Medical Plan",
+   "prem_date": "20260101"
+  },
+  "F00065-04-000-02": {
+   "age40": 6050,
+   "insurer": "YF Life Insurance International Limited",
+   "level": "HKD100,000 Deductible",
+   "plan": "TaxVantage Prestige Medical Plan",
+   "prem_date": "20260101"
+  },
+  "F00066-01-000-01": {
+   "age40": 11982,
+   "insurer": "Sun Life Hong Kong Limited",
+   "level": "HKD0 Deductible",
+   "plan": "WeHealth Preferred",
+   "prem_date": "20260401"
+  },
+  "F00066-02-000-01": {
+   "age40": 5794,
+   "insurer": "Sun Life Hong Kong Limited",
+   "level": "HKD20,000 Deductible",
+   "plan": "WeHealth Preferred",
+   "prem_date": "20260401"
+  },
+  "F00066-03-000-01": {
+   "age40": 3828,
+   "insurer": "Sun Life Hong Kong Limited",
+   "level": "HKD50,000 Deductible",
+   "plan": "WeHealth Preferred",
+   "prem_date": "20260401"
+  },
+  "F00066-04-000-01": {
+   "age40": 3434,
+   "insurer": "Sun Life Hong Kong Limited",
+   "level": "HKD80,000 Deductible",
+   "plan": "WeHealth Preferred",
+   "prem_date": "20260401"
+  },
+  "F00067-01-000-02": {
+   "age40": 23617,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Standard (HKD0 Deductible)",
+   "plan": "vTheOne Medical Plan ",
+   "prem_date": "20250602"
+  },
+  "F00067-02-000-02": {
+   "age40": 14678,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Standard (HKD25,000 Deductible)",
+   "plan": "vTheOne Medical Plan ",
+   "prem_date": "20250602"
+  },
+  "F00067-03-000-02": {
+   "age40": 8310,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Standard (HKD40,000 Deductible)",
+   "plan": "vTheOne Medical Plan ",
+   "prem_date": "20250602"
+  },
+  "F00067-04-000-02": {
+   "age40": 6906,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Standard (HKD80,000 Deductible)",
+   "plan": "vTheOne Medical Plan ",
+   "prem_date": "20250602"
+  },
+  "F00067-05-000-02": {
+   "age40": 5525,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Standard (HKD120,000 Deductible)",
+   "plan": "vTheOne Medical Plan ",
+   "prem_date": "20250602"
+  },
+  "F00067-06-000-02": {
+   "age40": 4732,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Standard (HKD250,000 Deductible)",
+   "plan": "vTheOne Medical Plan ",
+   "prem_date": "20250602"
+  },
+  "F00067-07-000-02": {
+   "age40": 25034,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Standard Plus (HKD0 Deductible)",
+   "plan": "vTheOne Medical Plan ",
+   "prem_date": "20250602"
+  },
+  "F00067-08-000-02": {
+   "age40": 15558,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Standard Plus (HKD25,000 Deductible)",
+   "plan": "vTheOne Medical Plan ",
+   "prem_date": "20250602"
+  },
+  "F00067-09-000-02": {
+   "age40": 8809,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Standard Plus (HKD40,000 Deductible)",
+   "plan": "vTheOne Medical Plan ",
+   "prem_date": "20250602"
+  },
+  "F00067-10-000-02": {
+   "age40": 7320,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Standard Plus (HKD80,000 Deductible)",
+   "plan": "vTheOne Medical Plan ",
+   "prem_date": "20250602"
+  },
+  "F00067-11-000-02": {
+   "age40": 5857,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Standard Plus (HKD120,000 Deductible)",
+   "plan": "vTheOne Medical Plan ",
+   "prem_date": "20250602"
+  },
+  "F00067-12-000-02": {
+   "age40": 5016,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Standard Plus (HKD250,000 Deductible)",
+   "plan": "vTheOne Medical Plan ",
+   "prem_date": "20250602"
+  },
+  "F00067-13-000-02": {
+   "age40": 34524,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Superior (HKD0 Deductible)",
+   "plan": "vTheOne Medical Plan ",
+   "prem_date": "20250602"
+  },
+  "F00067-14-000-02": {
+   "age40": 20829,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Superior (HKD25,000 Deductible)",
+   "plan": "vTheOne Medical Plan ",
+   "prem_date": "20250602"
+  },
+  "F00067-15-000-02": {
+   "age40": 13106,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Superior (HKD40,000 Deductible)",
+   "plan": "vTheOne Medical Plan ",
+   "prem_date": "20250602"
+  },
+  "F00067-16-000-02": {
+   "age40": 10537,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Superior (HKD80,000 Deductible)",
+   "plan": "vTheOne Medical Plan ",
+   "prem_date": "20250602"
+  },
+  "F00067-17-000-02": {
+   "age40": 8745,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Superior (HKD120,000 Deductible)",
+   "plan": "vTheOne Medical Plan ",
+   "prem_date": "20250602"
+  },
+  "F00067-18-000-02": {
+   "age40": 7553,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Superior (HKD250,000 Deductible)",
+   "plan": "vTheOne Medical Plan ",
+   "prem_date": "20250602"
+  },
+  "F00067-19-000-02": {
+   "age40": 52227,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Premier (HKD0 Deductible)",
+   "plan": "vTheOne Medical Plan ",
+   "prem_date": "20250602"
+  },
+  "F00067-20-000-02": {
+   "age40": 33510,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Premier (HKD25,000 Deductible)",
+   "plan": "vTheOne Medical Plan ",
+   "prem_date": "20250602"
+  },
+  "F00067-21-000-02": {
+   "age40": 20149,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Premier (HKD40,000 Deductible)",
+   "plan": "vTheOne Medical Plan ",
+   "prem_date": "20250602"
+  },
+  "F00067-22-000-02": {
+   "age40": 16721,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Premier (HKD80,000 Deductible)",
+   "plan": "vTheOne Medical Plan ",
+   "prem_date": "20250602"
+  },
+  "F00067-23-000-02": {
+   "age40": 13461,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Premier (HKD120,000 Deductible)",
+   "plan": "vTheOne Medical Plan ",
+   "prem_date": "20250602"
+  },
+  "F00067-24-000-02": {
+   "age40": 12048,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Premier (HKD250,000 Deductible)",
+   "plan": "vTheOne Medical Plan ",
+   "prem_date": "20250602"
+  },
+  "F00068-01-000-01": {
+   "age40": 5166.85,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "Ward with SMM (HKD)",
+   "plan": "PRUHealth VHIS EasyChoice Plan",
+   "prem_date": "20251001"
+  },
+  "F00068-02-000-01": {
+   "age40": 9873.73,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "Semi-private Room with SMM (HKD)",
+   "plan": "PRUHealth VHIS EasyChoice Plan",
+   "prem_date": "20251001"
+  },
+  "F00068-03-000-01": {
+   "age40": 20020.42,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "Private Room with SMM (HKD)",
+   "plan": "PRUHealth VHIS EasyChoice Plan",
+   "prem_date": "20251001"
+  },
+  "F00068-04-000-01": {
+   "age40": 666.69,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "Ward with SMM (USD)",
+   "plan": "PRUHealth VHIS EasyChoice Plan",
+   "prem_date": "20251001"
+  },
+  "F00068-05-000-01": {
+   "age40": 1274.03,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "Semi-private Room with SMM (USD)",
+   "plan": "PRUHealth VHIS EasyChoice Plan",
+   "prem_date": "20251001"
+  },
+  "F00068-06-000-01": {
+   "age40": 2583.28,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "Private Room with SMM (USD)",
+   "plan": "PRUHealth VHIS EasyChoice Plan",
+   "prem_date": "20251001"
+  },
+  "F00069-01-000-02": {
+   "age40": 9822,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "HKD0 Deductible",
+   "plan": "vBooster Medical Plan",
+   "prem_date": "20260202"
+  },
+  "F00069-02-000-02": {
+   "age40": 6201,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "HKD16,000 Deductible",
+   "plan": "vBooster Medical Plan",
+   "prem_date": "20260202"
+  },
+  "F00069-03-000-02": {
+   "age40": 5271,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "HKD25,000 Deductible",
+   "plan": "vBooster Medical Plan",
+   "prem_date": "20260202"
+  },
+  "F00069-04-000-02": {
+   "age40": 3058,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "HKD50,000 Deductible",
+   "plan": "vBooster Medical Plan",
+   "prem_date": "20260202"
+  },
+  "F00069-05-000-02": {
+   "age40": 2629,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "HKD100,000 Deductible",
+   "plan": "vBooster Medical Plan",
+   "prem_date": "20260202"
+  },
+  "F00069-06-000-02": {
+   "age40": 2319,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "HKD180,000 Deductible",
+   "plan": "vBooster Medical Plan",
+   "prem_date": "20260202"
+  },
+  "F00070-01-000-02": {
+   "age40": 14175,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Standard (HKD0 Deductible)",
+   "plan": "vPrime Signature Medical Plan",
+   "prem_date": "20260202"
+  },
+  "F00070-02-000-02": {
+   "age40": 6737,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Standard (HKD16,000 Deductible)",
+   "plan": "vPrime Signature Medical Plan",
+   "prem_date": "20260202"
+  },
+  "F00070-03-000-02": {
+   "age40": 5672,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Standard (HKD25,000 Deductible)",
+   "plan": "vPrime Signature Medical Plan",
+   "prem_date": "20260202"
+  },
+  "F00070-04-000-02": {
+   "age40": 4091,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Standard (HKD50,000 Deductible)",
+   "plan": "vPrime Signature Medical Plan",
+   "prem_date": "20260202"
+  },
+  "F00070-05-000-02": {
+   "age40": 3236,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Standard (HKD100,000 Deductible)",
+   "plan": "vPrime Signature Medical Plan",
+   "prem_date": "20260202"
+  },
+  "F00070-06-000-02": {
+   "age40": 2554,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Standard (HKD250,000 Deductible)",
+   "plan": "vPrime Signature Medical Plan",
+   "prem_date": "20260202"
+  },
+  "F00070-07-000-02": {
+   "age40": 16884,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Superior (HKD0 Deductible)",
+   "plan": "vPrime Signature Medical Plan",
+   "prem_date": "20260202"
+  },
+  "F00070-08-000-02": {
+   "age40": 8002,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Superior (HKD16,000 Deductible)",
+   "plan": "vPrime Signature Medical Plan",
+   "prem_date": "20260202"
+  },
+  "F00070-09-000-02": {
+   "age40": 6699,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Superior (HKD25,000 Deductible)",
+   "plan": "vPrime Signature Medical Plan",
+   "prem_date": "20260202"
+  },
+  "F00070-10-000-02": {
+   "age40": 4805,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Superior (HKD50,000 Deductible)",
+   "plan": "vPrime Signature Medical Plan",
+   "prem_date": "20260202"
+  },
+  "F00070-11-000-02": {
+   "age40": 3773,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Superior (HKD100,000 Deductible)",
+   "plan": "vPrime Signature Medical Plan",
+   "prem_date": "20260202"
+  },
+  "F00070-12-000-02": {
+   "age40": 2992,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Superior (HKD250,000 Deductible)",
+   "plan": "vPrime Signature Medical Plan",
+   "prem_date": "20260202"
+  },
+  "F00071-01-000-03": {
+   "age40": 16675,
+   "insurer": "Manulife (International) Limited",
+   "level": "Advance (HKD0 Deductible)",
+   "plan": "Manulife Supreme Lite VHIS Supplementary Benefit ",
+   "prem_date": "20251229"
+  },
+  "F00071-02-000-03": {
+   "age40": 6785,
+   "insurer": "Manulife (International) Limited",
+   "level": "Advance (HKD25,000 Deductible)",
+   "plan": "Manulife Supreme Lite VHIS Supplementary Benefit ",
+   "prem_date": "20251229"
+  },
+  "F00071-03-000-03": {
+   "age40": 5258,
+   "insurer": "Manulife (International) Limited",
+   "level": "Advance (HKD50,000 Deductible)",
+   "plan": "Manulife Supreme Lite VHIS Supplementary Benefit ",
+   "prem_date": "20251229"
+  },
+  "F00071-04-000-03": {
+   "age40": 4141,
+   "insurer": "Manulife (International) Limited",
+   "level": "Advance (HKD100,000 Deductible)",
+   "plan": "Manulife Supreme Lite VHIS Supplementary Benefit ",
+   "prem_date": "20251229"
+  },
+  "F00071-05-000-03": {
+   "age40": 2084,
+   "insurer": "Manulife (International) Limited",
+   "level": "Advance (USD0 Deductible)",
+   "plan": "Manulife Supreme Lite VHIS Supplementary Benefit ",
+   "prem_date": "20251229"
+  },
+  "F00071-06-000-03": {
+   "age40": 848,
+   "insurer": "Manulife (International) Limited",
+   "level": "Advance (USD3,125 Deductible)",
+   "plan": "Manulife Supreme Lite VHIS Supplementary Benefit ",
+   "prem_date": "20251229"
+  },
+  "F00071-07-000-03": {
+   "age40": 657,
+   "insurer": "Manulife (International) Limited",
+   "level": "Advance (USD6,250 Deductible)",
+   "plan": "Manulife Supreme Lite VHIS Supplementary Benefit ",
+   "prem_date": "20251229"
+  },
+  "F00071-08-000-03": {
+   "age40": 518,
+   "insurer": "Manulife (International) Limited",
+   "level": "Advance (USD12,500 Deductible)",
+   "plan": "Manulife Supreme Lite VHIS Supplementary Benefit ",
+   "prem_date": "20251229"
+  },
+  "F00071-09-000-03": {
+   "age40": 11672,
+   "insurer": "Manulife (International) Limited",
+   "level": "Smart (HKD0 Deductible)",
+   "plan": "Manulife Supreme Lite VHIS Supplementary Benefit ",
+   "prem_date": "20251229"
+  },
+  "F00071-10-000-03": {
+   "age40": 5494,
+   "insurer": "Manulife (International) Limited",
+   "level": "Smart (HKD25,000 Deductible)",
+   "plan": "Manulife Supreme Lite VHIS Supplementary Benefit ",
+   "prem_date": "20251229"
+  },
+  "F00071-11-000-03": {
+   "age40": 3285,
+   "insurer": "Manulife (International) Limited",
+   "level": "Smart (HKD50,000 Deductible)",
+   "plan": "Manulife Supreme Lite VHIS Supplementary Benefit ",
+   "prem_date": "20251229"
+  },
+  "F00071-12-000-03": {
+   "age40": 2794,
+   "insurer": "Manulife (International) Limited",
+   "level": "Smart (HKD100,000 Deductible)",
+   "plan": "Manulife Supreme Lite VHIS Supplementary Benefit ",
+   "prem_date": "20251229"
+  },
+  "F00071-13-000-03": {
+   "age40": 1459,
+   "insurer": "Manulife (International) Limited",
+   "level": "Smart (USD0 Deductible)",
+   "plan": "Manulife Supreme Lite VHIS Supplementary Benefit ",
+   "prem_date": "20251229"
+  },
+  "F00071-14-000-03": {
+   "age40": 687,
+   "insurer": "Manulife (International) Limited",
+   "level": "Smart (USD3,125 Deductible)",
+   "plan": "Manulife Supreme Lite VHIS Supplementary Benefit ",
+   "prem_date": "20251229"
+  },
+  "F00071-15-000-03": {
+   "age40": 411,
+   "insurer": "Manulife (International) Limited",
+   "level": "Smart (USD6,250 Deductible)",
+   "plan": "Manulife Supreme Lite VHIS Supplementary Benefit ",
+   "prem_date": "20251229"
+  },
+  "F00071-16-000-03": {
+   "age40": 349,
+   "insurer": "Manulife (International) Limited",
+   "level": "Smart (USD12,500 Deductible)",
+   "plan": "Manulife Supreme Lite VHIS Supplementary Benefit ",
+   "prem_date": "20251229"
+  },
+  "F00071-17-000-01": {
+   "age40": 33357,
+   "insurer": "Manulife (International) Limited",
+   "level": "Deluxe (HKD0 Deductible)",
+   "plan": "Manulife Supreme Lite VHIS Supplementary Benefit ",
+   "prem_date": "20251229"
+  },
+  "F00071-18-000-01": {
+   "age40": 15500,
+   "insurer": "Manulife (International) Limited",
+   "level": "Deluxe (HKD25,000 Deductible)",
+   "plan": "Manulife Supreme Lite VHIS Supplementary Benefit ",
+   "prem_date": "20251229"
+  },
+  "F00071-19-000-01": {
+   "age40": 12631,
+   "insurer": "Manulife (International) Limited",
+   "level": "Deluxe (HKD50,000 Deductible)",
+   "plan": "Manulife Supreme Lite VHIS Supplementary Benefit ",
+   "prem_date": "20251229"
+  },
+  "F00071-20-000-01": {
+   "age40": 9130,
+   "insurer": "Manulife (International) Limited",
+   "level": "Deluxe (HKD100,000 Deductible)",
+   "plan": "Manulife Supreme Lite VHIS Supplementary Benefit ",
+   "prem_date": "20251229"
+  },
+  "F00071-21-000-01": {
+   "age40": 4170,
+   "insurer": "Manulife (International) Limited",
+   "level": "Deluxe (USD0 Deductible)",
+   "plan": "Manulife Supreme Lite VHIS Supplementary Benefit ",
+   "prem_date": "20251229"
+  },
+  "F00071-22-000-01": {
+   "age40": 1938,
+   "insurer": "Manulife (International) Limited",
+   "level": "Deluxe (USD3,125 Deductible)",
+   "plan": "Manulife Supreme Lite VHIS Supplementary Benefit ",
+   "prem_date": "20251229"
+  },
+  "F00071-23-000-01": {
+   "age40": 1579,
+   "insurer": "Manulife (International) Limited",
+   "level": "Deluxe (USD6,250 Deductible)",
+   "plan": "Manulife Supreme Lite VHIS Supplementary Benefit ",
+   "prem_date": "20251229"
+  },
+  "F00071-24-000-01": {
+   "age40": 1141,
+   "insurer": "Manulife (International) Limited",
+   "level": "Deluxe (USD12,500 Deductible)",
+   "plan": "Manulife Supreme Lite VHIS Supplementary Benefit ",
+   "prem_date": "20251229"
+  },
+  "F00072-01-000-01": {
+   "age40": 5689,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Standard",
+   "plan": "vFamily Medical Plan ",
+   "prem_date": "20240304"
+  },
+  "F00073-01-000-01": {
+   "age40": 10780,
+   "insurer": "Blue Cross (Asia-Pacific) Insurance Limited",
+   "level": "HKD0 Deductible (Asia & Australia-New Zealand)",
+   "plan": "Blue Cross Love Yourself VHIS Plan",
+   "prem_date": "20260101"
+  },
+  "F00073-02-000-01": {
+   "age40": 5605,
+   "insurer": "Blue Cross (Asia-Pacific) Insurance Limited",
+   "level": "HKD20,000 Deductible (Asia & Australia-New Zealand)",
+   "plan": "Blue Cross Love Yourself VHIS Plan",
+   "prem_date": "20260101"
+  },
+  "F00073-03-000-01": {
+   "age40": 4853,
+   "insurer": "Blue Cross (Asia-Pacific) Insurance Limited",
+   "level": "HKD40,000 Deductible (Asia & Australia-New Zealand)",
+   "plan": "Blue Cross Love Yourself VHIS Plan",
+   "prem_date": "20260101"
+  },
+  "F00073-04-000-01": {
+   "age40": 3450,
+   "insurer": "Blue Cross (Asia-Pacific) Insurance Limited",
+   "level": "HKD80,000 Deductible (Asia & Australia-New Zealand)",
+   "plan": "Blue Cross Love Yourself VHIS Plan",
+   "prem_date": "20260101"
+  },
+  "F00073-05-000-01": {
+   "age40": 16335,
+   "insurer": "Blue Cross (Asia-Pacific) Insurance Limited",
+   "level": "HKD0 Deductible (Worldwide )",
+   "plan": "Blue Cross Love Yourself VHIS Plan",
+   "prem_date": "20240315"
+  },
+  "F00073-06-000-01": {
+   "age40": 8495,
+   "insurer": "Blue Cross (Asia-Pacific) Insurance Limited",
+   "level": "HKD20,000 Deductible (Worldwide )",
+   "plan": "Blue Cross Love Yourself VHIS Plan",
+   "prem_date": "20240315"
+  },
+  "F00073-07-000-01": {
+   "age40": 7352,
+   "insurer": "Blue Cross (Asia-Pacific) Insurance Limited",
+   "level": "HKD40,000 Deductible (Worldwide )",
+   "plan": "Blue Cross Love Yourself VHIS Plan",
+   "prem_date": "20240315"
+  },
+  "F00073-08-000-01": {
+   "age40": 5228,
+   "insurer": "Blue Cross (Asia-Pacific) Insurance Limited",
+   "level": "HKD80,000 Deductible (Worldwide )",
+   "plan": "Blue Cross Love Yourself VHIS Plan",
+   "prem_date": "20240315"
+  },
+  "F00074-01-000-01": {
+   "age40": 22328,
+   "insurer": "AIA International Limited",
+   "level": "HKD0 Deductible (Asia)",
+   "plan": "AIA Voluntary Health Insurance Privilege Ultra Scheme",
+   "prem_date": "20260715"
+  },
+  "F00074-02-000-01": {
+   "age40": 9464,
+   "insurer": "AIA International Limited",
+   "level": "HKD16,000 Deductible (Asia)",
+   "plan": "AIA Voluntary Health Insurance Privilege Ultra Scheme",
+   "prem_date": "20260715"
+  },
+  "F00074-03-000-01": {
+   "age40": 9024,
+   "insurer": "AIA International Limited",
+   "level": "HKD25,000 Deductible (Asia)",
+   "plan": "AIA Voluntary Health Insurance Privilege Ultra Scheme",
+   "prem_date": "20260715"
+  },
+  "F00074-04-000-01": {
+   "age40": 7048,
+   "insurer": "AIA International Limited",
+   "level": "HKD50,000 Deductible (Asia)",
+   "plan": "AIA Voluntary Health Insurance Privilege Ultra Scheme",
+   "prem_date": "20260715"
+  },
+  "F00074-05-000-01": {
+   "age40": 24568,
+   "insurer": "AIA International Limited",
+   "level": "HKD0 Deductible  (Worldwide except USA)",
+   "plan": "AIA Voluntary Health Insurance Privilege Ultra Scheme",
+   "prem_date": "20260715"
+  },
+  "F00074-06-000-01": {
+   "age40": 10400,
+   "insurer": "AIA International Limited",
+   "level": "HKD16,000 Deductible  (Worldwide except USA)",
+   "plan": "AIA Voluntary Health Insurance Privilege Ultra Scheme",
+   "prem_date": "20260715"
+  },
+  "F00074-07-000-01": {
+   "age40": 9944,
+   "insurer": "AIA International Limited",
+   "level": "HKD25,000 Deductible (Worldwide except USA)",
+   "plan": "AIA Voluntary Health Insurance Privilege Ultra Scheme",
+   "prem_date": "20260715"
+  },
+  "F00074-08-000-01": {
+   "age40": 7752,
+   "insurer": "AIA International Limited",
+   "level": "HKD50,000 Deductible (Worldwide except USA)",
+   "plan": "AIA Voluntary Health Insurance Privilege Ultra Scheme",
+   "prem_date": "20260715"
+  },
+  "F00074-09-000-01": {
+   "age40": 2791,
+   "insurer": "AIA International Limited",
+   "level": "USD0 Deductible (Asia)",
+   "plan": "AIA Voluntary Health Insurance Privilege Ultra Scheme",
+   "prem_date": "20260715"
+  },
+  "F00074-10-000-01": {
+   "age40": 1183,
+   "insurer": "AIA International Limited",
+   "level": "USD2,000 Deductible (Asia)",
+   "plan": "AIA Voluntary Health Insurance Privilege Ultra Scheme",
+   "prem_date": "20260715"
+  },
+  "F00074-11-000-01": {
+   "age40": 1128,
+   "insurer": "AIA International Limited",
+   "level": "USD3,125 Deductible (Asia)",
+   "plan": "AIA Voluntary Health Insurance Privilege Ultra Scheme",
+   "prem_date": "20260715"
+  },
+  "F00074-12-000-01": {
+   "age40": 881,
+   "insurer": "AIA International Limited",
+   "level": "USD6,250 Deductible (Asia)",
+   "plan": "AIA Voluntary Health Insurance Privilege Ultra Scheme",
+   "prem_date": "20260715"
+  },
+  "F00074-13-000-01": {
+   "age40": 3071,
+   "insurer": "AIA International Limited",
+   "level": "USD0 Deductible (Worldwide except USA)",
+   "plan": "AIA Voluntary Health Insurance Privilege Ultra Scheme",
+   "prem_date": "20260715"
+  },
+  "F00074-14-000-01": {
+   "age40": 1300,
+   "insurer": "AIA International Limited",
+   "level": "USD2,000 Deductible (Worldwide except USA)",
+   "plan": "AIA Voluntary Health Insurance Privilege Ultra Scheme",
+   "prem_date": "20260715"
+  },
+  "F00074-15-000-01": {
+   "age40": 1243,
+   "insurer": "AIA International Limited",
+   "level": "USD3,125 Deductible (Worldwide except USA)",
+   "plan": "AIA Voluntary Health Insurance Privilege Ultra Scheme",
+   "prem_date": "20260715"
+  },
+  "F00074-16-000-01": {
+   "age40": 969,
+   "insurer": "AIA International Limited",
+   "level": "USD6,250 Deductible (Worldwide except USA)",
+   "plan": "AIA Voluntary Health Insurance Privilege Ultra Scheme",
+   "prem_date": "20260715"
+  },
+  "F00075-01-000-01": {
+   "age40": 12650,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "HKD0 Deductible (Asia)",
+   "plan": "Chubb VHIS - Prime Plan",
+   "prem_date": "20240416"
+  },
+  "F00075-02-000-01": {
+   "age40": 6617,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "HKD25,000 Deductible (Asia)",
+   "plan": "Chubb VHIS - Prime Plan",
+   "prem_date": "20240416"
+  },
+  "F00075-03-000-01": {
+   "age40": 5617,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "HKD50,000 Deductible (Asia)",
+   "plan": "Chubb VHIS - Prime Plan",
+   "prem_date": "20240416"
+  },
+  "F00075-04-000-01": {
+   "age40": 4496,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "HKD100,000 Deductible (Asia)",
+   "plan": "Chubb VHIS - Prime Plan",
+   "prem_date": "20240416"
+  },
+  "F00075-05-000-01": {
+   "age40": 3702,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "HKD150,000 Deductible (Asia)",
+   "plan": "Chubb VHIS - Prime Plan",
+   "prem_date": "20240416"
+  },
+  "F00075-06-000-01": {
+   "age40": 21736,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "HKD0 Deductible (Worldwide excluding USA)",
+   "plan": "Chubb VHIS - Prime Plan",
+   "prem_date": "20240416"
+  },
+  "F00075-07-000-01": {
+   "age40": 13084,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "HKD25,000 Deductible (Worldwide excluding USA)",
+   "plan": "Chubb VHIS - Prime Plan",
+   "prem_date": "20240416"
+  },
+  "F00075-08-000-01": {
+   "age40": 10167,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "HKD50,000 Deductible (Worldwide excluding USA)",
+   "plan": "Chubb VHIS - Prime Plan",
+   "prem_date": "20240416"
+  },
+  "F00075-09-000-01": {
+   "age40": 8555,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "HKD100,000 Deductible (Worldwide excluding USA)",
+   "plan": "Chubb VHIS - Prime Plan",
+   "prem_date": "20240416"
+  },
+  "F00075-10-000-01": {
+   "age40": 7560,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "HKD150,000 Deductible (Worldwide excluding USA)",
+   "plan": "Chubb VHIS - Prime Plan",
+   "prem_date": "20240416"
+  },
+  "F00076-01-000-02": {
+   "age40": 10926,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Bronze level (HKD0 Deductible)",
+   "plan": "Vital Care Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20241101"
+  },
+  "F00076-02-000-02": {
+   "age40": 6951,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Bronze level (HKD16,000 Deductible)",
+   "plan": "Vital Care Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20241101"
+  },
+  "F00076-03-000-02": {
+   "age40": 3702,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Bronze level (HKD50,000 Deductible)",
+   "plan": "Vital Care Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20241101"
+  },
+  "F00076-04-000-02": {
+   "age40": 3213,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Bronze level (HKD100,000 Deductible)",
+   "plan": "Vital Care Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20241101"
+  },
+  "F00076-05-000-02": {
+   "age40": 14989,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Silver level (HKD0 Deductible)",
+   "plan": "Vital Care Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20241101"
+  },
+  "F00076-06-000-02": {
+   "age40": 8156,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Silver level (HKD16,000 Deductible)",
+   "plan": "Vital Care Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20241101"
+  },
+  "F00076-07-000-02": {
+   "age40": 4876,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Silver level (HKD50,000 Deductible)",
+   "plan": "Vital Care Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20241101"
+  },
+  "F00076-08-000-02": {
+   "age40": 4417,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Silver level (HKD100,000 Deductible)",
+   "plan": "Vital Care Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20241101"
+  },
+  "F00076-09-000-02": {
+   "age40": 20186,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Gold level (HKD0 Deductible)",
+   "plan": "Vital Care Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20241101"
+  },
+  "F00076-10-000-02": {
+   "age40": 14173,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Gold level (HKD16,000 Deductible)",
+   "plan": "Vital Care Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20241101"
+  },
+  "F00076-11-000-02": {
+   "age40": 10116,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Gold level (HKD50,000 Deductible)",
+   "plan": "Vital Care Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20241101"
+  },
+  "F00076-12-000-02": {
+   "age40": 7414,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Gold level (HKD100,000 Deductible)",
+   "plan": "Vital Care Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20241101"
+  },
+  "F00076-13-000-02": {
+   "age40": 47246,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Diamond level (HKD0 Deductible)",
+   "plan": "Vital Care Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20241101"
+  },
+  "F00076-14-000-02": {
+   "age40": 33436,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Diamond level (HKD16,000 Deductible)",
+   "plan": "Vital Care Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20241101"
+  },
+  "F00076-15-000-02": {
+   "age40": 23616,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Diamond level (HKD50,000 Deductible)",
+   "plan": "Vital Care Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20241101"
+  },
+  "F00076-16-000-02": {
+   "age40": 17320,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Diamond level (HKD100,000 Deductible)",
+   "plan": "Vital Care Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20241101"
+  },
+  "F00076-17-000-01": {
+   "age40": 22812,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Platinum level (HKD0 Deductible)",
+   "plan": "Vital Care Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20250922"
+  },
+  "F00076-18-000-01": {
+   "age40": 16017,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Platinum level (HKD16,000 Deductible)",
+   "plan": "Vital Care Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20250922"
+  },
+  "F00076-19-000-01": {
+   "age40": 11432,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Platinum level (HKD50,000 Deductible)",
+   "plan": "Vital Care Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20250922"
+  },
+  "F00076-20-000-01": {
+   "age40": 8379,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Platinum level (HKD100,000 Deductible)",
+   "plan": "Vital Care Voluntary Health Insurance Flexi Plan",
+   "prem_date": "20250922"
+  },
+  "F00077-01-000-01": {
+   "age40": 6198.81,
+   "insurer": "Chow Tai Fook Life Insurance Co Ltd",
+   "level": "Benefit Level 1 - Asia (HKD 36,000 Deductible + HKD 36,000 Benefit Contribution Amount)",
+   "plan": "\"ChampCare\" Medical Insurance Plan",
+   "prem_date": "20250110"
+  },
+  "F00077-02-000-01": {
+   "age40": 7109.52,
+   "insurer": "Chow Tai Fook Life Insurance Co Ltd",
+   "level": "Benefit Level 2 - Asia (HKD 18,000 Deductible + HKD 18,000 Benefit Contribution Amount)",
+   "plan": "\"ChampCare\" Medical Insurance Plan",
+   "prem_date": "20250110"
+  },
+  "F00077-03-000-01": {
+   "age40": 18032.14,
+   "insurer": "Chow Tai Fook Life Insurance Co Ltd",
+   "level": "Benefit Level 3 - Asia (HKD 0 Deductible + HKD 0 Benefit Contribution Amount)",
+   "plan": "\"ChampCare\" Medical Insurance Plan",
+   "prem_date": "20250110"
+  },
+  "F00077-04-000-01": {
+   "age40": 12583.33,
+   "insurer": "Chow Tai Fook Life Insurance Co Ltd",
+   "level": "Benefit Level 4 - Worldwide excluding USA (HKD 18,000 Deductible + HKD 18,000 Benefit Contribution Amount)",
+   "plan": "\"ChampCare\" Medical Insurance Plan",
+   "prem_date": "20250110"
+  },
+  "F00077-05-000-01": {
+   "age40": 31457.14,
+   "insurer": "Chow Tai Fook Life Insurance Co Ltd",
+   "level": "Benefit Level 5 - Worldwide excluding USA (HKD 0 Deductible + HKD 0 Benefit Contribution Amount)",
+   "plan": "\"ChampCare\" Medical Insurance Plan",
+   "prem_date": "20250110"
+  },
+  "F00077-06-000-01": {
+   "age40": 40111.9,
+   "insurer": "Chow Tai Fook Life Insurance Co Ltd",
+   "level": "Benefit Level 6 - Worldwide (HKD 18,000 Deductible + HKD 18,000 Benefit Contribution Amount)",
+   "plan": "\"ChampCare\" Medical Insurance Plan",
+   "prem_date": "20250110"
+  },
+  "F00077-07-000-01": {
+   "age40": 63175,
+   "insurer": "Chow Tai Fook Life Insurance Co Ltd",
+   "level": "Benefit Level 7 - Worldwide (HKD 0 Deductible + HKD 0 Benefit Contribution Amount)",
+   "plan": "\"ChampCare\" Medical Insurance Plan",
+   "prem_date": "20250110"
+  },
+  "F00077-08-000-01": {
+   "age40": 800,
+   "insurer": "Chow Tai Fook Life Insurance Co Ltd",
+   "level": "Benefit Level 1 - Asia (USD 4,640 Deductible + USD 4,640 Benefit Contribution Amount)",
+   "plan": "\"ChampCare\" Medical Insurance Plan",
+   "prem_date": "20250110"
+  },
+  "F00077-09-000-01": {
+   "age40": 917.86,
+   "insurer": "Chow Tai Fook Life Insurance Co Ltd",
+   "level": "Benefit Level 2 - Asia (USD 2,320 Deductible + USD 2,320 Benefit Contribution Amount)",
+   "plan": "\"ChampCare\" Medical Insurance Plan",
+   "prem_date": "20250110"
+  },
+  "F00077-10-000-01": {
+   "age40": 2326.19,
+   "insurer": "Chow Tai Fook Life Insurance Co Ltd",
+   "level": "Benefit Level 3 - Asia (USD 0 Deductible + USD 0 Benefit Contribution Amount)",
+   "plan": "\"ChampCare\" Medical Insurance Plan",
+   "prem_date": "20250110"
+  },
+  "F00077-11-000-01": {
+   "age40": 1623.81,
+   "insurer": "Chow Tai Fook Life Insurance Co Ltd",
+   "level": "Benefit Level 4 - Worldwide excluding USA (USD 2,320 Deductible + USD 2,320 Benefit Contribution Amount)",
+   "plan": "\"ChampCare\" Medical Insurance Plan",
+   "prem_date": "20250110"
+  },
+  "F00077-12-000-01": {
+   "age40": 4059.52,
+   "insurer": "Chow Tai Fook Life Insurance Co Ltd",
+   "level": "Benefit Level 5 - Worldwide excluding USA (USD 0 Deductible + USD 0 Benefit Contribution Amount)",
+   "plan": "\"ChampCare\" Medical Insurance Plan",
+   "prem_date": "20250110"
+  },
+  "F00077-13-000-01": {
+   "age40": 5176.19,
+   "insurer": "Chow Tai Fook Life Insurance Co Ltd",
+   "level": "Benefit Level 6 - Worldwide (USD 2,320 Deductible + USD 2,320 Benefit Contribution Amount)",
+   "plan": "\"ChampCare\" Medical Insurance Plan",
+   "prem_date": "20250110"
+  },
+  "F00077-14-000-01": {
+   "age40": 8151.19,
+   "insurer": "Chow Tai Fook Life Insurance Co Ltd",
+   "level": "Benefit Level 7 - Worldwide (USD 0 Deductible + USD 0 Benefit Contribution Amount)",
+   "plan": "\"ChampCare\" Medical Insurance Plan",
+   "prem_date": "20250110"
+  },
+  "F00078-01-000-01": {
+   "age40": 3439,
+   "insurer": "Bolttech Insurance (Hong Kong) Company Limited",
+   "level": "Plan 1",
+   "plan": "VFlexi Voluntary Health Insurance Plan",
+   "prem_date": "20250501"
+  },
+  "F00078-01-001-01": {
+   "age40": 4919,
+   "insurer": "Bolttech Insurance (Hong Kong) Company Limited",
+   "level": "Plan 2",
+   "plan": "VFlexi Voluntary Health Insurance Plan",
+   "prem_date": "20250501"
+  },
+  "F00078-02-000-01": {
+   "age40": 5199,
+   "insurer": "Bolttech Insurance (Hong Kong) Company Limited",
+   "level": "Plan 3",
+   "plan": "VFlexi Voluntary Health Insurance Plan",
+   "prem_date": "20250501"
+  },
+  "F00078-02-001-01": {
+   "age40": 7426,
+   "insurer": "Bolttech Insurance (Hong Kong) Company Limited",
+   "level": "Plan 4",
+   "plan": "VFlexi Voluntary Health Insurance Plan",
+   "prem_date": "20250501"
+  },
+  "F00078-03-000-01": {
+   "age40": 9457,
+   "insurer": "Bolttech Insurance (Hong Kong) Company Limited",
+   "level": "Plan 5",
+   "plan": "VFlexi Voluntary Health Insurance Plan",
+   "prem_date": "20250501"
+  },
+  "F00078-03-001-01": {
+   "age40": 13488,
+   "insurer": "Bolttech Insurance (Hong Kong) Company Limited",
+   "level": "Plan 6",
+   "plan": "VFlexi Voluntary Health Insurance Plan",
+   "prem_date": "20250501"
+  },
+  "F00079-01-000-01": {
+   "age40": 3290,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "One Plan",
+   "plan": "HSBC Voluntary Health Insurance One Plan ",
+   "prem_date": "20250623"
+  },
+  "F00079-01-001-01": {
+   "age40": 5377,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "One Plan with SMM",
+   "plan": "HSBC Voluntary Health Insurance One Plan ",
+   "prem_date": "20250623"
+  },
+  "F00080-01-000-01": {
+   "age40": 3889,
+   "insurer": "YF Life Insurance International Limited",
+   "level": "Plan 1",
+   "plan": "TaxVantage PrimeChoice Medical Plan",
+   "prem_date": "20260101"
+  },
+  "F00080-01-001-01": {
+   "age40": 5983,
+   "insurer": "YF Life Insurance International Limited",
+   "level": "Plan 1M",
+   "plan": "TaxVantage PrimeChoice Medical Plan",
+   "prem_date": "20260101"
+  },
+  "F00080-02-000-01": {
+   "age40": 4561,
+   "insurer": "YF Life Insurance International Limited",
+   "level": "Plan 1+",
+   "plan": "TaxVantage PrimeChoice Medical Plan",
+   "prem_date": "20260101"
+  },
+  "F00080-02-001-01": {
+   "age40": 7018,
+   "insurer": "YF Life Insurance International Limited",
+   "level": "Plan 1M+",
+   "plan": "TaxVantage PrimeChoice Medical Plan",
+   "prem_date": "20260101"
+  },
+  "F00080-03-000-01": {
+   "age40": 6495,
+   "insurer": "YF Life Insurance International Limited",
+   "level": "Plan 2",
+   "plan": "TaxVantage PrimeChoice Medical Plan",
+   "prem_date": "20260101"
+  },
+  "F00080-03-001-01": {
+   "age40": 9991,
+   "insurer": "YF Life Insurance International Limited",
+   "level": "Plan 2M",
+   "plan": "TaxVantage PrimeChoice Medical Plan",
+   "prem_date": "20260101"
+  },
+  "F00080-04-000-01": {
+   "age40": 12677,
+   "insurer": "YF Life Insurance International Limited",
+   "level": "Plan 3",
+   "plan": "TaxVantage PrimeChoice Medical Plan",
+   "prem_date": "20260101"
+  },
+  "F00080-04-001-01": {
+   "age40": 19503,
+   "insurer": "YF Life Insurance International Limited",
+   "level": "Plan 3M",
+   "plan": "TaxVantage PrimeChoice Medical Plan",
+   "prem_date": "20260101"
+  },
+  "F00081-01-000-01": {
+   "age40": 15496,
+   "insurer": "AIA International Limited",
+   "level": "HKD0 Deductible",
+   "plan": "AIA Voluntary Health Insurance SelectWise Scheme",
+   "prem_date": "20251027"
+  },
+  "F00081-02-000-01": {
+   "age40": 7728,
+   "insurer": "AIA International Limited",
+   "level": "HKD8,800 Deductible",
+   "plan": "AIA Voluntary Health Insurance SelectWise Scheme",
+   "prem_date": "20251027"
+  },
+  "F00081-03-000-01": {
+   "age40": 6064,
+   "insurer": "AIA International Limited",
+   "level": "HKD18,000 Deductible",
+   "plan": "AIA Voluntary Health Insurance SelectWise Scheme",
+   "prem_date": "20251027"
+  },
+  "F00081-04-000-01": {
+   "age40": 5432,
+   "insurer": "AIA International Limited",
+   "level": "HKD30,000 Deductible",
+   "plan": "AIA Voluntary Health Insurance SelectWise Scheme",
+   "prem_date": "20251027"
+  },
+  "F00081-05-000-01": {
+   "age40": 3984,
+   "insurer": "AIA International Limited",
+   "level": "HKD55,000 Deductible",
+   "plan": "AIA Voluntary Health Insurance SelectWise Scheme",
+   "prem_date": "20251027"
+  },
+  "F00081-06-000-01": {
+   "age40": 1937,
+   "insurer": "AIA International Limited",
+   "level": "USD0 Deductible",
+   "plan": "AIA Voluntary Health Insurance SelectWise Scheme",
+   "prem_date": "20251027"
+  },
+  "F00081-07-000-01": {
+   "age40": 966,
+   "insurer": "AIA International Limited",
+   "level": "USD1,100 Deductible",
+   "plan": "AIA Voluntary Health Insurance SelectWise Scheme",
+   "prem_date": "20251027"
+  },
+  "F00081-08-000-01": {
+   "age40": 758,
+   "insurer": "AIA International Limited",
+   "level": "USD2,250 Deductible",
+   "plan": "AIA Voluntary Health Insurance SelectWise Scheme",
+   "prem_date": "20251027"
+  },
+  "F00081-09-000-01": {
+   "age40": 679,
+   "insurer": "AIA International Limited",
+   "level": "USD3,750 Deductible",
+   "plan": "AIA Voluntary Health Insurance SelectWise Scheme",
+   "prem_date": "20251027"
+  },
+  "F00081-10-000-01": {
+   "age40": 498,
+   "insurer": "AIA International Limited",
+   "level": "USD6,875 Deductible",
+   "plan": "AIA Voluntary Health Insurance SelectWise Scheme",
+   "prem_date": "20251027"
+  },
+  "F00082-01-000-01": {
+   "age40": 11581,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "HKD0 Deductible",
+   "plan": "Chubb VHIS - Superb Plan",
+   "prem_date": "20251216"
+  },
+  "F00082-02-000-01": {
+   "age40": 4651,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "HKD25,000 Deductible",
+   "plan": "Chubb VHIS - Superb Plan",
+   "prem_date": "20251216"
+  },
+  "F00082-03-000-01": {
+   "age40": 3350,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "HKD50,000 Deductible",
+   "plan": "Chubb VHIS - Superb Plan",
+   "prem_date": "20251216"
+  },
+  "F00082-04-000-01": {
+   "age40": 2756,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "HKD100,000 Deductible",
+   "plan": "Chubb VHIS - Superb Plan",
+   "prem_date": "20251216"
+  },
+  "S00012-01-000-03": {
+   "age40": 2643,
+   "insurer": "Bolttech Insurance (Hong Kong) Company Limited",
+   "level": "Standard Plan",
+   "plan": "VChoice Voluntary Health Insurance Plan",
+   "prem_date": "20190401"
+  },
+  "S00013-01-000-02": {
+   "age40": 2959.2,
+   "insurer": "AIA International Limited",
+   "level": "Standard Plan",
+   "plan": "AIA Voluntary Health Insurance Standard Scheme",
+   "prem_date": "20260715"
+  },
+  "S00014-01-000-03": {
+   "age40": 2852,
+   "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
+   "level": "Standard Plan",
+   "plan": "AXA WiseGuard Medical Insurance Plan",
+   "prem_date": "20190401"
+  },
+  "S00015-01-000-02": {
+   "age40": 3005,
+   "insurer": "Chubb Life Insurance Company Ltd.",
+   "level": "Standard Plan",
+   "plan": "Chubb VHIS - Standard Plan",
+   "prem_date": "20221001"
+  },
+  "S00016-01-000-02": {
+   "age40": 3725,
+   "insurer": "China Taiping Insurance (HK) Company Limited",
+   "level": "Standard Plan",
+   "plan": "Taiping Voluntary Health Insurance Scheme Standard Plan",
+   "prem_date": "20190401"
+  },
+  "S00017-01-000-02": {
+   "age40": 2767,
+   "insurer": "Liberty International Insurance Limited",
+   "level": "Standard Plan",
+   "plan": "Liberty Insurance Standard VHIS Plan",
+   "prem_date": "20210701"
+  },
+  "S00018-01-000-02": {
+   "age40": 2351,
+   "insurer": "Sun Life Hong Kong Limited",
+   "level": "Standard Plan",
+   "plan": "WeHealth",
+   "prem_date": "20260401"
+  },
+  "S00019-01-000-03": {
+   "age40": 4445,
+   "insurer": "Dah Sing Insurance Company Limited",
+   "level": "Standard Plan",
+   "plan": "Dah Sing Insurance ADVANTAGE VHIS Standard Plan",
+   "prem_date": "20190401"
+  },
+  "S00020-01-000-02": {
+   "age40": 4796,
+   "insurer": "Bupa (Asia) Limited",
+   "level": "Standard Plan",
+   "plan": "Bupa MyBasic VHIS Plan",
+   "prem_date": "20260302"
+  },
+  "S00021-01-000-02": {
+   "age40": 2483,
+   "insurer": "China Life Insurance (Overseas) Company Limited",
+   "level": "Standard Plan",
+   "plan": "Guard Your Health Medical Insurance Plan",
+   "prem_date": "20190401"
+  },
+  "S00022-01-000-02": {
+   "age40": 3757,
+   "insurer": "BOC Group Life Assurance Company Limited",
+   "level": "Standard Plan",
+   "plan": "BOC Life Standard VHIS",
+   "prem_date": "20190401"
+  },
+  "S00023-01-000-03": {
+   "age40": 2304,
+   "insurer": "Bowtie Life Insurance Company Limited",
+   "level": "Standard Plan",
+   "plan": "Bowtie VHIS Standard",
+   "prem_date": "20251229"
+  },
+  "S00024-01-000-02": {
+   "age40": 2916,
+   "insurer": "Zurich Insurance Company Ltd",
+   "level": "Standard Plan",
+   "plan": "HealthSure Voluntary Health Insurance Plan",
+   "prem_date": "20191016"
+  },
+  "S00025-01-000-02": {
+   "age40": 2740,
+   "insurer": "YF Life Insurance International Limited",
+   "level": "Standard Plan",
+   "plan": "TaxVantage Medical Plan",
+   "prem_date": "20260101"
+  },
+  "S00026-01-000-02": {
+   "age40": 3388.92,
+   "insurer": "Prudential Hong Kong Limited",
+   "level": "Standard Plan",
+   "plan": "PRUHealth CoreChoice Medical Plan",
+   "prem_date": "20251001"
+  },
+  "S00027-01-000-02": {
+   "age40": 2895,
+   "insurer": "Asia Insurance Company, Limited",
+   "level": "Standard Plan",
+   "plan": "Asia Unique - Family Care",
+   "prem_date": "20190401"
+  },
+  "S00028-01-000-03": {
+   "age40": 3140,
+   "insurer": "Chow Tai Fook Life Insurance Co Ltd",
+   "level": "Standard Plan",
+   "plan": "''WiseCare'' Medical Insurance Plan",
+   "prem_date": "20251123"
+  },
+  "S00029-01-000-02": {
+   "age40": 4914,
+   "insurer": "MSIG Insurance (Hong Kong) Limited",
+   "level": "Standard Plan",
+   "plan": "VHIS Standard Care",
+   "prem_date": "20190401"
+  },
+  "S00030-01-000-02": {
+   "age40": 2628,
+   "insurer": "Allianz Global Corporate & Specialty SE",
+   "level": "Standard Plan",
+   "plan": "Allianz Medical Protect",
+   "prem_date": "20190401"
+  },
+  "S00031-01-000-02": {
+   "age40": 3846,
+   "insurer": "CIGNA Worldwide General Insurance Company Limited",
+   "level": "Standard Plan",
+   "plan": "Cigna VHIS Series - Standard Plan",
+   "prem_date": "20260701"
+  },
+  "S00032-01-000-02": {
+   "age40": 4898,
+   "insurer": "Blue Cross (Asia-Pacific) Insurance Limited",
+   "level": "Standard Plan",
+   "plan": "CareForYou Standard Plan for VHIS",
+   "prem_date": "20260101"
+  },
+  "S00033-01-000-02": {
+   "age40": 2852,
+   "insurer": "AXA China Region Insurance Company Limited",
+   "level": "Standard Plan",
+   "plan": "AXA WiseGuard Medical Insurance Plan",
+   "prem_date": "20190401"
+  },
+  "S00034-01-000-03": {
+   "age40": 2655,
+   "insurer": "Manulife (International) Limited",
+   "level": "Standard Plan",
+   "plan": "Manulife Shelter VHIS Standard Plan",
+   "prem_date": "20260629"
+  },
+  "S00035-01-000-02": {
+   "age40": 3390,
+   "insurer": "Bank of China Group Insurance Company Limited",
+   "level": "Standard Plan",
+   "plan": "BOC Standard Voluntary Health Insurance Scheme Certified Plan",
+   "prem_date": "20190401"
+  },
+  "S00036-01-000-03": {
+   "age40": 3141,
+   "insurer": "FWD Life Insurance Company (Bermuda) Limited",
+   "level": "Standard Plan",
+   "plan": "vCore Medical Plan",
+   "prem_date": "20260202"
+  },
+  "S00037-01-000-02": {
+   "age40": 3410,
+   "insurer": "Hong Kong Life Insurance Limited",
+   "level": "Standard Plan",
+   "plan": "Health Essential Medical Plan - Standard",
+   "prem_date": "20250929"
+  },
+  "S00038-01-000-02": {
+   "age40": 2852,
+   "insurer": "AXA General Insurance Hong Kong Limited",
+   "level": "Standard Plan",
+   "plan": "AXA GI WiseGuard Medical Insurance Plan",
+   "prem_date": "20190819"
+  },
+  "S00039-01-000-02": {
+   "age40": 3285.69,
+   "insurer": "China Taiping Life Insurance (Hong Kong) Company Limited",
+   "level": "Standard Plan",
+   "plan": "Taiping Life VHIS Standard Plan",
+   "prem_date": "20210707"
+  },
+  "S00040-01-000-02": {
+   "age40": 2661,
+   "insurer": "Well Link Life Insurance Company Limited",
+   "level": "Standard Plan",
+   "plan": "Well Protect Voluntary Health Insurance Scheme (Standard)",
+   "prem_date": "20191031"
+  },
+  "S00042-01-000-02": {
+   "age40": 2995,
+   "insurer": "HSBC Life (International) Limited",
+   "level": "Standard Plan",
+   "plan": "HSBC Voluntary Health Insurance Standard Plan",
+   "prem_date": "20200720"
+  },
+  "S00043-01-000-01": {
+   "age40": 2267,
+   "insurer": "Avo Insurance Company Limited",
+   "level": "Standard Plan",
+   "plan": "Avo Voluntary Health Insurance Scheme (Standard) Plan",
+   "prem_date": "20211201"
+  },
+  "S00044-01-000-03": {
+   "age40": 3634,
+   "insurer": "Chubb Life Insurance Hong Kong Limited",
+   "level": "Standard Plan",
+   "plan": "Chubb VHIS - Standard Plan",
+   "prem_date": "20250401"
+  },
+  "S00045-01-000-01": {
+   "age40": 2075,
+   "insurer": "ZA Life Limited",
+   "level": "Standard Plan",
+   "plan": "ZA VHIS",
+   "prem_date": "20210521"
+  }
+ }
+}
