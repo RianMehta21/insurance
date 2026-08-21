@@ -523,21 +523,28 @@ def sheet_notes(wb, stats):
         ("Age basis R", "Age nearest birthday. APPROXIMATED as client age; "
                         "exact resolution needs date of birth."),
         ("", ""),
-        ("Basis S", "STANDALONE policy (獨立保單). Confirmed by the Health "
-                    "Bureau data dictionary for the Standard Premium dataset. "
-                    "Present for 530 of 579 variants."),
-        ("Basis R", "RIDER / supplementary benefit attached to another policy "
-                    "(附屬保單). Present for 184 variants, all from insurers that "
-                    "also sell VHIS on top of a life policy. Of the 135 variants "
-                    "priced on both bases: R is lower at every age on 87, "
-                    "identical on 42, and HIGHER at one or more ages on 6. Quote "
-                    "R only when the plan is genuinely being sold as a rider, "
-                    "and do not assume it is the cheaper option."),
-        ("Basis S/R caveat", "This standalone/rider reading is inferred from the "
-                             "data, not read off a published data dictionary: "
-                             "an 'S' series appears on 497 Flexi variants, which "
-                             "rules out S meaning 'Standard Plan'. Confirm with "
-                             "the Health Bureau before relying on it in a quote."),
+        ("Basis S", "STANDALONE policy. The insurers' own premium schedules "
+                    "label this column 基本計劃 / Basic plan. Present for 530 "
+                    "of 579 variants."),
+        ("Basis R", "RIDER attached to another policy. The premium schedules "
+                    "label this column 附加契約 / Policy rider. Present for 184 "
+                    "variants. Of the 135 priced on both bases, R is lower at "
+                    "every age on 87, identical on 42, and higher at one or more "
+                    "ages on 6. Quote R only when the plan is genuinely being "
+                    "sold as a rider."),
+        ("Basis S/R verified", "Not an inference. The published premium schedule "
+                               "PDFs print the two series side by side under "
+                               "基本計劃 Basic plan and 附加契約 Policy rider, and "
+                               "those columns match the S and R figures in the "
+                               "open data to the cent. (It is emphatically NOT "
+                               "Standard vs Flexi: 497 Flexi variants carry an "
+                               "S series.)"),
+        ("How much it matters", "For the 444 variants priced on only one basis "
+                                "the choice is ignored and the other basis is "
+                                "used. For the 135 with both, R runs about 10% "
+                                "below S at the median and up to 17.7% below. "
+                                "Picking the wrong one is a real pricing error, "
+                                "so check the Basis Used column."),
         ("Basis fallback", "If the chosen basis has no table for a plan, the "
                            "other basis is used. See the Basis Used column."),
         ("", ""),

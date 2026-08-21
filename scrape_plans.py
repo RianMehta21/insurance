@@ -50,13 +50,30 @@ UA = {"User-Agent": "vhis-compare/1.0 (personal plan comparison tool)"}
 # ---------------------------------------------------------------------------
 # text extraction
 # ---------------------------------------------------------------------------
-def pdf_to_text(path):
-    """pdftotext -layout preserves column structure, which the benefit
-    schedule table needs. Falls back to pdfplumber."""
+def pdf_to_text(path, layout=True):
+    """Extract text, either preserving the visual layout or following reading order.
+
+    Both modes are needed, because they fail on opposite things.
+
+    -layout keeps columns aligned, which the Benefit Schedule table depends on:
+    without it the benefit name and its amount stop being on the same line.
+
+    But on a two-column policy document -layout interleaves the columns, and a
+    sentence spanning the page comes out shredded:
+
+        "... are not subject to any restriction in the choice of
+         Person is Confined in a Hospital or undergoes any ward class"
+
+    The Part 6 clauses are matched by their exact mandated wording, so that
+    splicing defeats them entirely. Reading order (no -layout) reassembles the
+    sentence correctly but scrambles the table.
+
+    So: pull both, and let each field use whichever one it can read.
+    """
+    args = ["pdftotext"] + (["-layout"] if layout else []) + [path, "-"]
     try:
         import subprocess
-        r = subprocess.run(["pdftotext", "-layout", path, "-"],
-                           capture_output=True, timeout=120)
+        r = subprocess.run(args, capture_output=True, timeout=120)
         if r.returncode == 0 and len(r.stdout) > 200:
             return r.stdout.decode("utf-8", errors="replace")
     except Exception:
@@ -218,17 +235,30 @@ def extract_ward_restriction(text):
     if not sec:
         return None, None, None
     s = squash(sec)
-    if re.search(r"not\s+subject\s+to\s+any\s+restriction\s+in\s+the\s+choice\s+of\s+ward",
+    if re.search(r"not\s+subject\s+to\s+any\s+restrictions?\s+in\s+the\s+choice\s+of\s+ward",
                  s, re.I):
         return "No restriction", "tier1", s[:200]
-    if re.search(r"subject\s+to\s+the\s+restriction\s+in\s+the\s+choice\s+of\s+ward",
+    # "subject to THE restriction" is the template wording, but insurers drop
+    # the article ("subject to restriction in the choice of ward class") and
+    # pluralise it. Requiring the exact article left 40 plans blank, which
+    # reads as "no restriction" rather than "restricted, look it up".
+    if re.search(r"subject\s+to\s+(?:the\s+|any\s+)?restrictions?\s+in\s+the\s+choice\s+of\s+ward",
                  s, re.I):
+        # Strip the clause's own boilerplate before hunting for a ward TYPE.
+        # Otherwise the literal phrase "choice of ward class" satisfies the
+        # \bward\b pattern and every restricted plan comes back as "Ward" -
+        # which was returning "Ward" for HSBC's Bronze AND Silver levels even
+        # though that document restricts the levels differently. A confidently
+        # wrong ward class is worse than an admitted gap.
+        named = re.sub(r"(?:the\s+)?choice\s+of\s+ward\s+class|"
+                       r"in\s+the\s+choice\s+of\s+ward|ward\s+class",
+                       " ", s, flags=re.I)
         for pat, label in [(r"\bsuite\b", "Suite"),
                            (r"standard\s*private", "Standard Private"),
                            (r"semi[\s\-]?private", "Semi-private"),
                            (r"\bprivate\b", "Private"),
                            (r"\bward\b", "Ward")]:
-            if re.search(pat, s, re.I):
+            if re.search(pat, named, re.I):
                 return label, "tier2", s[:200]
         return "Restricted (see doc)", "tier2", s[:200]
     return None, "tier3", s[:200]
@@ -239,9 +269,9 @@ def extract_provider_restriction(text):
     if not sec:
         return None, None, None
     s = squash(sec)
-    if re.search(r"not\s+subject\s+to\s+any\s+restriction", s, re.I):
+    if re.search(r"not\s+subject\s+to\s+any\s+restrictions?", s, re.I):
         return "No restriction", "tier1", s[:200]
-    if re.search(r"subject\s+to\s+the\s+restriction", s, re.I):
+    if re.search(r"subject\s+to\s+(?:the\s+|any\s+)?restrictions?", s, re.I):
         return "Network restricted", "tier1", s[:200]
     return None, "tier3", s[:200]
 
@@ -499,17 +529,45 @@ def scrape_one(row, cache_dir, sleep=1.0):
         rec["overall_tier"] = "tier3"
         return rec
 
-    text = pdf_to_text(path)
+    text = pdf_to_text(path, layout=True)
     if text.startswith("__EXTRACTION_FAILED__"):
         rec["scrape_status"] = "no_text_layer_needs_ocr"
         rec["overall_tier"] = "tier3"
         return rec
+    # Reading-order text, for the clauses that a two-column layout shreds.
+    # Read lazily: most documents resolve from the layout text alone.
+    flow = None
 
-    geo, gt, _ = extract_geography(text)
-    ward, wt, _ = extract_ward_restriction(text)
-    prov, _, _ = extract_provider_restriction(text)
+    def either(fn):
+        """Run an extractor on the layout text, retry on reading-order text."""
+        nonlocal flow
+        value, tier, snippet = fn(text)
+        if value is not None and tier != "tier3":
+            return value, tier, snippet
+        if flow is None:
+            flow = pdf_to_text(path, layout=False)
+        if flow.startswith("__EXTRACTION_FAILED__"):
+            return value, tier, snippet
+        v2, t2, s2 = fn(flow)
+        return (v2, t2, s2) if v2 is not None else (value, tier, snippet)
+
+    geo, gt, _ = either(extract_geography)
+    ward, wt, _ = either(extract_ward_restriction)
+    prov, _, _ = either(extract_provider_restriction)
+    life, lt, _ = either(extract_lifetime_limit)
+
     cost, ct, _ = extract_cost_sharing(text)
-    life, lt, _ = extract_lifetime_limit(text)
+    if not cost.get("has_deductible"):
+        if flow is None:
+            flow = pdf_to_text(path, layout=False)
+        if not flow.startswith("__EXTRACTION_FAILED__"):
+            c2, ct2, _ = extract_cost_sharing(flow)
+            if c2.get("has_deductible"):
+                cost, ct = c2, ct2
+
+    # The Benefit Schedule is a table, so it is read ONLY from the layout text.
+    # Reading order puts every benefit name and every amount in separate runs,
+    # which produces confident nonsense rather than a miss.
     sched, st, _ = extract_benefit_schedule(text)
 
     # Coinsurance is stated in the Benefit Schedule far more often than in the

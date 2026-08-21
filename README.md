@@ -49,9 +49,14 @@ Rows marked `APPROX` use basis R. Getting those exact needs the client's date of
 birth, so treat them as indicative.
 
 **Premium basis S or R** (the yellow cell on the Client sheet) is a different thing:
-`S` is a standalone policy, `R` is a rider attached to another policy. If a plan
-has no table for the basis you picked, the other one is used automatically — the
-**Basis Used** column tells you which.
+`S` is a standalone policy, `R` is a rider attached to another policy. The insurers'
+own premium schedules print these two columns side by side as 基本計劃 *Basic plan*
+and 附加契約 *Policy rider*.
+
+It matters. Of the 579 variants, 444 are priced on only one basis, so the choice is
+ignored and the other one is used automatically — the **Basis Used** column tells you
+which. But 135 carry both, and there R runs about 10% below S at the median and up to
+17.7% below. Quote R only if the plan is genuinely being sold as a rider.
 
 ### First Year and 10-Year Avg
 
