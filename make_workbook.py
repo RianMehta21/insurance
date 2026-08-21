@@ -122,35 +122,78 @@ def sheet_client(wb, catalog_n, prem_date_max):
     ws.add_data_validation(dv_age)
     dv_age.add(ws["C6"])
 
-    ws["B11"] = "HOW TO USE"
-    ws["B11"].font = Font(name=ARIAL, size=11, bold=True)
-    steps = [
-        "1. Set the four yellow cells above.",
-        "2. Go to the Compare sheet. Every premium column has already recalculated.",
-        "3. Filter row 4: set Available = Open first, then narrow by ward, deductible, geography.",
-        "4. Sort by 10-Year Avg, not First Year. See the warning below.",
-        "5. Copy the shortlisted rows into a fresh sheet for the client.",
-    ]
-    for i, s in enumerate(steps):
-        ws.cell(12 + i, 2, s).font = BLACK
-        ws.merge_cells(start_row=12 + i, start_column=2, end_row=12 + i, end_column=4)
+    # Everything below flows from a cursor rather than hardcoded row numbers.
+    # The previous layout pinned each block to a literal row, so adding a
+    # single warning silently pushed the footer into the block beneath it.
+    r += 2
 
-    ws["B18"] = "COLOUR LEGEND"
-    ws["B18"].font = Font(name=ARIAL, size=11, bold=True)
-    legend = [("Blue on yellow", INPUT_FILL, "You type here. These are the only cells to change."),
-              ("Orange fill", EDIT_FILL, "Benefits sheet. Paste scraper output or type corrections."),
-              ("Black text", None, "Formula. Do not overwrite or the sheet stops recalculating.")]
-    for i, (lbl, fill, desc) in enumerate(legend):
-        c = ws.cell(19 + i, 2, lbl)
+    def heading(text, colour=None):
+        nonlocal r
+        c = ws.cell(r, 2, text)
+        c.font = Font(name=ARIAL, size=11, bold=True, color=colour or "000000")
+        r += 1
+
+    def line(text, font=None, fill=None, height=None, span=4):
+        nonlocal r
+        c = ws.cell(r, 2, text)
+        c.font = font or BLACK
+        if fill:
+            c.fill = fill
+        if height:
+            c.alignment = Alignment(wrap_text=True, vertical="top")
+            ws.row_dimensions[r].height = height
+        ws.merge_cells(start_row=r, start_column=2, end_row=r, end_column=span)
+        r += 1
+
+    # This file is replaced every refresh, so freshness is the first thing he
+    # needs to know and the easiest thing to forget. It goes above the usage
+    # steps, not in a footer.
+    heading("BEFORE YOU QUOTE ANYONE", "C00000")
+    line(f"This copy was built on {datetime.now().strftime('%d %B %Y')}. "
+         f"The newest premium in it takes effect {prem_date_max}.",
+         font=Font(name=ARIAL, size=10, bold=True), fill=WARN_FILL, height=16)
+    line("Download a fresh copy before each client meeting. The file is rebuilt "
+         "whenever the Health Bureau publishes new data, and this one does not "
+         "update itself.",
+         font=Font(name=ARIAL, size=9), fill=WARN_FILL, height=16)
+    line("Always the newest copy:  "
+         "github.com/RianMehta21/insurance/releases/latest",
+         font=Font(name=ARIAL, size=9, bold=True), fill=WARN_FILL, height=16)
+    line("Do not save your own notes into this file. It is a tool, not a "
+         "document: the next download replaces it entirely. Copy your shortlist "
+         "into your own workbook instead.",
+         font=Font(name=ARIAL, size=9), fill=WARN_FILL, height=16)
+    r += 1
+
+    heading("HOW TO USE")
+    for s in [
+        "1. Check the build date above. If it is more than a week old, download a fresh copy.",
+        "2. Set the four yellow cells at the top.",
+        "3. Go to the Compare sheet. Every premium column has already recalculated.",
+        "4. Filter row 4: set Available = Open first, then narrow by ward, deductible, geography.",
+        "5. Sort by 10-Year Avg, not First Year. See the warnings below.",
+        "6. Copy the shortlisted rows into your own file for the client.",
+    ]:
+        line(s)
+    r += 1
+
+    heading("COLOUR LEGEND")
+    for lbl, fill, desc in [
+            ("Blue on yellow", INPUT_FILL, "You type here. These are the only cells to change."),
+            ("Orange fill", EDIT_FILL, "Benefits sheet. Rebuilt each refresh; corrections go in manual_overrides.csv."),
+            ("Black text", None, "Formula. Do not overwrite or the sheet stops recalculating."),
+            ("Orange row", WARN_FILL, "Compare sheet. This plan cannot be sold to a new client.")]:
+        c = ws.cell(r, 2, lbl)
         c.font = BLUE if fill is INPUT_FILL else BLACK
         if fill:
             c.fill = fill
         c.border = BOX
-        ws.cell(19 + i, 4, desc).font = SUB
+        ws.cell(r, 4, desc).font = SUB
+        r += 1
+    r += 1
 
-    ws["B23"] = "READ BEFORE QUOTING"
-    ws["B23"].font = Font(name=ARIAL, size=11, bold=True, color="C00000")
-    warns = [
+    heading("READ BEFORE QUOTING", "C00000")
+    for w in [
         "Age 75 and above: the source data stops at each insurer's new-application age ceiling, "
         "so the 10-year window is incomplete for 546 of 579 plans. Check the Years Avail column.",
         "The Available column shows whether a plan can still be sold to a NEW client. "
@@ -162,21 +205,18 @@ def sheet_client(wb, catalog_n, prem_date_max):
         "Age-nearest-birthday insurers are approximated from whole-year age. "
         "Those rows show APPROX and need date of birth to be exact.",
         "Never rank across currencies. Filter to HKD or USD first.",
-    ]
-    for i, w in enumerate(warns):
-        c = ws.cell(24 + i, 2, w)
-        c.font = Font(name=ARIAL, size=9)
-        c.fill = WARN_FILL
-        c.alignment = Alignment(wrap_text=True, vertical="top")
-        ws.merge_cells(start_row=24 + i, start_column=2, end_row=24 + i, end_column=4)
-        ws.row_dimensions[24 + i].height = 26
+        "Deductible is blank for some Flexi plans because the plan document does not state it; "
+        "it is set per policy. Confirm with the insurer before quoting those.",
+    ]:
+        line(w, font=Font(name=ARIAL, size=9), fill=WARN_FILL, height=26)
+    r += 1
 
-    ws.cell(31, 2, "Data refreshed").font = BLACK
-    ws.cell(31, 3, datetime.now().strftime("%Y-%m-%d")).font = BLACK
-    ws.cell(32, 2, "Latest premium date in data").font = BLACK
-    ws.cell(32, 3, prem_date_max).font = BLACK
-    ws.cell(33, 2, "Source").font = BLACK
-    ws.cell(33, 3, "data.gov.hk / Health Bureau VHIS open data").font = SUB
+    ws.cell(r, 2, "Data refreshed").font = BLACK
+    ws.cell(r, 3, datetime.now().strftime("%Y-%m-%d")).font = BLACK
+    ws.cell(r + 1, 2, "Latest premium date in data").font = BLACK
+    ws.cell(r + 1, 3, prem_date_max).font = BLACK
+    ws.cell(r + 2, 2, "Source").font = BLACK
+    ws.cell(r + 2, 3, "data.gov.hk / Health Bureau VHIS open data").font = SUB
     return ws
 
 
