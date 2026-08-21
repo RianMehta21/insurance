@@ -50,6 +50,11 @@ txt_cache/
 # ---------------------------------------------------------------------------
 *.recalc.xlsx
 
+# Staging file the scraper writes before the merge step folds it into
+# data/plan_benefits.csv. Committing it just duplicates ~190 KB and invites
+# someone to edit the copy that gets overwritten on the next run.
+data/plan_benefits_new.csv
+
 # Excel lock files, created when the workbook is open
 ~$*.xlsx
 .~lock.*#
