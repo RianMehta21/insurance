@@ -13,9 +13,17 @@ These four are not, and losing them costs either 40 minutes or real work.
 ## manual_overrides.csv
 
 The one file here meant to be edited by a person, and the only to-do list worth
-working from. `worklist.py` keeps it current on every run: it appends a row for
-each plan still missing a key field and refreshes the read-only context columns,
-but never changes or removes a value you typed.
+working from. `worklist.py` keeps it current on every run.
+
+It is deliberately short. A plan earns a row only if it is still missing a key
+field **and** actually reaches a client shortlist — scored by pricing every plan
+across 18 client profiles and counting how often it lands in the cheapest 20 of
+its currency. 194 plans are missing a deductible; 9 of them ever get quoted, so
+9 is what you see. `--min-hits 0` lists the rest.
+
+Two rules it never breaks: a row carrying a value you typed is kept forever, even
+if that plan would otherwise be filtered out, and no value you entered is ever
+altered or removed.
 
 Each row identifies the plan and links to its PDF. `still_missing` says what to
 fill; leave any other column blank to leave that field alone.

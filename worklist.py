@@ -144,6 +144,9 @@ def main():
     ap.add_argument("--premiums", default="current/plan-premium.json",
                     help="used to rank rows by how often the plan actually "
                          "reaches a client shortlist")
+    ap.add_argument("--min-hits", type=int, default=1,
+                    help="omit outstanding plans that reach a client shortlist "
+                         "fewer than this many times (0 = list everything)")
     ap.add_argument("--dry-run", action="store_true",
                     help="report what would change without writing")
     args = ap.parse_args()
@@ -196,11 +199,34 @@ def main():
                             -int(r["shortlist_hits"] or 0),
                             r["insurer"], r["plan_level"]))
 
-    print(f"catalog plans        : {len(catalog)}")
-    print(f"rows on the list     : {len(out)}")
-    print(f"  still need filling : {still_needed}")
-    print(f"  already filled in  : {resolved}")
-    print(f"  newly added        : {newly_added}")
+    # Write only what is worth someone's time.
+    #
+    # Two kinds of row always survive: anything with a value typed into it,
+    # because this file is the permanent store of those corrections and losing
+    # one is unrecoverable; and anything still outstanding that actually
+    # reaches a client shortlist. A plan that is both blank and never quoted is
+    # noise - it is fully reconstructible from the catalog, so dropping it
+    # loses nothing and keeps the file small enough to work through.
+    def has_user_value(r):
+        return any(clean(r.get(c)) for c in VALUE_COLS)
+
+    keep, omitted = [], 0
+    for r in out:
+        if has_user_value(r):
+            keep.append(r)
+        elif r["still_missing"] and int(r["shortlist_hits"] or 0) >= args.min_hits:
+            keep.append(r)
+        else:
+            omitted += 1
+    out = keep
+
+    outstanding = sum(1 for r in out if r["still_missing"])
+    print(f"catalog plans          : {len(catalog)}")
+    print(f"plans missing a value  : {still_needed}")
+    print(f"  worth chasing        : {outstanding}  (reach a client shortlist)")
+    print(f"  left out             : {omitted}  (never quoted, or already resolved)")
+    print(f"corrections on record  : {sum(1 for r in out if has_user_value(r))}")
+    print(f"rows written           : {len(out)}")
 
     if args.dry_run:
         print("\n--dry-run: nothing written")
@@ -215,13 +241,14 @@ def main():
         w.writeheader()
         w.writerows(out)
     print(f"\nwrote {args.overrides}")
+    still_needed = sum(1 for r in out if r["still_missing"])
     if still_needed:
         ranked = [r for r in out if r["still_missing"]]
         hot = [r for r in ranked if int(r["shortlist_hits"] or 0) > 0]
         print(f"\n{still_needed} row(s) still need filling, but they are not equal:")
         print(f"  {len(hot)} reach a client shortlist and are worth looking up")
-        print(f"  {still_needed - len(hot)} never place in the cheapest "
-              f"{SHORTLIST_N} for any profile - leave them")
+        print(f"  {omitted} more were left out entirely: never quoted, "
+              f"reconstructible any time with --min-hits 0")
         if hot:
             print("\nstart here:")
             for r in hot[:10]:

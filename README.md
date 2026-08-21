@@ -148,8 +148,16 @@ F00022-01-000-03,AIA International,VHIS Flexi,Semi-private (HKD),https://...,ded
 
 Fill the blank cells, save as CSV, commit. The next build picks it up.
 
-Currently 234 rows need attention: 189 need only the deductible, 40 only the ward
-class, 5 need all three.
+It only lists what is worth your time. Every plan is priced across 18 client
+profiles (ages 25-65, both genders) and scored by how often it reaches the cheapest
+20 of its currency among plans that can actually be sold. Plans that never place
+are left out — 194 are missing a deductible, but only **9** ever get quoted, and
+those 9 are the file.
+
+To see everything anyway: `python worklist.py --min-hits 0`.
+
+Anything you type is kept forever, even for a plan that would otherwise be left
+out. Nothing you enter is ever dropped.
 
 To fix something that's wrong rather than missing, add the certification number as
 a new row and type the correct values. It will override whatever was scraped.
