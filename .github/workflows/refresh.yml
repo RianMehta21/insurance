@@ -12,8 +12,12 @@ on:
     - cron: "0 23 * * 0"
   workflow_dispatch:        # lets you force a run from the Actions tab
     inputs:
+      force_build:
+        description: "Rebuild and publish even if the source data has not changed"
+        type: boolean
+        default: true
       force_full_scrape:
-        description: "Re-scrape all 579 plan PDFs (slow, ~40 min)"
+        description: "Also re-scrape all 579 plan PDFs (slow, ~40 min)"
         type: boolean
         default: false
 
@@ -24,9 +28,11 @@ jobs:
   refresh:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      # checkout v5 / setup-python v6 run on Node 24. The v4/v5 pair still
+      # works but targets the deprecated Node 20 and warns on every run.
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
@@ -54,14 +60,32 @@ jobs:
           rc=$?
           set -e
           case $rc in
-            0) echo "changed=false" >> $GITHUB_OUTPUT; echo "No upstream changes." ;;
-            1) echo "changed=true"  >> $GITHUB_OUTPUT; echo "Upstream data changed." ;;
+            0) changed=false; echo "No upstream changes." ;;
+            1) changed=true;  echo "Upstream data changed." ;;
             *) echo "refresh.py --check failed with exit $rc"; exit $rc ;;
           esac
+          echo "changed=$changed" >> $GITHUB_OUTPUT
+
+          # Whether to build is a SEPARATE question from whether the data moved.
+          #
+          # Gating the build purely on `changed` means the workbook can only
+          # ever publish on a week the government edits its data. There is then
+          # no way to cut the first release at all, and no way to republish
+          # after fixing a bug in the workbook itself. A manual run defaults to
+          # building for exactly that reason.
+          if [ "$changed" = "true" ] \
+             || [ "${{ inputs.force_build }}" = "true" ] \
+             || [ "${{ inputs.force_full_scrape }}" = "true" ]; then
+            echo "build=true" >> $GITHUB_OUTPUT
+            echo "Will build and publish."
+          else
+            echo "build=false" >> $GITHUB_OUTPUT
+            echo "Nothing to do."
+          fi
 
       # pipefail so a failing refresh.py is not masked by tee's exit status.
       - name: Pull and diff
-        if: steps.check.outputs.changed == 'true' || inputs.force_full_scrape
+        if: steps.check.outputs.build == 'true'
         shell: bash
         run: |
           set -o pipefail
@@ -71,7 +95,7 @@ jobs:
       # 2. Rebuild the flat data
       # ------------------------------------------------------------------
       - name: Build catalog
-        if: steps.check.outputs.changed == 'true' || inputs.force_full_scrape
+        if: steps.check.outputs.build == 'true'
         run: python build_vhis.py --data-dir current --out-dir out
 
       # ------------------------------------------------------------------
@@ -82,7 +106,7 @@ jobs:
       # premium update re-scrapes nothing.
       # ------------------------------------------------------------------
       - name: Determine scrape targets
-        if: steps.check.outputs.changed == 'true' || inputs.force_full_scrape
+        if: steps.check.outputs.build == 'true'
         id: targets
         run: |
           if [ "${{ inputs.force_full_scrape }}" = "true" ]; then
@@ -105,13 +129,13 @@ jobs:
           fi
           echo "count=$(tr ',' '\n' < scrape_targets.txt | grep -c . || true)" >> $GITHUB_OUTPUT
 
-      # The guard on `changed` is not redundant. Without it, a no-change run
-      # skips the targets step, leaves steps.targets.outputs.count as the empty
-      # string, and '' != '0' is true - so the scraper ran on every quiet week,
-      # crashed on the missing catalog, and was hidden by continue-on-error.
+      # The guard on `build` is not redundant. Without it, a run that skips the
+      # targets step leaves steps.targets.outputs.count as the empty string,
+      # and '' != '0' is true - so the scraper ran on every quiet week, crashed
+      # on the missing catalog, and was hidden by continue-on-error.
       - name: Scrape plan PDFs
         if: >-
-          (steps.check.outputs.changed == 'true' || inputs.force_full_scrape)
+          steps.check.outputs.build == 'true'
           && steps.targets.outputs.count != '0'
         continue-on-error: true    # a bad PDF must not block the premium refresh
         run: |
@@ -176,13 +200,13 @@ jobs:
       # 4. Rebuild the workbook and prove the formulas evaluate
       # ------------------------------------------------------------------
       - name: Build workbook
-        if: steps.check.outputs.changed == 'true' || inputs.force_full_scrape
+        if: steps.check.outputs.build == 'true'
         run: |
           python make_workbook.py --data-dir current --out VHIS_Compare.xlsx \
             --benefits data/plan_benefits.csv --overrides data/manual_overrides.csv
 
       - name: Verify no formula errors
-        if: steps.check.outputs.changed == 'true' || inputs.force_full_scrape
+        if: steps.check.outputs.build == 'true'
         run: |
           python verify_workbook.py VHIS_Compare.xlsx --timeout 400 --json | tee recalc.json
           python - <<'EOF'
@@ -204,7 +228,7 @@ jobs:
       # scrape repeated weekly forever. Add each path only if it exists, and
       # let the push fail loudly rather than `|| true`.
       - name: Commit
-        if: steps.check.outputs.changed == 'true' || inputs.force_full_scrape
+        if: steps.check.outputs.build == 'true'
         run: |
           git config user.name  "vhis-bot"
           git config user.email "vhis-bot@users.noreply.github.com"
@@ -225,7 +249,7 @@ jobs:
           fi
 
       - name: Publish release
-        if: steps.check.outputs.changed == 'true' || inputs.force_full_scrape
+        if: steps.check.outputs.build == 'true'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: latest
