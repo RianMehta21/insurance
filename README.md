@@ -148,16 +148,20 @@ F00022-01-000-03,AIA International,VHIS Flexi,Semi-private (HKD),https://...,ded
 
 Fill the blank cells, save as CSV, commit. The next build picks it up.
 
-It only lists what is worth your time. Every plan is priced across 18 client
-profiles (ages 25-65, both genders) and scored by how often it reaches the cheapest
-20 of its currency among plans that can actually be sold. Plans that never place
-are left out — 194 are missing a deductible, but only **9** ever get quoted, and
-those 9 are the file.
+Every plan that is missing something gets a row, so you never have to look up a
+certification number by hand. The **priority** column tells you where to start:
 
-To see everything anyway: `python worklist.py --min-hits 0`.
+| priority | meaning |
+|---|---|
+| `CHECK FIRST` | the plan actually reaches a client shortlist — worth looking up |
+| `when needed` | a real gap, but the plan never places in the cheapest 20, so leave it until a client asks |
 
-Anything you type is kept forever, even for a plan that would otherwise be left
-out. Nothing you enter is ever dropped.
+Priority comes from pricing every plan across 18 client profiles (ages 25–65, both
+genders) and counting how often it lands in the cheapest 20 of its currency among
+plans that can still be sold. 194 plans are missing a deductible; **9** are marked
+`CHECK FIRST`. Start there and stop — the rest are there if you ever need them.
+
+Anything you type is kept forever and always beats the scraped value.
 
 To fix something that's wrong rather than missing, add the certification number as
 a new row and type the correct values. It will override whatever was scraped.

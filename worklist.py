@@ -45,8 +45,8 @@ CONTEXT_COLS = ["insurer", "plan_name", "plan_level", "plan_doc_url"]
 # demanding them would mean a list that can never be finished.
 KEY_COLS = ["ward", "deductible", "geography"]
 
-COLUMNS = (["certification_no"] + CONTEXT_COLS + ["shortlist_hits", "still_missing"]
-           + VALUE_COLS + ["note"])
+COLUMNS = (["priority", "certification_no"] + CONTEXT_COLS
+           + ["shortlist_hits", "still_missing"] + VALUE_COLS + ["note"])
 
 # Client profiles used to work out which plans are worth chasing. Nobody is
 # going to look up 234 deductibles by hand, and they should not have to: most
@@ -144,9 +144,10 @@ def main():
     ap.add_argument("--premiums", default="current/plan-premium.json",
                     help="used to rank rows by how often the plan actually "
                          "reaches a client shortlist")
-    ap.add_argument("--min-hits", type=int, default=1,
-                    help="omit outstanding plans that reach a client shortlist "
-                         "fewer than this many times (0 = list everything)")
+    ap.add_argument("--min-hits", type=int, default=0,
+                    help="omit outstanding plans reaching a client shortlist "
+                         "fewer than this many times. Default 0 = list every "
+                         "outstanding plan, so a row is always ready to fill.")
     ap.add_argument("--dry-run", action="store_true",
                     help="report what would change without writing")
     args = ap.parse_args()
@@ -188,8 +189,13 @@ def main():
         row["plan_name"] = cat.get("plan_name", "")
         row["plan_level"] = cat.get("plan_level_raw", "")
         row["plan_doc_url"] = cat.get("plan_doc_url", "")
-        row["shortlist_hits"] = hits.get(cert, 0)
+        n_hits = hits.get(cert, 0)
+        row["shortlist_hits"] = n_hits
         row["still_missing"] = ";".join(missing)
+        # Sorting alone is easy to lose once the file is open in Excel and
+        # someone clicks a column header, so the ranking is also written down.
+        row["priority"] = ("" if not missing
+                           else "CHECK FIRST" if n_hits else "when needed")
         if missing:
             still_needed += 1
         out.append(row)
@@ -199,14 +205,17 @@ def main():
                             -int(r["shortlist_hits"] or 0),
                             r["insurer"], r["plan_level"]))
 
-    # Write only what is worth someone's time.
+    # Keep every outstanding plan by default.
     #
-    # Two kinds of row always survive: anything with a value typed into it,
-    # because this file is the permanent store of those corrections and losing
-    # one is unrecoverable; and anything still outstanding that actually
-    # reaches a client shortlist. A plan that is both blank and never quoted is
-    # noise - it is fully reconstructible from the catalog, so dropping it
-    # loses nothing and keeps the file small enough to work through.
+    # An earlier version wrote only the plans that reach a client shortlist.
+    # That made the file short, but if a client ever asked about one of the
+    # others there was no row for it and adding one meant looking up a
+    # certification number by hand. Completeness is worth more than brevity
+    # here; the priority column and the sort handle the "where do I start"
+    # problem instead.
+    #
+    # A row carrying a typed value always survives regardless, because this
+    # file is the permanent store of those corrections.
     def has_user_value(r):
         return any(clean(r.get(c)) for c in VALUE_COLS)
 
@@ -220,11 +229,12 @@ def main():
             omitted += 1
     out = keep
 
-    outstanding = sum(1 for r in out if r["still_missing"])
+    outstanding = [r for r in out if r["still_missing"]]
+    check_first = [r for r in outstanding if int(r["shortlist_hits"] or 0) > 0]
     print(f"catalog plans          : {len(catalog)}")
-    print(f"plans missing a value  : {still_needed}")
-    print(f"  worth chasing        : {outstanding}  (reach a client shortlist)")
-    print(f"  left out             : {omitted}  (never quoted, or already resolved)")
+    print(f"plans missing a value  : {len(outstanding)}")
+    print(f"  CHECK FIRST          : {len(check_first)}  (reach a client shortlist)")
+    print(f"  when needed          : {len(outstanding) - len(check_first)}")
     print(f"corrections on record  : {sum(1 for r in out if has_user_value(r))}")
     print(f"rows written           : {len(out)}")
 
@@ -247,8 +257,9 @@ def main():
         hot = [r for r in ranked if int(r["shortlist_hits"] or 0) > 0]
         print(f"\n{still_needed} row(s) still need filling, but they are not equal:")
         print(f"  {len(hot)} reach a client shortlist and are worth looking up")
-        print(f"  {omitted} more were left out entirely: never quoted, "
-              f"reconstructible any time with --min-hits 0")
+        print(f"  {len(ranked) - len(hot)} marked 'when needed' - real gaps, but "
+              f"they never place in the cheapest {SHORTLIST_N}, so fill those "
+              f"only if a client asks")
         if hot:
             print("\nstart here:")
             for r in hot[:10]:

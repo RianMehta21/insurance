@@ -15,11 +15,15 @@ These four are not, and losing them costs either 40 minutes or real work.
 The one file here meant to be edited by a person, and the only to-do list worth
 working from. `worklist.py` keeps it current on every run.
 
-It is deliberately short. A plan earns a row only if it is still missing a key
-field **and** actually reaches a client shortlist — scored by pricing every plan
-across 18 client profiles and counting how often it lands in the cheapest 20 of
-its currency. 194 plans are missing a deductible; 9 of them ever get quoted, so
-9 is what you see. `--min-hits 0` lists the rest.
+Every plan missing a key field gets a row, so there is always something to fill
+in and never a certification number to hunt down. The `priority` column ranks
+them: `CHECK FIRST` for plans that actually reach a client shortlist, `when
+needed` for real gaps on plans that never place in the cheapest 20. Of the 194
+plans missing a deductible, 9 are `CHECK FIRST`.
+
+Ranking comes from pricing every plan across 18 client profiles and counting
+shortlist appearances among plans that can still be sold. `--min-hits 1` trims
+the file to just the `CHECK FIRST` rows if the full list is in the way.
 
 Two rules it never breaks: a row carrying a value you typed is kept forever, even
 if that plan would otherwise be filtered out, and no value you entered is ever
