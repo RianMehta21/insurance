@@ -149,17 +149,40 @@ F00022-01-000-03,AIA International,VHIS Flexi,Semi-private (HKD),https://...,ded
 Fill the blank cells, save as CSV, commit. The next build picks it up.
 
 Every plan that is missing something gets a row, so you never have to look up a
-certification number by hand. The **priority** column tells you where to start:
+certification number by hand. The **priority** column tells you where to start.
 
-| priority | meaning |
-|---|---|
-| `CHECK FIRST` | the plan actually reaches a client shortlist — worth looking up |
-| `when needed` | a real gap, but the plan never places in the cheapest 20, so leave it until a client asks |
+### What CHECK FIRST and when needed actually mean
 
-Priority comes from pricing every plan across 18 client profiles (ages 25–65, both
-genders) and counting how often it lands in the cheapest 20 of its currency among
-plans that can still be sold. 194 plans are missing a deductible; **9** are marked
-`CHECK FIRST`. Start there and stop — the rest are there if you ever need them.
+The build prices every sellable plan for **18 test clients** — ages 25, 30, 35, 40,
+45, 50, 55, 60, 65, each as male and female, non-smoker. For each of those 18, it
+takes the **20 cheapest plans** in each currency (HKD and USD ranked separately).
+
+`shortlist_hits` is how many of those 18 clients would have seen that plan in their
+cheapest 20. The most any plan can score is 18.
+
+| priority | rule | means |
+|---|---|---|
+| `CHECK FIRST` | 1 or more hits | at least one ordinary client would see this plan near the top of their list, so the gap will show up in a real comparison |
+| `when needed` | 0 hits | no ordinary client sees it in their cheapest 20. It only surfaces if you filter for something specific — a particular insurer, ward class or currency |
+
+`when needed` does **not** mean the plan is bad or that the gap is fake. It means
+nobody hits it by accident, so filling it in advance is wasted effort. If a client
+does ask about one, fill that row then.
+
+Right now the split is decisive — there is no grey middle:
+
+```
+18 hits    3 plans  CHECK FIRST
+17 hits    1 plan   CHECK FIRST
+16 hits    1 plan   CHECK FIRST
+13 hits    1 plan   CHECK FIRST
+ 6 hits    1 plan   CHECK FIRST
+ 2 hits    1 plan   CHECK FIRST
+ 1 hit     1 plan   CHECK FIRST
+ 0 hits  185 plans  when needed
+```
+
+So: **fill the 9, ignore the 185 until asked.**
 
 Anything you type is kept forever and always beats the scraped value.
 

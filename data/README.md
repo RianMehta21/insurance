@@ -17,9 +17,16 @@ working from. `worklist.py` keeps it current on every run.
 
 Every plan missing a key field gets a row, so there is always something to fill
 in and never a certification number to hunt down. The `priority` column ranks
-them: `CHECK FIRST` for plans that actually reach a client shortlist, `when
-needed` for real gaps on plans that never place in the cheapest 20. Of the 194
-plans missing a deductible, 9 are `CHECK FIRST`.
+them.
+
+`shortlist_hits` counts how many of 18 test clients (ages 25-65 in fives, male
+and female, non-smoker) would see that plan among the 20 cheapest in its
+currency, counting only plans that can still be sold. Maximum 18.
+
+  CHECK FIRST   1+ hits - an ordinary client meets this plan, so fill it
+  when needed   0 hits  - only reachable by filtering deliberately; fill on demand
+
+Of 194 outstanding plans, 9 are `CHECK FIRST` and 185 are `when needed`.
 
 Ranking comes from pricing every plan across 18 client profiles and counting
 shortlist appearances among plans that can still be sold. `--min-hits 1` trims
