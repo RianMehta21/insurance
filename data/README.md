@@ -26,7 +26,10 @@ currency, counting only plans that can still be sold. Maximum 18.
   CHECK FIRST   1+ hits - an ordinary client meets this plan, so fill it
   when needed   0 hits  - only reachable by filtering deliberately; fill on demand
 
-Of 194 outstanding plans, 9 are `CHECK FIRST` and 185 are `when needed`.
+Of 193 outstanding plans, 9 are `CHECK FIRST` and 184 are `when needed`. Every
+one of the 193 is missing only `deductible` — ward and geography are covered
+for every plan, one way or another (see "Ward and geography" below), so they
+never land on this list.
 
 Ranking comes from pricing every plan across 18 client profiles and counting
 shortlist appearances among plans that can still be sold. `--min-hits 1` trims
@@ -57,5 +60,36 @@ Two things worth knowing:
   the deductible as "*as stated in the Policy Schedule*" — a per-client form,
   not part of the certified terms. On 40 real PDFs the scraper recovered an
   amount zero times. Where the plan-level label in the source JSON does not
-  carry it either (about 139 variants with names like "Superior" or "Benefit
-  Level 3"), this file is the only place it can come from.
+  carry it either (193 variants, all named like "Regular", "Premier" or
+  "Plan 1" — a marketing tier name with no figure to parse out, checked
+  digit-by-digit, not just eyeballed), this file is the only place it can
+  come from.
+
+## Ward and geography: why so many say "(see doc)"
+
+`scrape_plans.py` reads two clauses per PDF — *Choice of ward class* and
+*Territorial scope of cover*. Insurers write one of two templates: either "not
+subject to any restriction" (a clean answer — `No restriction` / `Worldwide`),
+or "subject to the restriction ..." which only confirms a restriction exists
+without naming it inline; the actual ward class or region usually lives in a
+separate benefit-schedule table the scraper doesn't read. That's what
+`Restricted (see doc)` and `Limited (see doc)` mean: confirmed-but-unnamed,
+not "unknown."
+
+Before falling back to that sentinel, `make_workbook.py` now checks whether
+the certified plan-level label already names the answer — `build_vhis.py`
+parses it into `ward_type` / `geographical_coverage` on every row. Insurers
+often do bake it in, e.g. `"Semi-Private Room"` or `"HKD16,000 Deductible
+(Worldwide except USA)"`, and when they do, that specific value is shown
+instead of the placeholder. It only stays `(see doc)` when neither the PDF
+clause nor the plan's own name says which one — 239 plans for geography, 325
+for ward, as of the last refresh. Closing those needs the actual PDF read,
+which is a separate, larger job from filling in `manual_overrides.csv`.
+
+**Standard Plan is a special case.** All 33 insurers' VHIS Standard Plan
+variants certify identical, government-mandated terms — Worldwide, no ward
+restriction, HKD420,000 annual limit, no deductible, 30% coinsurance, no
+lifetime limit — only the premium differs per insurer. `make_workbook.py` and
+`worklist.py` both know these constants and use them to fill in whatever a
+Standard Plan's own PDF scrape left blank (never to overrule a real scraped
+value, and a manual override still wins over even that).

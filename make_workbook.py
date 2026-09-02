@@ -227,6 +227,7 @@ COMPARE_COLS = OrderedDict([
     ("First Year", 12), ("10-Year Total", 14), ("10-Year Avg", 13),
     ("Years Avail", 11), ("Age Basis", 11), ("Basis Used", 11),
     ("Smoker Rated", 12), ("Annual Limit", 13), ("Coinsurance %", 12),
+    ("Lifetime Limit", 14),
     ("Cert No", 22), ("_tableage", 10), ("_key", 30), ("_row", 8),
 ])
 
@@ -376,7 +377,15 @@ def sheet_compare(wb, catalog, n_prem_rows):
             ws.cell(r, CIDX[name], f'=IFERROR(IF(COUNT({idx})=0,"",{idx}),"")')
         ws.cell(r, CIDX["Annual Limit"]).number_format = money()
 
-        for name in ("First Year", "10-Year Total", "10-Year Avg", "Years Avail"):
+        # Lifetime Limit is text as often as it's a number - "None" is a real,
+        # meaningful answer (no lifetime cap), not a missing value, so this
+        # can't use the COUNT()=0 blank check above: COUNT() treats "None" as
+        # non-numeric and would blank it out same as an actual gap.
+        lt_idx = ben_lookup("G").format(r=r)
+        ws.cell(r, CIDX["Lifetime Limit"], f'=IFERROR(IF({lt_idx}="","",{lt_idx}),"")')
+
+        for name in ("First Year", "10-Year Total", "10-Year Avg", "Years Avail",
+                     "Lifetime Limit"):
             ws.cell(r, CIDX[name]).font = BLACK
         r += 1
 
@@ -391,8 +400,40 @@ def sheet_compare(wb, catalog, n_prem_rows):
     return ws, last
 
 
-def load_benefits(benefits_csv, overrides_csv):
-    """Merge scraper output with hand-entered overrides. Overrides win.
+# A scraped "(see doc)" value means the PDF's clause confirmed a restriction
+# exists but didn't name it inline. The certified plan-level label often
+# names it anyway (build_vhis.py already parses it into ward_type /
+# geographical_coverage) - a specific answer from the plan's own certified
+# name beats an admission that the PDF was vague. Maps the merged field to
+# (the scraper's vague sentinel, the catalog column that may do better).
+SEE_DOC_FALLBACK = {
+    "ward": ("Restricted (see doc)", "ward_type"),
+    "geography": ("Limited (see doc)", "geographical_coverage"),
+}
+
+# The VHIS Standard Plan is one government-mandated product: every insurer's
+# Standard Plan certifies identical terms (only the premium differs), so
+# these are known, not scraped. Used only to fill what the PDF scrape left
+# blank - e.g. S00030-01-000-02 (Allianz), whose cost-sharing clause the
+# scraper's regex didn't match - never to overrule a real scraped value.
+STANDARD_PLAN_DEFAULTS = {
+    "ward": "No restriction",
+    "deductible": "0",
+    "geography": "Worldwide",
+    "annual_limit": "420000",
+    "coinsurance": "30",
+    "lifetime": "None",
+}
+
+
+def load_benefits(benefits_csv, overrides_csv, catalog):
+    """Merge scraper output, plan-name fallbacks, Standard Plan defaults and
+    hand-entered overrides. Trust order, low to high:
+
+        scraped "(see doc)" placeholder
+        < scraped real value / certified plan-level label
+        < Standard Plan mandated default (fills gaps only)
+        < manual override (always wins)
 
     These live in CSV files, NOT in the workbook, because the workbook is
     regenerated on every refresh. Anything typed into the spreadsheet itself
@@ -400,9 +441,10 @@ def load_benefits(benefits_csv, overrides_csv):
     """
     import csv as _csv
     merged = {}
-    for path, tag in ((benefits_csv, "scraped"), (overrides_csv, "override")):
+
+    def apply(path, tag):
         if not path or not os.path.exists(path):
-            continue
+            return
         with open(path, encoding="utf-8-sig") as f:
             for row in _csv.DictReader(f):
                 cert = (row.get("certification_no") or "").strip()
@@ -442,6 +484,31 @@ def load_benefits(benefits_csv, overrides_csv):
                 if supplied:
                     cur["tier"] = ("override" if tag == "override"
                                    else row.get("overall_tier", "scraped"))
+
+    apply(benefits_csv, "scraped")
+
+    cat_by_cert = {r["certification_no"]: r for r in catalog}
+
+    for cert, cat_row in cat_by_cert.items():
+        cur = merged.get(cert)
+        if not cur:
+            continue
+        for field, (sentinel, label_col) in SEE_DOC_FALLBACK.items():
+            if cur.get(field) == sentinel:
+                label_val = (cat_row.get(label_col) or "").strip()
+                if label_val:
+                    cur[field] = label_val
+
+    for cert, cat_row in cat_by_cert.items():
+        if cat_row.get("plan_type") != "Standard":
+            continue
+        cur = merged.setdefault(cert, {})
+        for field, default in STANDARD_PLAN_DEFAULTS.items():
+            if not cur.get(field):
+                cur[field] = default
+                cur.setdefault("tier", "standard-mandated")
+
+    apply(overrides_csv, "override")
     return merged
 
 
@@ -554,9 +621,16 @@ def sheet_notes(wb, stats):
         ("Age ceiling", "Source data stops at each insurer's new-application "
                         "age limit. Renewal-only ages are absent, so 10-year "
                         "figures truncate from client age 72."),
-        ("Benefit fields", "Ward, deductible and geography are parsed from the "
-                           "plan label where possible and otherwise must come "
-                           "from the plan PDF. The Benefits sheet overrides."),
+        ("Benefit fields", "Ward, deductible and geography come from the plan "
+                           "PDF first; if the PDF only confirms a restriction "
+                           "without naming it ('(see doc)'), the certified plan "
+                           "label is used instead when it names one. Standard "
+                           "Plan variants (all 33 insurers) fill any remaining "
+                           "gap from the government-mandated terms: Worldwide, "
+                           "no ward restriction, HKD420,000 annual limit, no "
+                           "deductible, 30% coinsurance, no lifetime limit. "
+                           "Manual entries in the Benefits sheet override all "
+                           "of the above."),
     ]
     for i, (k, v) in enumerate(rows, start=3):
         ws.cell(i, 1, k).font = Font(name=ARIAL, size=10, bold=bool(k))
@@ -589,7 +663,7 @@ def main():
 
     sheet_client(wb, len(catalog), prem_date_max)
     sheet_compare(wb, catalog, len(prem_rows))
-    benefits = load_benefits(args.benefits, args.overrides)
+    benefits = load_benefits(args.benefits, args.overrides, catalog)
     sheet_benefits(wb, catalog, benefits)
     sheet_prem(wb, prem_rows)
     sheet_notes(wb, {

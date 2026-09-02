@@ -107,6 +107,22 @@ CATALOG_FROM = {
     "geography": "geographical_coverage",
 }
 
+# The VHIS Standard Plan is one government-mandated product: every insurer's
+# Standard Plan certifies identical terms (only the premium differs), so
+# these are known constants, not something to chase in a PDF. Used only when
+# scraping and the plan label both left the field blank - e.g.
+# S00030-01-000-02 (Allianz), whose cost-sharing clause the scraper's regex
+# didn't match. make_workbook.py applies the same defaults when it builds
+# the workbook, so a row resolved here by this fallback is resolved there too.
+STANDARD_PLAN_DEFAULTS = {
+    "ward": "No restriction",
+    "deductible": "0",
+    "geography": "Worldwide",
+    "annual_limit": "420000",
+    "coinsurance": "30",
+    "lifetime": "None",
+}
+
 
 def clean(v):
     return (v or "").strip()
@@ -133,6 +149,8 @@ def effective(cert, col, overrides, scraped, catalog):
     src = CATALOG_FROM.get(col)
     if src and clean(c.get(src)):
         return clean(c[src]), "label"
+    if c.get("plan_type") == "Standard" and col in STANDARD_PLAN_DEFAULTS:
+        return STANDARD_PLAN_DEFAULTS[col], "standard-mandated"
     return "", "missing"
 
 

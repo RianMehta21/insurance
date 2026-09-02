@@ -124,10 +124,22 @@ Runs itself every Monday morning, Hong Kong time. Nobody has to do anything.
 7. Publish    Replace the file at the download link above.
 ```
 
-Ward class and geography come from the plan PDFs and are near-complete. Deductible
-is different: most Flexi plan documents say it is "as stated in the Policy
-Schedule", meaning it is set per policy and simply isn't in the document. Those
-have to be filled in by hand — see below.
+Ward class and geography come from the plan PDF first; when the PDF only confirms
+a restriction without naming it, the certified plan-level label is checked too
+(insurers often put it right in the name, e.g. `"Semi-Private Room"` or
+`"(Worldwide except USA)"`). Only when neither source names it does a plan show
+`Restricted (see doc)` / `Limited (see doc)` — an honest "go check the PDF," not
+a guess, and still true for 325 plans on ward and 239 on geography.
+
+Standard Plan is solved outright: it's one government-mandated product across
+all 33 insurers (Worldwide, no ward restriction, HKD420,000 annual limit, no
+deductible, 30% coinsurance, no lifetime limit), so those fields are known
+constants, not scraped guesses. What's left to chase is almost entirely **Flexi**
+plans, where terms genuinely vary by insurer.
+
+Deductible is the hardest of the three: most plan documents say it is "as stated
+in the Policy Schedule", meaning it is set per policy and simply isn't in the
+document, PDF or plan name. Those have to be filled in by hand — see below.
 
 ---
 
@@ -179,10 +191,10 @@ Right now the split is decisive — there is no grey middle:
  6 hits    1 plan   CHECK FIRST
  2 hits    1 plan   CHECK FIRST
  1 hit     1 plan   CHECK FIRST
- 0 hits  185 plans  when needed
+ 0 hits  184 plans  when needed
 ```
 
-So: **fill the 9, ignore the 185 until asked.**
+So: **fill the 9 first**
 
 Anything you type is kept forever and always beats the scraped value.
 
