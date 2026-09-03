@@ -129,7 +129,23 @@ a restriction without naming it, the certified plan-level label is checked too
 (insurers often put it right in the name, e.g. `"Semi-Private Room"` or
 `"(Worldwide except USA)"`). Only when neither source names it does a plan show
 `Restricted (see doc)` / `Limited (see doc)` — an honest "go check the PDF," not
-a guess, and still true for 325 plans on ward and 239 on geography.
+a guess, and still true for 116 plans on ward and 81 on geography.
+
+Those counts used to be 325 and 239. The gap closed because the clause the
+scraper reads usually does not state the answer — it points at the plan's
+**Benefit Schedule**, which does:
+
+```
+(d) Choice of ward class
+    ... subject to the restriction in the choice of ward class as stated in
+    Section 3 of Supplement 5 and the Benefit Schedule of these Terms and
+    Benefits.
+```
+
+`schedule_fields.py` reads that schedule row. It has been run for AXA, Bupa,
+Blue Cross, FWD, Sun Life, HSBC Life and Manulife, which between them had 209
+plans showing a placeholder and now have none. The remaining 116/81 are the
+other 26 insurers, and the same pass can be pointed at them.
 
 Standard Plan is solved outright: it's one government-mandated product across
 all 33 insurers (Worldwide, no ward restriction, HKD420,000 annual limit, no
@@ -222,6 +238,25 @@ python verify_workbook.py VHIS_Compare.xlsx              # check every formula
 
 To publish without waiting for Monday: **Actions → Refresh VHIS workbook → Run
 workflow**, leaving "Rebuild and publish" ticked.
+
+### Closing `(see doc)` for another insurer
+
+Not part of the weekly run — it is opt-in, one insurer group at a time, and
+its output is meant to be read before it counts.
+
+```bash
+# 1. propose values, with the schedule text each one came from
+python schedule_fields.py --insurers "Prudential,Chubb" \
+    --out data/schedule_candidates.csv
+
+# 2. read the ward_evidence / geo_evidence columns, then merge
+python schedule_fields.py --insurers "Prudential,Chubb" \
+    --apply data/manual_overrides.csv
+```
+
+Step 2 only fills `(see doc)` placeholders and never overwrites a value typed
+by hand. Add `--correct-wrong` to also replace a *scraped* value that
+disagrees with the schedule; it prints every replacement, so check them.
 
 ---
 

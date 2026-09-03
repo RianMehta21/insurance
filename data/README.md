@@ -9,6 +9,7 @@ These four are not, and losing them costs either 40 minutes or real work.
 | `plan_benefits.csv` | Everything `scrape_plans.py` pulled out of the plan PDFs. Keyed on `certification_no` + `plan_date`. | All 579 PDFs get re-downloaded and re-parsed, roughly 40 minutes. |
 | `review_queue.csv` | Technical record of which PDFs the parser struggled with. **Not** the worklist — it does not know about your corrections, so entries stay after you fix them. | Regenerated on the next scrape. |
 | `manual_overrides.csv` | The to-do list *and* the corrections file. Maintained by `worklist.py`: a row appears for every plan still missing a key field, and your typed values are never overwritten. **Wins over anything scraped.** | Gone for good. Nothing else knows these values. |
+| `schedule_candidates.csv` | Audit trail for the 209 ward/geography values `schedule_fields.py` read out of the Benefit Schedules, each with the verbatim schedule text it came from. Regenerable, but only against the same certification versions. | Re-run `schedule_fields.py`. Values already merged into `manual_overrides.csv` are unaffected. |
 
 ## manual_overrides.csv
 
@@ -30,6 +31,10 @@ Of 193 outstanding plans, 9 are `CHECK FIRST` and 184 are `when needed`. Every
 one of the 193 is missing only `deductible` — ward and geography are covered
 for every plan, one way or another (see "Ward and geography" below), so they
 never land on this list.
+
+The file holds 399 rows, not 193: the other 206 carry no outstanding gap but
+do carry a recorded ward/geography correction, and a row with a value in it is
+kept forever. `still_missing` is blank on those.
 
 Ranking comes from pricing every plan across 18 client profiles and counting
 shortlist appearances among plans that can still be sold. `--min-hits 1` trims
@@ -82,9 +87,56 @@ parses it into `ward_type` / `geographical_coverage` on every row. Insurers
 often do bake it in, e.g. `"Semi-Private Room"` or `"HKD16,000 Deductible
 (Worldwide except USA)"`, and when they do, that specific value is shown
 instead of the placeholder. It only stays `(see doc)` when neither the PDF
-clause nor the plan's own name says which one — 239 plans for geography, 325
-for ward, as of the last refresh. Closing those needs the actual PDF read,
-which is a separate, larger job from filling in `manual_overrides.csv`.
+clause nor the plan's own name says which one — 81 plans for geography, 116
+for ward, as of the last refresh.
+
+### Reading the Benefit Schedule instead
+
+Those counts were 239 and 325 until `schedule_fields.py` was run. The clause
+that comes back "restricted but unnamed" almost always names *where* the
+answer is, and it is the plan's own Benefit Schedule — which every certified
+variant has its own PDF of. So the answer is per-variant and it is there:
+
+```
+Entitled ward class                General Ward
+Geographical limitation            Except for psychiatric treatments ... –
+                                   For non-Emergency Treatment: Greater China
+                                   For Emergency Treatment: Worldwide
+```
+
+It has been run for AXA, Bupa, Blue Cross, FWD, Sun Life, HSBC Life and
+Manulife — 209 plans, now none of them on a placeholder. Three things are
+worth knowing before pointing it at the other 26 insurers:
+
+- **There is no single format.** Seven insurers used four different labels for
+  the ward row (`Entitled` / `Designated` / `Restricted` / `Covered ward
+  class`) and three for geography. Bupa lays the ward row out in three
+  columns; Manulife centres the label vertically so most of the value sits
+  *above* the words naming it; FWD splits a cell across a page break.
+- **Values vary by benefit level, not just by product.** HSBC's Flexi Plan
+  runs General Ward/Greater China at Bronze up to Standard Private/Worldwide
+  excluding the USA at Platinum. Reading one variant per product would be
+  wrong for every other level.
+- **Some plans restrict by location too**, and both tiers are recorded:
+  `Semi-private (HK/Australia/NZ); Standard Private (elsewhere)`. Same for the
+  emergency split on geography: `Asia (Worldwide for emergency)`.
+
+`schedule_fields.py --apply` merges the reviewed values in. It only fills
+placeholders, never a value typed by hand. `--correct-wrong` additionally
+replaces a *scraped* value that disagrees with the schedule, printing each
+one — that is how AXA WiseGuard Pro's 24 variants were fixed, having all read
+`Hong Kong/Macau` because the clause-level regex matched that phrase inside
+the list of benefits **excluded** from the limitation. Their real scopes are
+Greater China, Asia, or Worldwide excluding USA depending on level.
+
+**What it deliberately leaves alone.** A clause reading "not subject to any
+restriction in the choice of ward class" is a real answer, not a gap, even
+when that plan's schedule does print a `Designated Ward Class` — there it
+sets the room-and-board benefit limit and names the pricing tier rather than
+restricting anything. Manulife First and Bupa MyFlexi are both that shape
+(their levels are literally called "(Semi-private Room)", "(Private Room)"),
+so 12 plans keep their `No restriction`. `NEVER_REPLACE` in the script
+enforces this.
 
 **Standard Plan is a special case.** All 33 insurers' VHIS Standard Plan
 variants certify identical, government-mandated terms — Worldwide, no ward
