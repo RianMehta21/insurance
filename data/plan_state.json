@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-03T02:40:43",
+ "generated_at": "2026-09-21T00:42:16",
  "variants": {
   "F00012-01-000-03": {
    "age40": 7671,
@@ -968,172 +968,172 @@
    "prem_date": "20190729"
   },
   "F00034-01-000-05": {
-   "age40": 12463,
+   "age40": 13647,
    "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
    "level": "Regular (HKD0 Deductible)",
    "plan": "AXA WiseGuard Pro Medical Insurance Plan",
-   "prem_date": "20250909"
+   "prem_date": "20260909"
   },
   "F00034-02-000-05": {
-   "age40": 7029,
+   "age40": 7697,
    "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
    "level": "Regular (HKD20,000 Deductible)",
    "plan": "AXA WiseGuard Pro Medical Insurance Plan",
-   "prem_date": "20250909"
+   "prem_date": "20260909"
   },
   "F00034-03-000-05": {
-   "age40": 4173,
+   "age40": 4570,
    "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
    "level": "Regular (HKD50,000 Deductible)",
    "plan": "AXA WiseGuard Pro Medical Insurance Plan",
-   "prem_date": "20250909"
+   "prem_date": "20260909"
   },
   "F00034-04-000-05": {
-   "age40": 17288,
+   "age40": 18931,
    "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
    "level": "Enhance (HKD0 Deductible)",
    "plan": "AXA WiseGuard Pro Medical Insurance Plan",
-   "prem_date": "20250909"
+   "prem_date": "20260909"
   },
   "F00034-05-000-05": {
-   "age40": 8113,
+   "age40": 8884,
    "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
    "level": "Enhance (HKD20,000 Deductible)",
    "plan": "AXA WiseGuard Pro Medical Insurance Plan",
-   "prem_date": "20250909"
+   "prem_date": "20260909"
   },
   "F00034-06-000-05": {
-   "age40": 5585,
+   "age40": 6116,
    "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
    "level": "Enhance (HKD50,000 Deductible)",
    "plan": "AXA WiseGuard Pro Medical Insurance Plan",
-   "prem_date": "20250909"
+   "prem_date": "20260909"
   },
   "F00034-07-000-05": {
-   "age40": 20562,
+   "age40": 22516,
    "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
    "level": "Premier (HKD0 Deductible)",
    "plan": "AXA WiseGuard Pro Medical Insurance Plan",
-   "prem_date": "20250909"
+   "prem_date": "20260909"
   },
   "F00034-08-000-05": {
-   "age40": 14183,
+   "age40": 15531,
    "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
    "level": "Premier (HKD20,000 Deductible)",
    "plan": "AXA WiseGuard Pro Medical Insurance Plan",
-   "prem_date": "20250909"
+   "prem_date": "20260909"
   },
   "F00034-09-000-05": {
-   "age40": 10042,
+   "age40": 10996,
    "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
    "level": "Premier (HKD50,000 Deductible)",
    "plan": "AXA WiseGuard Pro Medical Insurance Plan",
-   "prem_date": "20250909"
+   "prem_date": "20260909"
   },
   "F00034-10-000-05": {
-   "age40": 1557.9,
+   "age40": 1705.9,
    "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
    "level": "Regular (USD0 Deductible)",
    "plan": "AXA WiseGuard Pro Medical Insurance Plan",
-   "prem_date": "20250909"
+   "prem_date": "20260909"
   },
   "F00034-11-000-05": {
-   "age40": 878.6,
+   "age40": 962.1,
    "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
    "level": "Regular (USD2,500 Deductible)",
    "plan": "AXA WiseGuard Pro Medical Insurance Plan",
-   "prem_date": "20250909"
+   "prem_date": "20260909"
   },
   "F00034-12-000-05": {
-   "age40": 521.6,
+   "age40": 571.3,
    "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
    "level": "Regular (USD6,250 Deductible)",
    "plan": "AXA WiseGuard Pro Medical Insurance Plan",
-   "prem_date": "20250909"
+   "prem_date": "20260909"
   },
   "F00034-13-000-05": {
-   "age40": 2161,
+   "age40": 2366.4,
    "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
    "level": "Enhance (USD0 Deductible)",
    "plan": "AXA WiseGuard Pro Medical Insurance Plan",
-   "prem_date": "20250909"
+   "prem_date": "20260909"
   },
   "F00034-14-000-05": {
-   "age40": 1014.1,
+   "age40": 1110.5,
    "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
    "level": "Enhance (USD2,500 Deductible)",
    "plan": "AXA WiseGuard Pro Medical Insurance Plan",
-   "prem_date": "20250909"
+   "prem_date": "20260909"
   },
   "F00034-15-000-05": {
-   "age40": 698.1,
+   "age40": 764.5,
    "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
    "level": "Enhance (USD6,250 Deductible)",
    "plan": "AXA WiseGuard Pro Medical Insurance Plan",
-   "prem_date": "20250909"
+   "prem_date": "20260909"
   },
   "F00034-16-000-05": {
-   "age40": 2570.3,
+   "age40": 2814.5,
    "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
    "level": "Premier (USD0 Deductible)",
    "plan": "AXA WiseGuard Pro Medical Insurance Plan",
-   "prem_date": "20250909"
+   "prem_date": "20260909"
   },
   "F00034-17-000-05": {
-   "age40": 1772.9,
+   "age40": 1941.4,
    "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
    "level": "Premier (USD2,500 Deductible)",
    "plan": "AXA WiseGuard Pro Medical Insurance Plan",
-   "prem_date": "20250909"
+   "prem_date": "20260909"
   },
   "F00034-18-000-05": {
-   "age40": 1255.3,
+   "age40": 1374.5,
    "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
    "level": "Premier (USD6,250 Deductible)",
    "plan": "AXA WiseGuard Pro Medical Insurance Plan",
-   "prem_date": "20250909"
+   "prem_date": "20260909"
   },
   "F00034-19-000-03": {
-   "age40": 25620,
+   "age40": 28054,
    "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
    "level": "Noble (HKD0 Deductible)",
    "plan": "AXA WiseGuard Pro Medical Insurance Plan",
-   "prem_date": "20250909"
+   "prem_date": "20260909"
   },
   "F00034-20-000-03": {
-   "age40": 18202,
+   "age40": 19932,
    "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
    "level": "Noble (HKD20,000 Deductible)",
    "plan": "AXA WiseGuard Pro Medical Insurance Plan",
-   "prem_date": "20250909"
+   "prem_date": "20260909"
   },
   "F00034-21-000-03": {
-   "age40": 13669,
+   "age40": 14968,
    "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
    "level": "Noble (HKD50,000 Deductible)",
    "plan": "AXA WiseGuard Pro Medical Insurance Plan",
-   "prem_date": "20250909"
+   "prem_date": "20260909"
   },
   "F00034-22-000-03": {
-   "age40": 3202.5,
+   "age40": 3506.8,
    "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
    "level": "Noble (USD0 Deductible)",
    "plan": "AXA WiseGuard Pro Medical Insurance Plan",
-   "prem_date": "20250909"
+   "prem_date": "20260909"
   },
   "F00034-23-000-03": {
-   "age40": 2275.3,
+   "age40": 2491.5,
    "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
    "level": "Noble (USD2,500 Deductible)",
    "plan": "AXA WiseGuard Pro Medical Insurance Plan",
-   "prem_date": "20250909"
+   "prem_date": "20260909"
   },
   "F00034-24-000-03": {
-   "age40": 1708.6,
+   "age40": 1871,
    "insurer": "AXA China Region Insurance Company (Hong Kong) Limited",
    "level": "Noble (USD6,250 Deductible)",
    "plan": "AXA WiseGuard Pro Medical Insurance Plan",
-   "prem_date": "20250909"
+   "prem_date": "20260909"
   },
   "F00035-01-000-05": {
    "age40": 55573,
