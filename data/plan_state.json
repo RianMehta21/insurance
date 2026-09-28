@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-21T00:42:16",
+ "generated_at": "2026-09-28T01:20:22",
  "variants": {
   "F00012-01-000-03": {
    "age40": 7671,
@@ -123,7 +123,7 @@
   "F00014-01-000-02": {
    "age40": 8878,
    "insurer": "Blue Cross (Asia-Pacific) Insurance Limited",
-   "level": "CareForYou",
+   "level": "CareForYou Flexi Plan for VHIS",
    "plan": "CareForYou Flexi Plan for VHIS",
    "prem_date": "20260101"
   },
@@ -3519,98 +3519,98 @@
    "age40": 6198.81,
    "insurer": "Chow Tai Fook Life Insurance Co Ltd",
    "level": "Benefit Level 1 - Asia (HKD 36,000 Deductible + HKD 36,000 Benefit Contribution Amount)",
-   "plan": "\"ChampCare\" Medical Insurance Plan",
+   "plan": "''ChampCare'' Medical Insurance Plan",
    "prem_date": "20250110"
   },
   "F00077-02-000-01": {
    "age40": 7109.52,
    "insurer": "Chow Tai Fook Life Insurance Co Ltd",
    "level": "Benefit Level 2 - Asia (HKD 18,000 Deductible + HKD 18,000 Benefit Contribution Amount)",
-   "plan": "\"ChampCare\" Medical Insurance Plan",
+   "plan": "''ChampCare'' Medical Insurance Plan",
    "prem_date": "20250110"
   },
   "F00077-03-000-01": {
    "age40": 18032.14,
    "insurer": "Chow Tai Fook Life Insurance Co Ltd",
    "level": "Benefit Level 3 - Asia (HKD 0 Deductible + HKD 0 Benefit Contribution Amount)",
-   "plan": "\"ChampCare\" Medical Insurance Plan",
+   "plan": "''ChampCare'' Medical Insurance Plan",
    "prem_date": "20250110"
   },
   "F00077-04-000-01": {
    "age40": 12583.33,
    "insurer": "Chow Tai Fook Life Insurance Co Ltd",
    "level": "Benefit Level 4 - Worldwide excluding USA (HKD 18,000 Deductible + HKD 18,000 Benefit Contribution Amount)",
-   "plan": "\"ChampCare\" Medical Insurance Plan",
+   "plan": "''ChampCare'' Medical Insurance Plan",
    "prem_date": "20250110"
   },
   "F00077-05-000-01": {
    "age40": 31457.14,
    "insurer": "Chow Tai Fook Life Insurance Co Ltd",
    "level": "Benefit Level 5 - Worldwide excluding USA (HKD 0 Deductible + HKD 0 Benefit Contribution Amount)",
-   "plan": "\"ChampCare\" Medical Insurance Plan",
+   "plan": "''ChampCare'' Medical Insurance Plan",
    "prem_date": "20250110"
   },
   "F00077-06-000-01": {
    "age40": 40111.9,
    "insurer": "Chow Tai Fook Life Insurance Co Ltd",
    "level": "Benefit Level 6 - Worldwide (HKD 18,000 Deductible + HKD 18,000 Benefit Contribution Amount)",
-   "plan": "\"ChampCare\" Medical Insurance Plan",
+   "plan": "''ChampCare'' Medical Insurance Plan",
    "prem_date": "20250110"
   },
   "F00077-07-000-01": {
    "age40": 63175,
    "insurer": "Chow Tai Fook Life Insurance Co Ltd",
    "level": "Benefit Level 7 - Worldwide (HKD 0 Deductible + HKD 0 Benefit Contribution Amount)",
-   "plan": "\"ChampCare\" Medical Insurance Plan",
+   "plan": "''ChampCare'' Medical Insurance Plan",
    "prem_date": "20250110"
   },
   "F00077-08-000-01": {
    "age40": 800,
    "insurer": "Chow Tai Fook Life Insurance Co Ltd",
    "level": "Benefit Level 1 - Asia (USD 4,640 Deductible + USD 4,640 Benefit Contribution Amount)",
-   "plan": "\"ChampCare\" Medical Insurance Plan",
+   "plan": "''ChampCare'' Medical Insurance Plan",
    "prem_date": "20250110"
   },
   "F00077-09-000-01": {
    "age40": 917.86,
    "insurer": "Chow Tai Fook Life Insurance Co Ltd",
    "level": "Benefit Level 2 - Asia (USD 2,320 Deductible + USD 2,320 Benefit Contribution Amount)",
-   "plan": "\"ChampCare\" Medical Insurance Plan",
+   "plan": "''ChampCare'' Medical Insurance Plan",
    "prem_date": "20250110"
   },
   "F00077-10-000-01": {
    "age40": 2326.19,
    "insurer": "Chow Tai Fook Life Insurance Co Ltd",
    "level": "Benefit Level 3 - Asia (USD 0 Deductible + USD 0 Benefit Contribution Amount)",
-   "plan": "\"ChampCare\" Medical Insurance Plan",
+   "plan": "''ChampCare'' Medical Insurance Plan",
    "prem_date": "20250110"
   },
   "F00077-11-000-01": {
    "age40": 1623.81,
    "insurer": "Chow Tai Fook Life Insurance Co Ltd",
    "level": "Benefit Level 4 - Worldwide excluding USA (USD 2,320 Deductible + USD 2,320 Benefit Contribution Amount)",
-   "plan": "\"ChampCare\" Medical Insurance Plan",
+   "plan": "''ChampCare'' Medical Insurance Plan",
    "prem_date": "20250110"
   },
   "F00077-12-000-01": {
    "age40": 4059.52,
    "insurer": "Chow Tai Fook Life Insurance Co Ltd",
    "level": "Benefit Level 5 - Worldwide excluding USA (USD 0 Deductible + USD 0 Benefit Contribution Amount)",
-   "plan": "\"ChampCare\" Medical Insurance Plan",
+   "plan": "''ChampCare'' Medical Insurance Plan",
    "prem_date": "20250110"
   },
   "F00077-13-000-01": {
    "age40": 5176.19,
    "insurer": "Chow Tai Fook Life Insurance Co Ltd",
    "level": "Benefit Level 6 - Worldwide (USD 2,320 Deductible + USD 2,320 Benefit Contribution Amount)",
-   "plan": "\"ChampCare\" Medical Insurance Plan",
+   "plan": "''ChampCare'' Medical Insurance Plan",
    "prem_date": "20250110"
   },
   "F00077-14-000-01": {
    "age40": 8151.19,
    "insurer": "Chow Tai Fook Life Insurance Co Ltd",
    "level": "Benefit Level 7 - Worldwide (USD 0 Deductible + USD 0 Benefit Contribution Amount)",
-   "plan": "\"ChampCare\" Medical Insurance Plan",
+   "plan": "''ChampCare'' Medical Insurance Plan",
    "prem_date": "20250110"
   },
   "F00078-01-000-01": {
