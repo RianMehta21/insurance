@@ -321,7 +321,10 @@ def sheet_compare(wb, catalog, n_prem_rows, benefits):
                 ("Deductible", "C", row["deductible_amount"], True),
                 ("Geography Detail", "D", row["geographical_coverage"], False)):
             if fallback == "" or fallback is None:
-                fb = '""'
+                # A Flexi plan whose document states no deductible leaves it
+                # to the individual policy ("as stated in the Policy
+                # Schedule"); saying so beats an empty cell that reads as zero.
+                fb = '"Per policy"' if name == "Deductible" else '""'
             elif numeric:
                 fb = str(fallback)
             else:
@@ -385,15 +388,20 @@ def sheet_compare(wb, catalog, n_prem_rows, benefits):
                 f'=IF({rowno}="",0,COUNT(INDEX({grid},{rowno},{col_first}):'
                 f'INDEX({grid},{rowno},{col_last})))')
 
-        for name, ben_col in (("Annual Limit", "E"), ("Coinsurance %", "F")):
-            idx = ben_lookup(ben_col).format(r=r)
-            ws.cell(r, CIDX[name], f'=IFERROR(IF(COUNT({idx})=0,"",{idx}),"")')
+        # Annual Limit can be text ("No limit"), so it is blanked only when
+        # truly empty. Coinsurance is always a number when known; when it is
+        # not, the cell says so rather than looking like 0%.
+        idx = ben_lookup("E").format(r=r)
+        ws.cell(r, CIDX["Annual Limit"],
+                f'=IFERROR(IF({idx}="","Not stated",{idx}),"Not stated")')
         ws.cell(r, CIDX["Annual Limit"]).number_format = money()
+        idx = ben_lookup("F").format(r=r)
+        ws.cell(r, CIDX["Coinsurance %"],
+                f'=IFERROR(IF(COUNT({idx})=0,"Not stated",{idx}),"Not stated")')
 
-        # Lifetime Limit is text as often as it's a number - "None" is a real,
-        # meaningful answer (no lifetime cap), not a missing value, so this
-        # can't use the COUNT()=0 blank check above: COUNT() treats "None" as
-        # non-numeric and would blank it out same as an actual gap.
+        # Lifetime Limit is text as often as it's a number - "No limit" is a
+        # real, meaningful answer, not a missing value, so it cannot use a
+        # COUNT()=0 blank check, which treats any text as a gap.
         lt_idx = ben_lookup("G").format(r=r)
         ws.cell(r, CIDX["Lifetime Limit"], f'=IFERROR(IF({lt_idx}="","",{lt_idx}),"")')
         ws.cell(r, CIDX["Lifetime Limit"]).number_format = money()
@@ -432,7 +440,7 @@ SEE_DOC_FALLBACK = {
 #
 # Order matters: "Standard Semi-private" contains "Private" and "Ward" can
 # appear in the long split values, so the narrowest test runs first. A value
-# matching nothing stops the build rather than quietly landing in no group.
+# matching nothing is shown as "Other" and logged (see _group).
 WARD_CLASSES = [
     (r"semi[\s-]*private", "Semi-private"),
     (r"private|\bsuite\b",  "Private"),
@@ -454,9 +462,12 @@ def _group(value, table, what):
     for pat, label in table:
         if re.search(pat, value, re.I):
             return label
-    raise SystemExit(
-        f"No {what} group for {value!r}. Add a pattern for it to "
-        f"{'WARD_CLASSES' if what == 'ward' else 'REGIONS'} in make_workbook.py.")
+    # The weekly run must publish without anyone touching it, so a wording no
+    # pattern knows is shown as "Other" - its exact text stays in the Detail
+    # column beside it - and noted in the build log, never a failed build.
+    print(f"  note: no {what} group for {value!r}; shown as Other "
+          f"(add a pattern to {'WARD_CLASSES' if what == 'ward' else 'REGIONS'})")
+    return "Other"
 
 
 def ward_class(value):
@@ -475,18 +486,18 @@ def ward_class(value):
 
 
 def region(value):
-    """'Asia (Worldwide for emergency)' -> ('Asia', 'Y'). Emergency is 'Y'
-    only when the cover is known to reach worldwide; blank means the source
-    did not say, not that emergencies abroad are excluded."""
+    """'Asia (Worldwide for emergency)' -> ('Asia', 'Yes'). Emergency is
+    'Yes' only when the cover is known to reach worldwide; 'Not stated' means
+    the source did not say, not that emergencies abroad are excluded."""
     v = (value or "").strip()
     if not v:
-        return "", ""
+        return "", "Not stated"
     if v == SEE_DOC_FALLBACK["geography"][0]:
-        return "See doc", ""
+        return "See doc", "Not stated"
     emergency = re.search(r"worldwide\s+for\s+emergency", v, re.I)
     main = _group(re.sub(r"\(\s*worldwide\s+for\s+emergency\s*\)", "", v,
                          flags=re.I), REGIONS, "geography")
-    return main, "Y" if emergency or main == "Worldwide" else ""
+    return main, "Yes" if emergency or main == "Worldwide" else "Not stated"
 
 
 # The VHIS Standard Plan is one government-mandated product: every insurer's
@@ -616,9 +627,13 @@ def sheet_benefits(wb, catalog, benefits=None):
         cert = row["certification_no"]
         ws.cell(i, 1, cert).font = Font(name=ARIAL, size=9)
         b = benefits.get(cert, {})
+        # "None" in the data means no limit. Shown bare it reads as "no
+        # cover", the opposite, so the sheet spells it out.
+        def limit(v):
+            return "No limit" if (v or "").strip() == "None" else v
         vals = [b.get("ward", ""), b.get("deductible", ""), b.get("geography", ""),
-                b.get("annual_limit", ""), b.get("coinsurance", ""),
-                b.get("lifetime", ""), b.get("tier", "")]
+                limit(b.get("annual_limit", "")), b.get("coinsurance", ""),
+                limit(b.get("lifetime", "")), b.get("tier", "")]
         for j, col in enumerate(range(2, 9)):
             c = ws.cell(i, col)
             v = vals[j]
@@ -721,11 +736,23 @@ def sheet_notes(wb, stats):
                                 "USA, or Worldwide. 'See doc' means the plan "
                                 "document confirms a restriction without "
                                 "naming it."),
-        ("Emergency Worldwide", "Y when emergency treatment is covered "
+        ("Emergency Worldwide", "Yes when emergency treatment is covered "
                                 "worldwide, either because all cover is "
                                 "worldwide or the plan says so for "
-                                "emergencies. Blank means not stated, not "
-                                "necessarily excluded."),
+                                "emergencies. 'Not stated' means the plan "
+                                "data does not say, not that it is excluded."),
+        ("No limit", "Annual or Lifetime Limit: the plan has no overall cap "
+                     "of that kind (its schedule says 'Nil'). Individual "
+                     "benefits still have their own limits."),
+        ("Per policy", "Deductible: the plan document leaves the deductible "
+                       "to the individual policy. Ask the insurer which "
+                       "options exist."),
+        ("Not stated", "Coinsurance or Annual Limit: the plan document does "
+                       "not give one figure for it (coinsurance often "
+                       "differs between inpatient and day patient). Check "
+                       "the plan document."),
+        ("Other", "Ward Class or Region: wording no rule recognises yet. "
+                  "The Detail column next to it has the exact text."),
     ]
     for i, (k, v) in enumerate(rows, start=3):
         ws.cell(i, 1, k).font = Font(name=ARIAL, size=10, bold=bool(k))

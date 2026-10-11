@@ -9,7 +9,7 @@ These four are not, and losing them costs either 40 minutes or real work.
 | `plan_benefits.csv` | Everything `scrape_plans.py` pulled out of the plan PDFs. Keyed on `certification_no` + `plan_date`. | All 579 PDFs get re-downloaded and re-parsed, roughly 40 minutes. |
 | `review_queue.csv` | Technical record of which PDFs the parser struggled with. **Not** the worklist — it does not know about your corrections, so entries stay after you fix them. | Regenerated on the next scrape. |
 | `manual_overrides.csv` | The to-do list *and* the corrections file. Maintained by `worklist.py`: a row appears for every plan still missing a key field, and your typed values are never overwritten. **Wins over anything scraped.** | Gone for good. Nothing else knows these values. |
-| `schedule_candidates.csv` | Audit trail for the ward, geography and lifetime-limit values `schedule_fields.py` read out of the Benefit Schedules, each with the verbatim schedule text it came from. Regenerable, but only against the same certification versions. | Re-run `schedule_fields.py`. Values already merged into `manual_overrides.csv` are unaffected. |
+| `schedule_candidates.csv` | Audit trail for every value (ward, geography, annual and lifetime limits, coinsurance) `schedule_fields.py` read out of the Benefit Schedules, each with the verbatim schedule text it came from. Regenerable, but only against the same certification versions. | Re-run `schedule_fields.py`. Values already merged into `manual_overrides.csv` are unaffected. |
 
 ## manual_overrides.csv
 
@@ -122,7 +122,24 @@ supplement's prose ("subject to a geographical limitation of Asia") and
 labelled `prose (no schedule row)` in the candidates file. Allianz, Asia
 Elite, Chubb's VHIS Series Flexi and YF Life are that shape.
 
-Three things worth knowing before re-running it:
+It also reads the **annual benefit limit** and **coinsurance**:
+
+- Annual limit: 38 Flexi plans (AIA 34, Chubb 4) showed HKD420,000 — the
+  Standard Plan's limit, which these PDFs restate after their own schedule —
+  instead of their real HKD5,000,000-12,000,000. On a Flexi plan that figure
+  is treated as a gap and replaced; on a Standard plan it is the real limit.
+  "Nil" on that row means no overall annual cap (89 plans, e.g. AXA Smart
+  Medicare, Prudential FlexiChoice). Checked against the 228 plans whose
+  limit was already known: every one agreed.
+- Coinsurance comes from the Prescribed Diagnostic Imaging row, the one VHIS
+  mandates. Only a row stating a single rate counts: Chow Tai Fook TopCare
+  charges 30% inpatient and 20% day patient, and AIA centres its value
+  between two rows, so neither is guessed. It only ever fills a blank.
+
+Since October 2026 the weekly workflow runs this pass on every plan it
+scrapes, fill-only, so newly certified plans do not fall back to "(see doc)".
+
+Three things worth knowing before re-running it by hand:
 
 - **There is no single format.** Seven insurers used four different labels for
   the ward row (`Entitled` / `Designated` / `Restricted` / `Covered ward

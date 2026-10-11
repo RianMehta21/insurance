@@ -20,6 +20,11 @@ You only need **`VHIS_Compare.xlsx`**. Nothing else.
    **Region** (Greater China / Asia / Worldwide excl. USA / Worldwide). The
    *Detail* column next to each keeps the insurer's exact wording.
 4. Sort by **10-Year Avg**, not First Year.
+
+   A few cells are words, not numbers, and each means something specific:
+   **No limit** (the plan has no annual or lifetime cap), **Per policy** (the
+   deductible is chosen per policy, ask the insurer), **Not stated** (the plan
+   document gives no single figure). The Notes sheet lists them all.
 5. Copy your shortlist into your own file.
 
 The file does not update itself. Download a fresh copy before each client meeting.
@@ -117,15 +122,29 @@ Runs itself every Monday morning, Hong Kong time. Nobody has to do anything.
               geography, deductible, coinsurance and benefit limits.
               Only plans whose certification date moved are re-read.
 
-4. Worklist   Refresh the list of plans still missing a key field.
+4. Schedules  For the plans just scraped, read the Benefit Schedule:
+              ward class, geography, annual and lifetime limits,
+              coinsurance. Fills gaps only, never changes a value.
 
-5. Workbook   Build VHIS_Compare.xlsx.
+5. Worklist   Refresh the list of plans still missing a key field.
 
-6. Verify     Recalculate every formula in LibreOffice. If any cell
+6. Workbook   Build VHIS_Compare.xlsx.
+
+7. Verify     Recalculate every formula in LibreOffice. If any cell
               errors, refuse to publish.
 
-7. Publish    Replace the file at the download link above.
+8. Publish    Replace the file at the download link above, and email
+              the change report if the email secrets are set.
+
+9. Keep-alive Re-enable the schedule, and add an empty commit after 45
+              quiet days, so GitHub never switches the job off.
 ```
+
+Nothing in it needs a person. Wording no rule recognises shows as `Other`
+(with the exact text beside it) instead of failing the build, and a schedule
+the reader cannot parse leaves that field as unknown rather than stopping the
+publish. A failed run emails the repository owner — GitHub does that by
+default.
 
 Ward class and geography come from the plan PDF first; when the PDF only confirms
 a restriction without naming it, the certified plan-level label is checked too
@@ -260,17 +279,17 @@ link and the change report. It is off until three repository secrets exist
 
 A manual republish or a quiet week sends nothing.
 
-### Closing `(see doc)` for another insurer
+### Re-reading Benefit Schedules by hand
 
-Not part of the weekly run — it is opt-in, one insurer group at a time, and
-its output is meant to be read before it counts.
+The weekly run already does this for every newly scraped plan (fill-only).
+Run it by hand only to re-check a whole insurer and review the evidence first:
 
 ```bash
 # 1. propose values, with the schedule text each one came from
 python schedule_fields.py --insurers "Prudential,Chubb" \
     --out data/schedule_candidates.csv
 
-# 2. read the ward_evidence / geo_evidence / lifetime_evidence columns, then merge
+# 2. read the *_evidence columns, then merge
 python schedule_fields.py --insurers "Prudential,Chubb" \
     --apply data/manual_overrides.csv
 ```

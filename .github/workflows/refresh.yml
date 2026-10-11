@@ -23,6 +23,7 @@ on:
 
 permissions:
   contents: write
+  actions: write      # keep-alive below re-enables this workflow
 
 jobs:
   refresh:
@@ -200,6 +201,25 @@ jobs:
                   f"re-run the workflow once connectivity is stable.")
           EOF
 
+      # Read the Benefit Schedule of every plan scraped this run, so a newly
+      # certified plan gets its ward class, geography, annual and lifetime
+      # limits and coinsurance the same week instead of "(see doc)". Fill-only:
+      # it never changes a value already there or one typed by hand. Allowed
+      # to fail: a missed field is shown as unknown, not worth a lost publish.
+      - name: Read benefit schedules
+        if: >-
+          steps.check.outputs.build == 'true'
+          && steps.targets.outputs.count != '0'
+        continue-on-error: true
+        run: |
+          TARGETS=$(cat scrape_targets.txt)
+          if [ "$TARGETS" = "ALL" ]; then
+            TARGETS=$(python -c "import csv; print(','.join(r['certification_no'] for r in csv.DictReader(open('out/plans_catalog.csv', encoding='utf-8-sig'))))")
+          fi
+          python schedule_fields.py --certs "$TARGETS" \
+            --out schedule_candidates_run.csv \
+            --apply data/manual_overrides.csv
+
       # Refresh the hand-entry to-do list. Adds a row for any plan still
       # missing a key field after scraping, drops nothing, and never touches a
       # value already typed in. review_queue.csv cannot do this job: it records
@@ -263,7 +283,7 @@ jobs:
 
       - name: Publish release
         if: steps.check.outputs.build == 'true'
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: latest
           name: "VHIS Compare (latest)"
@@ -295,7 +315,7 @@ jobs:
 
       - name: Email the change report
         if: steps.check.outputs.changed == 'true' && env.MAIL_TO != ''
-        uses: dawidd6/action-send-mail@v3
+        uses: dawidd6/action-send-mail@v22
         with:
           server_address: smtp.gmail.com
           server_port: 465
@@ -306,3 +326,26 @@ jobs:
           to: ${{ env.MAIL_TO }}
           subject: "VHIS Compare updated"
           body: file://mail_body.txt
+
+      # ------------------------------------------------------------------
+      # 7. Stay switched on. GitHub disables a scheduled workflow in a public
+      #    repository after 60 days without activity, and a run that finds
+      #    no new data commits nothing - so a quiet two months would stop the
+      #    refresh for good, silently. Re-enable it every week, and if the
+      #    repository has had no commit for 45 days, add an empty one.
+      # ------------------------------------------------------------------
+      - name: Keep the weekly run enabled
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api -X PUT "repos/${{ github.repository }}/actions/workflows/refresh.yml/enable" || true
+          git fetch -q origin main
+          age=$(( $(date +%s) - $(git log -1 --format=%ct origin/main) ))
+          if [ "$age" -gt $((45*24*3600)) ]; then
+            git config user.name  "vhis-bot"
+            git config user.email "vhis-bot@users.noreply.github.com"
+            git commit --allow-empty -m "Keep the weekly refresh enabled"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi

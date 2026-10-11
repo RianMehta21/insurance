@@ -638,13 +638,17 @@ def _right_column(line, label_indent):
     return ""
 
 
-def lifetime_cells(text):
-    """Every Lifetime Benefit Limit schedule row's value text, in order."""
+def amount_row_cells(text, label, prose):
+    """Every schedule row's value text for `label`, in document order.
+
+    Shared by every one-figure row (lifetime limit, annual limit): the label
+    starts its line, and its value is whatever sits in the right-hand column
+    for a few lines, up to a blank line or the next row."""
     lines = text.split("\n")
     out = []
     for i, line in enumerate(lines):
-        m = LIFETIME_LABEL.match(line)
-        if not m or LIFETIME_PROSE.search(line):
+        m = label.match(line)
+        if not m or prose.search(line):
             continue
         indent = len(m.group("indent"))
         parts = [_right_column(line, indent)]
@@ -658,6 +662,11 @@ def lifetime_cells(text):
                          else _right_column(nxt, indent))
         out.append(squash(" ".join(p for p in parts if p)))
     return out
+
+
+def lifetime_cells(text):
+    """Every Lifetime Benefit Limit schedule row's value text, in order."""
+    return amount_row_cells(text, LIFETIME_LABEL, LIFETIME_PROSE)
 
 
 def normalise_lifetime(cell, currency):
@@ -680,15 +689,15 @@ def normalise_lifetime(cell, currency):
             "single" + (" (cell runs on into other figures)" if rest else ""))
 
 
-def read_lifetime(text, currency):
+def first_amount(cells, currency, missing):
     """-> (value, confidence, evidence). The first row that yields a value
     wins: AIA prints a second schedule for an optional benefit further on,
-    with its own "Nil" row, and that one is not the plan's limit. How many
-    distinct values the document holds goes into the confidence, so a
+    with its own "Nil" lifetime row, and appends the Standard Plan's
+    HKD420,000 annual limit after its own. Neither is the plan's figure. How
+    many distinct values the document holds goes into the confidence, so a
     disagreement is visible in review."""
-    cells = lifetime_cells(text)
     if not cells:
-        return "", "no lifetime row in schedule", ""
+        return "", missing, ""
     read = [(normalise_lifetime(c, currency), c) for c in cells]
     hits = [(v, conf, c) for (v, conf), c in read if v]
     if not hits:
@@ -700,6 +709,94 @@ def read_lifetime(text, currency):
         conf += f" (document also states {', '.join(others)})"
     return value, conf, evidence
 
+
+def read_lifetime(text, currency):
+    return first_amount(lifetime_cells(text), currency,
+                        "no lifetime row in schedule")
+
+
+# --------------------------------------------------------------------------
+# Annual Benefit Limit
+# --------------------------------------------------------------------------
+# scrape_plans.py reads this from the clause and, on AIA's and Chubb's Flexi
+# plans, picks up the Standard Plan's HKD420,000 - printed in the same PDF
+# because a Flexi plan must restate Standard Plan terms. 38 Flexi plans showed
+# that figure instead of their own HKD5,000,000-12,000,000. The plan's own
+# schedule row comes first in the document, so first_amount() takes it.
+ANNUAL_LABEL = re.compile(r"^(?P<indent>\s*)Annual\s+Benefit\s+Limit\b", re.I)
+ANNUAL_PROSE = re.compile(
+    r"Annual\s+Benefit\s+Limit\s*(?:[.;,]|(?:as|and|is|shall|of|has)\b)", re.I)
+STANDARD_ANNUAL_LIMIT = "420000"
+
+
+def read_annual(text, currency):
+    # "Nil" means no overall annual cap, exactly as on the lifetime row: AXA
+    # Smart Medicare, Prudential FlexiChoice and Manulife First, among others,
+    # limit individual benefits but not the year as a whole.
+    return first_amount(amount_row_cells(text, ANNUAL_LABEL, ANNUAL_PROSE),
+                        currency, "no annual limit row in schedule")
+
+
+# --------------------------------------------------------------------------
+# Coinsurance
+# --------------------------------------------------------------------------
+# VHIS mandates coinsurance on one benefit only: Prescribed Diagnostic Imaging
+# Tests (30% on the Standard Plan). Flexi plans state their own rate on that
+# schedule row, and most of the ones the scraper left blank say "Fully
+# covered" there - 0%, a phrase scrape_plans.py does not recognise.
+IMAGING_LABEL = re.compile(
+    # "Diagnostic" alone: AIA wraps the label as "(i) Prescribed Diagnostic"
+    # with "Imaging Tests" on the next line.
+    r"^(?P<indent>\s*)(?:\(\w{1,4}\)\s*)?Prescribed\s+Diagnostic\b", re.I)
+NO_PROSE = re.compile(r"(?!)")
+COINS_PCT = re.compile(r"(\d{1,2})\s*%\s*(?:of\s+(?:the\s+)?Eligible\s+Expenses\s+)?Co-?insurance", re.I)
+COINS_NONE = re.compile(r"Fully\s+covered|No\s+Co-?insurance|Co-?insurance\s*:?\s*(?:Nil|0\s*%)", re.I)
+
+
+SCHEDULE_HEADING = re.compile(r"^\s*BENEFIT\s+SCHEDULE\s*$|^\s*Benefit\s+Schedule\s*$")
+IMAGING_SCAN = 14
+# The next schedule item - "(j) Prescribed Non-surgical Cancer Treatments" -
+# ends the imaging row. Blank lines do not: FlexiCare prints "Fully covered"
+# then, after a gap, "Performed during Confinement: subject to 30%
+# Coinsurance", and stopping at the gap reported 0% for a plan that charges
+# 30% on inpatient scans.
+NEXT_ITEM = re.compile(r"^\s*\((?:[a-z]{1,3}|[ivx]{1,5})\)\s+\S", re.I)
+
+
+def read_coinsurance(text):
+    """-> (percent, confidence, evidence) from the imaging row.
+
+    Only a row that states one rate gives a figure. Chow Tai Fook's TopCare
+    charges 30% during Confinement and 20% as a Day Patient; a single number
+    for that would be wrong whichever one was picked, so it is reported as
+    varying and left for the plan document."""
+    lines = text.split("\n")
+    # Part 6 describes the imaging benefit in prose, mentioning coinsurance in
+    # general terms, long before the schedule states this plan's rate. Start
+    # at the first schedule heading; a document without one is scanned whole.
+    first = next((i for i, l in enumerate(lines) if SCHEDULE_HEADING.match(l)), 0)
+    for i, line in enumerate(lines):
+        if i < first or not IMAGING_LABEL.match(line):
+            continue
+        block = [line]
+        for nxt in lines[i + 1:i + 1 + IMAGING_SCAN]:
+            if NEXT_ITEM.match(nxt) or STOP.match(nxt):
+                break
+            block.append(nxt)
+        cell = squash(" ".join(block))
+        rates = {m.group(1) for m in COINS_PCT.finditer(cell)}
+        if COINS_NONE.search(cell):
+            rates.add("0")
+        if len(rates) == 1:
+            return rates.pop(), "imaging row", cell
+        if len(rates) > 1:
+            return "", f"varies by setting {sorted(rates, key=int)}", cell
+        # Only the plan's own (first) row counts. AIA centres "Fully covered"
+        # between its (i) and (j) rows, so its row reads empty - and carrying
+        # on would reach the Standard Plan schedule AIA appends, whose 30% is
+        # not this plan's rate.
+        return "", "imaging row states no rate of its own", cell
+    return "", "no imaging row in schedule", ""
 
 # --------------------------------------------------------------------------
 # Cross-check: the ward-class adjustment table
@@ -820,7 +917,9 @@ def apply(candidates, overrides_path, catalog, benefits_path, correct_wrong=Fals
         if geo == GEO_PLACEHOLDER:
             geo = (c.get("geographical_coverage") or "").strip() or geo
         life = (s.get("lifetime_benefit_limit") or "").strip()
-        return ward, geo, life
+        annual = (s.get("annual_benefit_limit") or "").strip()
+        coins = (s.get("coinsurance_pct") or "").strip()
+        return ward, geo, life, annual, coins
 
     scraped = {r["certification_no"]: r
                for r in _csv.DictReader(open(benefits_path, encoding="utf-8-sig"))}
@@ -838,23 +937,31 @@ def apply(candidates, overrides_path, catalog, benefits_path, correct_wrong=Fals
         cat = catalog.get(cert)
         if not cat:
             continue
-        cur_ward, cur_geo, cur_life = current(cert)
+        cur_ward, cur_geo, cur_life, cur_annual, cur_coins = current(cert)
+        # On a Flexi plan the Standard Plan's annual limit is the scraper
+        # reading the wrong schedule (see ANNUAL_LABEL), so it is treated as
+        # a gap, not an answer. A Standard plan's 420,000 is its real limit.
+        annual_gap = (STANDARD_ANNUAL_LIMIT if cat.get("plan_type") != "Standard"
+                      else WARD_PLACEHOLDER)
         want = {}
         for field, cur, placeholder in (("ward", cur_ward, WARD_PLACEHOLDER),
                                         ("geography", cur_geo, GEO_PLACEHOLDER),
-                                        ("lifetime", cur_life, LIFETIME_PLACEHOLDER)):
+                                        ("lifetime", cur_life, LIFETIME_PLACEHOLDER),
+                                        ("annual_limit", cur_annual, annual_gap),
+                                        ("coinsurance", cur_coins, None)):
             new = cand.get(field, "")
             if not new:
                 continue
             if cur in (placeholder, ""):
                 want[field] = new
-            elif (correct_wrong and new != cur
+            elif (correct_wrong and new != cur and field != "coinsurance"
                   and cur not in NEVER_REPLACE.get(field, ())):
                 want[field] = new
                 if (by_cert.get(cert, {}).get(field) or "").strip() != new:
                     corrected.append((cert, field, cur, new))
         if not want:
-            if cand["ward"] or cand["geography"] or cand.get("lifetime"):
+            if any(cand.get(f) for f in ("ward", "geography", "lifetime",
+                                         "annual_limit", "coinsurance")):
                 skipped.append((cert, cur_ward, cur_geo))
             continue
 
@@ -912,20 +1019,31 @@ def main():
                          "Requires --insurers: this pass is reviewed one "
                          "insurer group at a time, and applying it blind "
                          "across all 33 is exactly the mistake to avoid.")
+    ap.add_argument("--certs", default="",
+                    help="comma-separated certification numbers: read only "
+                         "these. The weekly workflow passes the plans it just "
+                         "scraped, so a re-certified plan is read the same "
+                         "week instead of falling back to '(see doc)'.")
     ap.add_argument("--correct-wrong", action="store_true",
                     help="also replace a scraped value that disagrees with "
                          "the schedule, not just a '(see doc)' placeholder. "
                          "Every replacement is printed.")
     args = ap.parse_args()
-    if args.apply and not args.insurers:
-        raise SystemExit("--apply requires --insurers (refusing to apply to every insurer at once)")
+    if args.apply and not (args.insurers or args.certs):
+        raise SystemExit("--apply requires --insurers or --certs "
+                         "(refusing to apply to every insurer at once)")
+    if args.apply and args.correct_wrong and args.certs:
+        raise SystemExit("--correct-wrong is for a reviewed run, not the "
+                         "unattended weekly one")
 
     with open(args.catalog, encoding="utf-8-sig") as f:
         catalog = list(csv.DictReader(f))
 
     prefixes = [p.strip() for p in args.insurers.split(",") if p.strip()]
+    certs = {c.strip() for c in args.certs.split(",") if c.strip()}
     rows = [r for r in catalog
-            if not prefixes or any(r["insurer"].startswith(p) for p in prefixes)]
+            if (not prefixes or any(r["insurer"].startswith(p) for p in prefixes))
+            and (not certs or r["certification_no"] in certs)]
 
     out = []
     for r in rows:
@@ -937,10 +1055,15 @@ def main():
                             ward="", ward_conf="pdf missing", ward_evidence="",
                             geography="", geo_conf="pdf missing", geo_evidence="",
                             lifetime="", lifetime_conf="pdf missing",
-                            lifetime_evidence="", ward_crosscheck=""))
+                            lifetime_evidence="", annual_limit="",
+                            annual_conf="pdf missing", annual_evidence="",
+                            coinsurance="", coins_conf="pdf missing",
+                            coins_evidence="", ward_crosscheck=""))
             continue
 
         life, lconf, lcell = read_lifetime(text, r["currency"])
+        annual, aconf, acell = read_annual(text, r["currency"])
+        coins, cconf, ccell = read_coinsurance(text)
 
         wcells = find_cells(text, WARD_LABEL, ward_answers)
         gcells = find_cells(text, GEO_LABEL, geo_answers)
@@ -981,12 +1104,16 @@ def main():
             ward=ward, ward_conf=wconf, ward_evidence=wcell[:400],
             geography=geo, geo_conf=gconf, geo_evidence=gcell[:400],
             lifetime=life, lifetime_conf=lconf, lifetime_evidence=lcell[:400],
+            annual_limit=annual, annual_conf=aconf, annual_evidence=acell[:400],
+            coinsurance=coins, coins_conf=cconf, coins_evidence=ccell[:400],
             ward_crosscheck=xcheck))
 
     cols = ["certification_no", "insurer", "plan_name", "plan_level",
             "ward", "ward_conf", "ward_crosscheck", "ward_evidence",
             "geography", "geo_conf", "geo_evidence",
-            "lifetime", "lifetime_conf", "lifetime_evidence"]
+            "lifetime", "lifetime_conf", "lifetime_evidence",
+            "annual_limit", "annual_conf", "annual_evidence",
+            "coinsurance", "coins_conf", "coins_evidence"]
     os.makedirs(os.path.dirname(args.out) or ".", exist_ok=True)
     with open(args.out, "w", encoding="utf-8", newline="") as f:
         w = csv.DictWriter(f, fieldnames=cols)
@@ -1024,6 +1151,8 @@ def main():
     print(f"  ward extracted:      {ok_w}/{len(out)}")
     print(f"  geography extracted: {ok_g}/{len(out)}")
     print(f"  lifetime extracted:  {ok_l}/{len(out)}")
+    print(f"  annual extracted:    {sum(1 for r in out if r['annual_limit'])}/{len(out)}")
+    print(f"  coinsurance read:    {sum(1 for r in out if r['coinsurance'])}/{len(out)}")
     import collections as _c
     print("  ward cross-check (advisory):")
     for k, n in _c.Counter(r["ward_crosscheck"].split(" (")[0]
