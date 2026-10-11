@@ -170,7 +170,7 @@ def sheet_client(wb, catalog_n, prem_date_max):
         "1. Check the build date above. If it is more than a week old, download a fresh copy.",
         "2. Set the four yellow cells at the top.",
         "3. Go to the Compare sheet. Every premium column has already recalculated.",
-        "4. Filter row 4: set Available = Open first, then narrow by ward, deductible, geography.",
+        "4. Filter row 4: set Available = Open first, then narrow by Ward Class, Deductible, Region.",
         "5. Sort by 10-Year Avg, not First Year. See the warnings below.",
         "6. Copy the shortlisted rows into your own file for the client.",
     ]:
@@ -223,7 +223,9 @@ def sheet_client(wb, catalog_n, prem_date_max):
 COMPARE_COLS = OrderedDict([
     ("Insurer", 26), ("Plan Name", 34), ("Type", 8), ("Available", 17),
     ("Plan Level", 30),
-    ("Ward", 14), ("Deductible", 12), ("Geography", 18), ("Ccy", 6),
+    ("Ward Class", 14), ("Ward Detail", 16), ("Deductible", 12),
+    ("Region", 15), ("Geography Detail", 20), ("Emergency Worldwide", 12),
+    ("Ccy", 6),
     ("First Year", 12), ("10-Year Total", 14), ("10-Year Avg", 13),
     ("Years Avail", 11), ("Age Basis", 11), ("Basis Used", 11),
     ("Smoker Rated", 12), ("Annual Limit", 13), ("Coinsurance %", 12),
@@ -242,7 +244,7 @@ CIDX = {name: i for i, name in enumerate(COMPARE_COLS, start=1)}
 CL = {name: get_column_letter(i) for name, i in CIDX.items()}
 
 
-def sheet_compare(wb, catalog, n_prem_rows):
+def sheet_compare(wb, catalog, n_prem_rows, benefits):
     ws = wb.create_sheet("Compare")
     ws.sheet_view.showGridLines = False
     ws.freeze_panes = "A5"
@@ -315,9 +317,9 @@ def sheet_compare(wb, catalog, n_prem_rows):
         # but drops out of numeric sorts and "greater than" filters - on the
         # column most likely to be filtered.
         for name, ben_col, fallback, numeric in (
-                ("Ward", "B", row["ward_type"], False),
+                ("Ward Detail", "B", row["ward_type"], False),
                 ("Deductible", "C", row["deductible_amount"], True),
-                ("Geography", "D", row["geographical_coverage"], False)):
+                ("Geography Detail", "D", row["geographical_coverage"], False)):
             if fallback == "" or fallback is None:
                 fb = '""'
             elif numeric:
@@ -329,6 +331,17 @@ def sheet_compare(wb, catalog, n_prem_rows):
                         f'=IFERROR(IF({idx}="",{fb},{idx}),{fb})')
             c.font = BLACK
         ws.cell(r, CIDX["Deductible"]).number_format = money()
+
+        # The filterable groups are plain values, not formulas: they come from
+        # the same merged value the detail formulas above resolve to (Benefits
+        # sheet first, plan-level label second), worked out here in Python.
+        b = benefits.get(cert, {})
+        ward = b.get("ward") or row["ward_type"] or ""
+        geo = b.get("geography") or row["geographical_coverage"] or ""
+        reg, emergency = region(geo)
+        ws.cell(r, CIDX["Ward Class"], ward_class(ward)).font = BLACK
+        ws.cell(r, CIDX["Region"], reg).font = BLACK
+        ws.cell(r, CIDX["Emergency Worldwide"], emergency).font = BLACK
 
         ws.cell(r, CIDX["Ccy"], row["currency"]).font = BLACK
         ws.cell(r, CIDX["Age Basis"], row["age_counting_method"]).font = BLACK
@@ -383,6 +396,7 @@ def sheet_compare(wb, catalog, n_prem_rows):
         # non-numeric and would blank it out same as an actual gap.
         lt_idx = ben_lookup("G").format(r=r)
         ws.cell(r, CIDX["Lifetime Limit"], f'=IFERROR(IF({lt_idx}="","",{lt_idx}),"")')
+        ws.cell(r, CIDX["Lifetime Limit"]).number_format = money()
 
         for name in ("First Year", "10-Year Total", "10-Year Avg", "Years Avail",
                      "Lifetime Limit"):
@@ -410,6 +424,70 @@ SEE_DOC_FALLBACK = {
     "ward": ("Restricted (see doc)", "ward_type"),
     "geography": ("Limited (see doc)", "geographical_coverage"),
 }
+
+# Ward Class and Region are the columns meant for filtering. The detail columns
+# beside them carry every insurer's own wording - "Ward" / "General Ward" /
+# "Standard Ward", or "Semi-private (HK/Australia/NZ); Standard Private
+# (elsewhere)" - which is right to keep but useless in a filter dropdown.
+#
+# Order matters: "Standard Semi-private" contains "Private" and "Ward" can
+# appear in the long split values, so the narrowest test runs first. A value
+# matching nothing stops the build rather than quietly landing in no group.
+WARD_CLASSES = [
+    (r"semi[\s-]*private", "Semi-private"),
+    (r"private|\bsuite\b",  "Private"),
+    (r"\bward\b",          "General Ward"),
+]
+
+# Narrowest scope first: "Worldwide excl. USA" must not be read as Worldwide.
+# Hong Kong/Macau shares the Greater China group; it is never widened to Asia,
+# because a filter must not make a plan's cover look bigger than it is.
+REGIONS = [
+    (r"excl\.?\s*(the\s+)?USA|except\s+(the\s+)?USA", "Worldwide excl. USA"),
+    (r"worldwide",                                    "Worldwide"),
+    (r"\basia\b",                                     "Asia"),
+    (r"greater\s+china|hong\s*kong|macau",            "Greater China"),
+]
+
+
+def _group(value, table, what):
+    for pat, label in table:
+        if re.search(pat, value, re.I):
+            return label
+    raise SystemExit(
+        f"No {what} group for {value!r}. Add a pattern for it to "
+        f"{'WARD_CLASSES' if what == 'ward' else 'REGIONS'} in make_workbook.py.")
+
+
+def ward_class(value):
+    """'Semi-private (HK/Australia/NZ); Standard Private (elsewhere)' ->
+    'Semi-private'. A split value is grouped by its Hong Kong tier: that is
+    the hospital this workbook's clients will actually be admitted to."""
+    v = (value or "").strip()
+    if v in ("", "No restriction"):
+        return v
+    if v == SEE_DOC_FALLBACK["ward"][0]:
+        return "See doc"
+    tiers = [t.strip() for t in v.split(";")]
+    home = next((t for t in tiers if re.search(r"\bHK\b|Hong\s*Kong", t)),
+                tiers[0])
+    return _group(re.sub(r"\(.*?\)", "", home), WARD_CLASSES, "ward")
+
+
+def region(value):
+    """'Asia (Worldwide for emergency)' -> ('Asia', 'Y'). Emergency is 'Y'
+    only when the cover is known to reach worldwide; blank means the source
+    did not say, not that emergencies abroad are excluded."""
+    v = (value or "").strip()
+    if not v:
+        return "", ""
+    if v == SEE_DOC_FALLBACK["geography"][0]:
+        return "See doc", ""
+    emergency = re.search(r"worldwide\s+for\s+emergency", v, re.I)
+    main = _group(re.sub(r"\(\s*worldwide\s+for\s+emergency\s*\)", "", v,
+                         flags=re.I), REGIONS, "geography")
+    return main, "Y" if emergency or main == "Worldwide" else ""
+
 
 # The VHIS Standard Plan is one government-mandated product: every insurer's
 # Standard Plan certifies identical terms (only the premium differs), so
@@ -553,6 +631,7 @@ def sheet_benefits(wb, catalog, benefits=None):
             c.font = BLACK
         ws.cell(i, 3).number_format = money()
         ws.cell(i, 5).number_format = money()
+        ws.cell(i, 7).number_format = money()
     return ws
 
 
@@ -631,6 +710,22 @@ def sheet_notes(wb, stats):
                            "deductible, 30% coinsurance, no lifetime limit. "
                            "Manual entries in the Benefits sheet override all "
                            "of the above."),
+        ("Ward Class / Region", "Short groups for filtering; the Detail column "
+                                "beside each keeps the insurer's own wording. "
+                                "Ward Class is General Ward, Semi-private, "
+                                "Private or No restriction. A plan whose ward "
+                                "differs by location is grouped by its Hong "
+                                "Kong ward. Region is Greater China (includes "
+                                "Hong Kong/Macau-only cover), Asia (includes "
+                                "Australia/NZ where stated), Worldwide excl. "
+                                "USA, or Worldwide. 'See doc' means the plan "
+                                "document confirms a restriction without "
+                                "naming it."),
+        ("Emergency Worldwide", "Y when emergency treatment is covered "
+                                "worldwide, either because all cover is "
+                                "worldwide or the plan says so for "
+                                "emergencies. Blank means not stated, not "
+                                "necessarily excluded."),
     ]
     for i, (k, v) in enumerate(rows, start=3):
         ws.cell(i, 1, k).font = Font(name=ARIAL, size=10, bold=bool(k))
@@ -662,8 +757,8 @@ def main():
     wb.remove(wb.active)
 
     sheet_client(wb, len(catalog), prem_date_max)
-    sheet_compare(wb, catalog, len(prem_rows))
     benefits = load_benefits(args.benefits, args.overrides, catalog)
+    sheet_compare(wb, catalog, len(prem_rows), benefits)
     sheet_benefits(wb, catalog, benefits)
     sheet_prem(wb, prem_rows)
     sheet_notes(wb, {

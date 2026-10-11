@@ -27,6 +27,10 @@ permissions:
 jobs:
   refresh:
     runs-on: ubuntu-latest
+    # Job-level so the email steps' `if:` can test it; a step's own env is not
+    # visible to that step's condition. Empty until the secret is added.
+    env:
+      MAIL_TO: ${{ secrets.MAIL_TO }}
     steps:
       # checkout v5 / setup-python v6 run on Node 24. The v4/v5 pair still
       # works but targets the deprecated Node 20 and warns on every run.
@@ -266,3 +270,39 @@ jobs:
           body_path: change_report.txt
           files: VHIS_Compare.xlsx
           make_latest: true
+
+      # ------------------------------------------------------------------
+      # 6. Tell him there is a new file - only when the government data
+      #    actually changed, not on a manual republish or a quiet week.
+      #
+      # Needs three repository secrets (Settings -> Secrets and variables ->
+      # Actions): MAIL_USERNAME (the sending Gmail address), MAIL_PASSWORD
+      # (a Gmail *app password*, not the account password) and MAIL_TO
+      # (comma-separated recipients). Until MAIL_TO exists this step is
+      # skipped, so the workflow keeps running cleanly without it.
+      # ------------------------------------------------------------------
+      - name: Write the email
+        if: steps.check.outputs.changed == 'true' && env.MAIL_TO != ''
+        run: |
+          {
+            echo "A new VHIS comparison workbook is ready. Download it here:"
+            echo "https://github.com/${{ github.repository }}/releases/latest/download/VHIS_Compare.xlsx"
+            echo
+            echo "Please delete any older copy and use this one from now on."
+            echo "What changed:"
+            cat change_report.txt
+          } > mail_body.txt
+
+      - name: Email the change report
+        if: steps.check.outputs.changed == 'true' && env.MAIL_TO != ''
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          from: VHIS Compare <${{ secrets.MAIL_USERNAME }}>
+          to: ${{ env.MAIL_TO }}
+          subject: "VHIS Compare updated"
+          body: file://mail_body.txt

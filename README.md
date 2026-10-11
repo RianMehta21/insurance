@@ -15,7 +15,10 @@ You only need **`VHIS_Compare.xlsx`**. Nothing else.
 1. Open the **Client** sheet. Check the build date, then fill in the four yellow
    cells: age, gender, smoker, premium basis.
 2. Go to the **Compare** sheet. All 579 plans have already repriced.
-3. Use the filter arrows in **row 4**. Set `Available = Open` first.
+3. Use the filter arrows in **row 4**. Set `Available = Open` first, then narrow
+   by **Ward Class** (General Ward / Semi-private / Private / No restriction) and
+   **Region** (Greater China / Asia / Worldwide excl. USA / Worldwide). The
+   *Detail* column next to each keeps the insurer's exact wording.
 4. Sort by **10-Year Avg**, not First Year.
 5. Copy your shortlist into your own file.
 
@@ -129,11 +132,14 @@ a restriction without naming it, the certified plan-level label is checked too
 (insurers often put it right in the name, e.g. `"Semi-Private Room"` or
 `"(Worldwide except USA)"`). Only when neither source names it does a plan show
 `Restricted (see doc)` / `Limited (see doc)` — an honest "go check the PDF," not
-a guess, and still true for 116 plans on ward and 81 on geography.
+a guess. As of October 2026 that is 10 plans on ward (AIA SelectWise, whose ward
+class depends on whether your doctors are in AIA's network) and none on
+geography. Lifetime limit works the same way and has no gaps left either: 168
+plans show the actual cap, the rest have none.
 
-Those counts used to be 325 and 239. The gap closed because the clause the
-scraper reads usually does not state the answer — it points at the plan's
-**Benefit Schedule**, which does:
+Those counts used to be 325 ward and 239 geography. The gap closed because the
+clause the scraper reads usually does not state the answer — it points at the
+plan's **Benefit Schedule**, which does:
 
 ```
 (d) Choice of ward class
@@ -142,10 +148,11 @@ scraper reads usually does not state the answer — it points at the plan's
     Benefits.
 ```
 
-`schedule_fields.py` reads that schedule row. It has been run for AXA, Bupa,
-Blue Cross, FWD, Sun Life, HSBC Life and Manulife, which between them had 209
-plans showing a placeholder and now have none. The remaining 116/81 are the
-other 26 insurers, and the same pass can be pointed at them.
+`schedule_fields.py` reads that schedule row — ward class, geography and
+lifetime limit. It has been run for every insurer that had a gap. A plan that
+is re-certified gets a new certificate number and starts over from the PDF
+clause, so after a refresh that adds plans it is worth re-running for that
+insurer.
 
 Standard Plan is solved outright: it's one government-mandated product across
 all 33 insurers (Worldwide, no ward restriction, HKD420,000 annual limit, no
@@ -239,6 +246,20 @@ python verify_workbook.py VHIS_Compare.xlsx              # check every formula
 To publish without waiting for Monday: **Actions → Refresh VHIS workbook → Run
 workflow**, leaving "Rebuild and publish" ticked.
 
+### Update emails
+
+When the government data actually changes, the Monday run emails the download
+link and the change report. It is off until three repository secrets exist
+(**Settings → Secrets and variables → Actions**):
+
+| Secret | Value |
+|---|---|
+| `MAIL_USERNAME` | the Gmail address that sends it |
+| `MAIL_PASSWORD` | a Gmail [app password](https://myaccount.google.com/apppasswords) for that account — not its normal password |
+| `MAIL_TO` | who receives it; separate several with commas |
+
+A manual republish or a quiet week sends nothing.
+
 ### Closing `(see doc)` for another insurer
 
 Not part of the weekly run — it is opt-in, one insurer group at a time, and
@@ -249,7 +270,7 @@ its output is meant to be read before it counts.
 python schedule_fields.py --insurers "Prudential,Chubb" \
     --out data/schedule_candidates.csv
 
-# 2. read the ward_evidence / geo_evidence columns, then merge
+# 2. read the ward_evidence / geo_evidence / lifetime_evidence columns, then merge
 python schedule_fields.py --insurers "Prudential,Chubb" \
     --apply data/manual_overrides.csv
 ```

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Read ward class and geographical coverage out of the Benefit Schedule.
+"""Read ward class, geographical coverage and the lifetime benefit limit out
+of the Benefit Schedule.
 
 scrape_plans.py reads Part 6 Section 1(a) and 1(d). For a large family of
 plans those clauses name no value at all - they cross-reference somewhere
@@ -57,19 +58,28 @@ from collections import defaultdict
 #   Designated Ward Class    Manulife, Sun Life, Blue Cross
 #   Restricted ward class    Bupa (Hero)
 #   Covered ward class       Bupa (Global Prestige)
+#   Covered Room             AIA
+#   Covered room level       YF Life
+#   Restricted accommodation room type:   Zurich (in the supplement, colon-
+#                            separated, so the colon counts as the column gap)
 #
 #   Geographical limitation      AXA, Blue Cross, FWD, HSBC Life, Sun Life
 #   Area of cover                Bupa
-#   Territorial scope of cover   Manulife, FWD (vTheOne, vPrime Signature)
+#   Territorial scope of cover   Manulife, FWD (vTheOne, vPrime Signature), Bowtie
+#   Geographical cover           AIA
+#
+# A label can carry more than one footnote marker - Bowtie writes
+# "Territorial scope of cover(1) (2)" - so the markers repeat.
 WARD_LABEL = re.compile(
-    r"^(?P<indent>\s*)(?:Entitled|Designated|Restricted|Covered)\s+ward\s+class"
-    r"(?:\s*\(\d+\))?"
-    r"(?:\s*$|\s{2,}(?P<val>\S.*?)\s*$)", re.I)
+    r"^(?P<indent>\s*)(?:(?:Entitled|Designated|Restricted|Covered)\s+ward\s+class"
+    r"|Covered\s+Room(?:\s+level)?|Restricted\s+accommodation\s+room\s+type\s*:)"
+    r"(?:\s*\(\d+\))*"
+    r"(?:\s*$|(?:\s{2,}|(?<=:)\s*)(?P<val>\S.*?)\s*$)", re.I)
 
 GEO_LABEL = re.compile(
-    r"^(?P<indent>\s*)(?:Geographical\s+limitations?|Area\s+of\s+cover"
+    r"^(?P<indent>\s*)(?:Geographical\s+(?:limitations?|cover)|Area\s+of\s+cover"
     r"|Territorial\s+scope\s+of\s+cover)"
-    r"(?:\s*\(\d+\))?"
+    r"(?:\s*\(\d+\))*"
     r"(?:\s*$|\s{2,}(?P<val>\S.*?)\s*$)", re.I)
 
 # Requiring end-of-line or a 2+ space column gap after the label is what keeps
@@ -137,7 +147,8 @@ LABEL_CONT_INLINE = re.compile(
 # A label inside parentheses is a continuation of the current label, not a new
 # row, so it must not match here.
 ROW_LABEL = re.compile(
-    r"^\s*(?:Area\s+of\s+cover|Geographical\s+limitations?"
+    r"^\s*(?:Area\s+of\s+cover|Geographical\s+(?:limitations?|cover)|Covered\s+Room\b"
+    r"|Restricted\s+accommodation\s+room\s+type"
     r"|Territorial\s+scope\s+of\s+cover|Extended\s+territorial\s+scope"
     r"|Deductible\b|Annual\s+Benefit\s+Limit|Lifetime\s+Benefit\s+Limit"
     r"|Aggregate\s+limit|Benefit\s+items?\b|Benefit\s+Coverage"
@@ -293,10 +304,12 @@ def squash(s):
 # "Standard Private Room" is never matched as "Private Room" and "Standard
 # Semi-private Room" never as "Semi-private Room".
 WARD_TERMS = [
-    (r"Standard\s+Semi[\s-]?private\s+Room", "Standard Semi-private"),
+    # "Semi\s*-?\s*private": AIA's PDFs break the word as "Semi- Private",
+    # which squash() leaves alone because the second half is capitalised.
+    (r"Standard\s+Semi\s*-?\s*private\s+Room", "Standard Semi-private"),
     (r"Standard\s+Private\s+Room",           "Standard Private"),
     (r"Standard\s+Ward\s+Room",              "Standard Ward"),
-    (r"Semi[\s-]?private\s+Room",            "Semi-private"),
+    (r"Semi\s*-?\s*private\s+Room",          "Semi-private"),
     (r"General\s+Ward",                      "General Ward"),
     (r"Private\s+Room",                      "Private"),
     (r"Ward\s+Room",                         "Ward"),
@@ -320,7 +333,15 @@ LOCATIONS = [
     (r"anywhere\s+else\s+in\s+the\s+world",                        "elsewhere"),
     (r"outside\s+Hong\s*Kong,?\s*Macau\s*(?:and|or)\s*Mainland\s*China", "elsewhere"),
     (r"excluding\s+Hong\s*Kong,?\s*Macau\s*(?:and|or)\s*Mainland\s*China", "elsewhere"),
-    (r"except\s+Hong\s*Kong,?\s*Australia\s*and\s*New\s*Zealand",  "elsewhere"),
+    # Prudential: "anywhere else in Asia except Hong Kong, Macau or mainland
+    # China". Missing this made the branch read as Hong Kong itself.
+    (r"except\s+Hong\s*Kong,?\s*Macau\s*(?:and|or)\s*Mainland\s*China", "elsewhere"),
+    (r"(?:except|excluding)\s+Hong\s*Kong,?\s*Australia\s*and\s*New\s*Zealand",  "elsewhere"),
+    # Chow Tai Fook ChampCare. The "outside" form must come first: it names
+    # the same four places.
+    (r"outside\s+Hong\s*Kong,?\s*Macau,?\s*Australia\s*and\s*New\s*Zealand",
+                                                                   "elsewhere"),
+    (r"Hong\s*Kong,?\s*Macau,?\s*Australia\s*and\s*New\s*Zealand", "HK/Macau/Australia/NZ"),
     (r"Hong\s*Kong,?\s*Macau,?\s*Taiwan\s*and\s*mainland\s*China", "HK/Macau/Taiwan/China"),
     (r"Hong\s*Kong,?\s*Macau\s*(?:or|and)\s*Mainland\s*China",     "HK/Macau/China"),
     (r"Hong\s*Kong,?\s*Australia\s*and\s*New\s*Zealand",           "HK/Australia/NZ"),
@@ -457,7 +478,8 @@ def normalise_ward(cell):
     # ward class with two territories that way - so a split there would strand
     # the ward class in a fragment of its own and make the row look ambiguous.
     parts = re.split(r"(?<!or )(?=(?:Confinement\s+in\b|Confinement\s+outside\b"
-                     r"|For\s+(?:Hong|other)))", body, flags=re.I)
+                     r"|Confinement\s+anywhere\b"
+                     r"|For\s+(?:Hong|other|anywhere)))", body, flags=re.I)
     for part in parts:
         if not part.strip():
             continue
@@ -472,11 +494,16 @@ def normalise_ward(cell):
             branches.append((loc, ward))
 
     if len(branches) >= 2:
-        seen, uniq = set(), []
+        seen, uniq = {}, []
         for loc, w in branches:
             if loc in seen:
+                # The same place named twice with different wards means a
+                # branch's location was misread. Keeping the first silently
+                # dropped Prudential's "Private (elsewhere)" tier this way.
+                if seen[loc] != w:
+                    return "", f"conflicting tiers for {loc}: {seen[loc]} / {w}"
                 continue
-            seen.add(loc)
+            seen[loc] = w
             uniq.append(f"{w} ({loc})")
         return "; ".join(uniq), "tiered"
 
@@ -539,6 +566,139 @@ def match_geo(s):
         if re.search(pat, s, re.I):
             return label
     return None
+
+
+# Some plans have no geography row at all and put the answer in the
+# supplement's prose instead - Asia Elite and Chubb's VHIS Series Flexi
+# ("subject to a geographical limitation of Asia"), Allianz Ultra Medical
+# Protect ("payable only if the relevant expenses are incurred in Asia").
+# Only consulted when the schedule has no row, and labelled as such so the
+# review can tell the two sources apart.
+GEO_PROSE = re.compile(
+    r"subject\s+to\s+(?:a|the)\s+geographical\s+limitation\s+of\s+(?P<a>[A-Z][\w ,&-]{2,60}?)\s*\."
+    r"|payable\s+only\s+if\s+the\s+relevant\s+expenses\s+are\s+incurred\s+in\s+(?P<b>[A-Z][\w ,&-]{2,60}?)\s*\."
+    # YF Life: "all benefits ... shall be applicable in Asia."
+    r"|all\s+benefits\s+described\s+in\s+these\s+Terms\s+and\s+Benefits\s+shall\s+be\s+applicable\s+in\s+(?P<c>[A-Z][\w ,&-]{2,60}?)\s*\.")
+
+
+def geo_from_prose(text):
+    """-> (evidence, value, confidence) from the supplement's wording."""
+    found = {}
+    for m in GEO_PROSE.finditer(squash(text)):
+        v = match_geo(m.group("a") or m.group("b") or m.group("c"))
+        if v:
+            found.setdefault(v, m.group(0))
+    if len(found) == 1:
+        v, ev = next(iter(found.items()))
+        return ev, v, "prose (no schedule row)"
+    if found:
+        return "", "", f"prose disagrees: {sorted(found)}"
+    return "", "", "no geography row in schedule"
+
+
+# --------------------------------------------------------------------------
+# Lifetime Benefit Limit
+# --------------------------------------------------------------------------
+# Same shape of gap as ward and geography: Part 6 Section 1(b) says only "All
+# benefits ... are subject to the Lifetime Benefit Limit as stated in the
+# Benefit Schedule", which scrape_plans.py records as "Capped (see doc)". The
+# schedule row names the figure:
+#
+#     Lifetime Benefit Limit for benefit       $20,000,000 per life
+#     items I (a) - (r) and II (a) - (h)
+#
+# The value is always one short amount (or "Nil"), so this does not need the
+# general cell reader above - which in fact cannot read Manulife's row: the
+# label wraps over four left-column lines and the amount is centred on a line
+# with nothing at all in the label column. Instead: start at the label, read
+# the right-hand column for a few lines, stop at a blank line or the next row.
+#
+# Manulife and Sun Life print a bare "$". The currency is then the plan's own,
+# which is why normalise_lifetime() takes it; a stated currency that disagrees
+# with the plan's is reported, not trusted.
+LIFETIME_LABEL = re.compile(r"^(?P<indent>\s*)Lifetime\s+Benefit\s+Limit\b", re.I)
+# A line that starts with the label but is really mid-sentence prose: Sun Life
+# wraps "...Annual Benefit Limit and the" / "Lifetime Benefit Limit." so the
+# label opens a line and is followed straight by punctuation or a verb.
+LIFETIME_PROSE = re.compile(
+    r"Lifetime\s+Benefit\s+Limit\s*(?:[.;,]|(?:as|and|is|shall|of)\b)", re.I)
+LIFETIME_AMOUNT = re.compile(r"(HKD|USD|HK\$|US\$|\$)\s*([\d,]{5,})", re.I)
+LIFETIME_NIL = re.compile(r"^(?:nil|no\s+limit|unlimited|not\s+applicable)\b", re.I)
+LIFETIME_SCAN = 6
+
+
+def _right_column(line, label_indent):
+    """Text in the value column: after a 2+ space gap, clear of the label."""
+    # Test every gap, not just the first: HSBC prints the amount to the right
+    # of the label's wrapped second line ("items (a) - (l) and Enhanced
+    # HKD20,000,000"), so the leading indent is a gap that comes first.
+    for mm in re.finditer(r"\s{2,}(?=\S)", line):
+        if mm.end() > label_indent + 6:
+            return line[mm.end():].rstrip()
+    return ""
+
+
+def lifetime_cells(text):
+    """Every Lifetime Benefit Limit schedule row's value text, in order."""
+    lines = text.split("\n")
+    out = []
+    for i, line in enumerate(lines):
+        m = LIFETIME_LABEL.match(line)
+        if not m or LIFETIME_PROSE.search(line):
+            continue
+        indent = len(m.group("indent"))
+        parts = [_right_column(line, indent)]
+        for j in range(i + 1, min(len(lines), i + 1 + LIFETIME_SCAN)):
+            nxt = lines[j]
+            if is_blank(nxt) or STOP.match(nxt) or ROW_LABEL.match(nxt):
+                break
+            # A line with nothing in the label column is all value (Manulife's
+            # centred amount); otherwise only its right-hand column is.
+            parts.append(nxt.strip() if not nxt[:indent + 6].strip()
+                         else _right_column(nxt, indent))
+        out.append(squash(" ".join(p for p in parts if p)))
+    return out
+
+
+def normalise_lifetime(cell, currency):
+    """-> (value, confidence). Value is a whole number in the plan's currency,
+    "None" for a schedule that says Nil, or "" when nothing usable is there."""
+    # The first value in the cell is the answer. The scan can run on into the
+    # next row's figures - Blue Cross follows a "Nil" lifetime row with
+    # "$1,000 per Day Case Procedure" - so anything after it is only flagged.
+    if LIFETIME_NIL.match(cell):
+        extra = LIFETIME_AMOUNT.search(cell)
+        return "None", "nil" + (" (cell runs on into other figures)" if extra else "")
+    m = LIFETIME_AMOUNT.search(cell)
+    if not m:
+        return "", "no amount"
+    stated = m.group(1).upper().replace("HK$", "HKD").replace("US$", "USD")
+    if stated != "$" and stated != currency:
+        return "", f"currency {stated} is not the plan's {currency}"
+    rest = LIFETIME_AMOUNT.search(cell, m.end())
+    return (m.group(2).replace(",", ""),
+            "single" + (" (cell runs on into other figures)" if rest else ""))
+
+
+def read_lifetime(text, currency):
+    """-> (value, confidence, evidence). The first row that yields a value
+    wins: AIA prints a second schedule for an optional benefit further on,
+    with its own "Nil" row, and that one is not the plan's limit. How many
+    distinct values the document holds goes into the confidence, so a
+    disagreement is visible in review."""
+    cells = lifetime_cells(text)
+    if not cells:
+        return "", "no lifetime row in schedule", ""
+    read = [(normalise_lifetime(c, currency), c) for c in cells]
+    hits = [(v, conf, c) for (v, conf), c in read if v]
+    if not hits:
+        (_, conf), c = read[0]
+        return "", conf, c
+    value, conf, evidence = hits[0]
+    others = sorted({v for v, _, _ in hits} - {value})
+    if others:
+        conf += f" (document also states {', '.join(others)})"
+    return value, conf, evidence
 
 
 # --------------------------------------------------------------------------
@@ -609,6 +769,7 @@ def pdf_text(cache, cert):
 # "No restriction" with a ward class read out of the schedule would be wrong.
 WARD_PLACEHOLDER = "Restricted (see doc)"
 GEO_PLACEHOLDER = "Limited (see doc)"
+LIFETIME_PLACEHOLDER = "Capped (see doc)"
 
 # Values --correct-wrong must never replace, however loudly the schedule
 # seems to disagree. "No restriction" is not a gap or a bad guess: it is the
@@ -621,7 +782,10 @@ GEO_PLACEHOLDER = "Limited (see doc)"
 # carries a real ward restriction. Manulife First (9) and Bupa MyFlexi (3)
 # are both that shape; replacing their "No restriction" would state a
 # restriction the certified terms do not impose.
-NEVER_REPLACE = {"ward": {"No restriction"}}
+NEVER_REPLACE = {"ward": {"No restriction"},
+                 # Likewise "None" is Part 6(b) saying outright that the plan
+                 # is "not subject to any Lifetime Benefit Limit".
+                 "lifetime": {"None"}}
 
 
 def apply(candidates, overrides_path, catalog, benefits_path, correct_wrong=False):
@@ -655,7 +819,8 @@ def apply(candidates, overrides_path, catalog, benefits_path, correct_wrong=Fals
             ward = (c.get("ward_type") or "").strip() or ward
         if geo == GEO_PLACEHOLDER:
             geo = (c.get("geographical_coverage") or "").strip() or geo
-        return ward, geo
+        life = (s.get("lifetime_benefit_limit") or "").strip()
+        return ward, geo, life
 
     scraped = {r["certification_no"]: r
                for r in _csv.DictReader(open(benefits_path, encoding="utf-8-sig"))}
@@ -673,11 +838,12 @@ def apply(candidates, overrides_path, catalog, benefits_path, correct_wrong=Fals
         cat = catalog.get(cert)
         if not cat:
             continue
-        cur_ward, cur_geo = current(cert)
+        cur_ward, cur_geo, cur_life = current(cert)
         want = {}
         for field, cur, placeholder in (("ward", cur_ward, WARD_PLACEHOLDER),
-                                        ("geography", cur_geo, GEO_PLACEHOLDER)):
-            new = cand[field]
+                                        ("geography", cur_geo, GEO_PLACEHOLDER),
+                                        ("lifetime", cur_life, LIFETIME_PLACEHOLDER)):
+            new = cand.get(field, "")
             if not new:
                 continue
             if cur in (placeholder, ""):
@@ -688,7 +854,7 @@ def apply(candidates, overrides_path, catalog, benefits_path, correct_wrong=Fals
                 if (by_cert.get(cert, {}).get(field) or "").strip() != new:
                     corrected.append((cert, field, cur, new))
         if not want:
-            if cand["ward"] or cand["geography"]:
+            if cand["ward"] or cand["geography"] or cand.get("lifetime"):
                 skipped.append((cert, cur_ward, cur_geo))
             continue
 
@@ -719,7 +885,7 @@ def apply(candidates, overrides_path, catalog, benefits_path, correct_wrong=Fals
                 continue                      # never overwrite a typed value
             row[k] = v
             filled[k] += 1
-        note = "ward/geography read from Benefit Schedule"
+        note = "read from Benefit Schedule"
         if not (row.get("note") or "").strip():
             row["note"] = note
 
@@ -770,8 +936,11 @@ def main():
                             plan_name=r["plan_name"], plan_level=r["plan_level_raw"],
                             ward="", ward_conf="pdf missing", ward_evidence="",
                             geography="", geo_conf="pdf missing", geo_evidence="",
-                            ward_crosscheck=""))
+                            lifetime="", lifetime_conf="pdf missing",
+                            lifetime_evidence="", ward_crosscheck=""))
             continue
+
+        life, lconf, lcell = read_lifetime(text, r["currency"])
 
         wcells = find_cells(text, WARD_LABEL, ward_answers)
         gcells = find_cells(text, GEO_LABEL, geo_answers)
@@ -786,7 +955,7 @@ def main():
             gcell = gcells[0][2]
             geo, gconf = normalise_geo(gcell)
         else:
-            gcell, geo, gconf = "", "", "no geography row in schedule"
+            gcell, geo, gconf = geo_from_prose(text)
 
         # Advisory only, never a gate. The supplement's adjustment table is a
         # genuinely independent naming of the ward class in some insurers'
@@ -811,11 +980,13 @@ def main():
             plan_name=r["plan_name"], plan_level=r["plan_level_raw"],
             ward=ward, ward_conf=wconf, ward_evidence=wcell[:400],
             geography=geo, geo_conf=gconf, geo_evidence=gcell[:400],
+            lifetime=life, lifetime_conf=lconf, lifetime_evidence=lcell[:400],
             ward_crosscheck=xcheck))
 
     cols = ["certification_no", "insurer", "plan_name", "plan_level",
             "ward", "ward_conf", "ward_crosscheck", "ward_evidence",
-            "geography", "geo_conf", "geo_evidence"]
+            "geography", "geo_conf", "geo_evidence",
+            "lifetime", "lifetime_conf", "lifetime_evidence"]
     os.makedirs(os.path.dirname(args.out) or ".", exist_ok=True)
     with open(args.out, "w", encoding="utf-8", newline="") as f:
         w = csv.DictWriter(f, fieldnames=cols)
@@ -848,9 +1019,11 @@ def main():
 
     ok_w = sum(1 for r in out if r["ward"])
     ok_g = sum(1 for r in out if r["geography"])
+    ok_l = sum(1 for r in out if r["lifetime"])
     print(f"{len(out)} plans -> {args.out}")
     print(f"  ward extracted:      {ok_w}/{len(out)}")
     print(f"  geography extracted: {ok_g}/{len(out)}")
+    print(f"  lifetime extracted:  {ok_l}/{len(out)}")
     import collections as _c
     print("  ward cross-check (advisory):")
     for k, n in _c.Counter(r["ward_crosscheck"].split(" (")[0]

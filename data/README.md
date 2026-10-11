@@ -9,7 +9,7 @@ These four are not, and losing them costs either 40 minutes or real work.
 | `plan_benefits.csv` | Everything `scrape_plans.py` pulled out of the plan PDFs. Keyed on `certification_no` + `plan_date`. | All 579 PDFs get re-downloaded and re-parsed, roughly 40 minutes. |
 | `review_queue.csv` | Technical record of which PDFs the parser struggled with. **Not** the worklist — it does not know about your corrections, so entries stay after you fix them. | Regenerated on the next scrape. |
 | `manual_overrides.csv` | The to-do list *and* the corrections file. Maintained by `worklist.py`: a row appears for every plan still missing a key field, and your typed values are never overwritten. **Wins over anything scraped.** | Gone for good. Nothing else knows these values. |
-| `schedule_candidates.csv` | Audit trail for the 209 ward/geography values `schedule_fields.py` read out of the Benefit Schedules, each with the verbatim schedule text it came from. Regenerable, but only against the same certification versions. | Re-run `schedule_fields.py`. Values already merged into `manual_overrides.csv` are unaffected. |
+| `schedule_candidates.csv` | Audit trail for the ward, geography and lifetime-limit values `schedule_fields.py` read out of the Benefit Schedules, each with the verbatim schedule text it came from. Regenerable, but only against the same certification versions. | Re-run `schedule_fields.py`. Values already merged into `manual_overrides.csv` are unaffected. |
 
 ## manual_overrides.csv
 
@@ -87,8 +87,10 @@ parses it into `ward_type` / `geographical_coverage` on every row. Insurers
 often do bake it in, e.g. `"Semi-Private Room"` or `"HKD16,000 Deductible
 (Worldwide except USA)"`, and when they do, that specific value is shown
 instead of the placeholder. It only stays `(see doc)` when neither the PDF
-clause nor the plan's own name says which one — 81 plans for geography, 116
-for ward, as of the last refresh.
+clause nor the plan's own name says which one — as of October 2026, 10 plans
+for ward (AIA SelectWise: the ward class depends on whether the attending
+doctors are in AIA's network, so no single value is right) and none for
+geography.
 
 ### Reading the Benefit Schedule instead
 
@@ -104,9 +106,23 @@ Geographical limitation            Except for psychiatric treatments ... –
                                    For Emergency Treatment: Worldwide
 ```
 
-It has been run for AXA, Bupa, Blue Cross, FWD, Sun Life, HSBC Life and
-Manulife — 209 plans, now none of them on a placeholder. Three things are
-worth knowing before pointing it at the other 26 insurers:
+It was run for AXA, Bupa, Blue Cross, FWD, Sun Life, HSBC Life and Manulife
+first (209 plans), then in October 2026 for the remaining ten insurers with a
+gap — AIA, Chow Tai Fook, Prudential, Chubb, Zurich, China Taiping, BOC, YF
+Life, China Life, Liberty, plus geography for Bowtie, CIGNA, Allianz and Asia
+Insurance. The same pass also reads the **lifetime benefit limit**, which had
+exactly the same gap: 210 plans said only "Capped (see doc)" because Part 6
+1(b) defers to the schedule. A schedule that says "Nil" there means no limit,
+the same as a clause saying "not subject to any Lifetime Benefit Limit" (Chubb
+and Asia iCare print both). HSBC is the case to know: its Bronze level caps at
+HKD20,000,000 and every higher level prints "Nil".
+
+Where a plan has no schedule row at all, the geography is taken from its
+supplement's prose ("subject to a geographical limitation of Asia") and
+labelled `prose (no schedule row)` in the candidates file. Allianz, Asia
+Elite, Chubb's VHIS Series Flexi and YF Life are that shape.
+
+Three things worth knowing before re-running it:
 
 - **There is no single format.** Seven insurers used four different labels for
   the ward row (`Entitled` / `Designated` / `Restricted` / `Covered ward
