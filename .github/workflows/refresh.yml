@@ -241,7 +241,11 @@ jobs:
       - name: Verify no formula errors
         if: steps.check.outputs.build == 'true'
         run: |
-          python verify_workbook.py VHIS_Compare.xlsx --timeout 400 --json | tee recalc.json
+          # --save-values: when every formula is clean, publish the copy
+          # LibreOffice just calculated, which stores each formula's answer.
+          # Without it, previews that do not calculate (Quick Look, phones,
+          # email, Excel's Protected View) show every price as 0.
+          python verify_workbook.py VHIS_Compare.xlsx --timeout 400 --json --save-values | tee recalc.json
           python - <<'EOF'
           import json, sys
           r = json.load(open("recalc.json"))

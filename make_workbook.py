@@ -205,8 +205,8 @@ def sheet_client(wb, catalog_n, prem_date_max):
         "Age-nearest-birthday insurers are approximated from whole-year age. "
         "Those rows show APPROX and need date of birth to be exact.",
         "Never rank across currencies. Filter to HKD or USD first.",
-        "Deductible is blank for some Flexi plans because the plan document does not state it; "
-        "it is set per policy. Confirm with the insurer before quoting those.",
+        "Deductible shows 'Per policy' for some Flexi plans because the plan document does not "
+        "state it; it is chosen per policy. Confirm with the insurer before quoting those.",
     ]:
         line(w, font=Font(name=ARIAL, size=9), fill=WARN_FILL, height=26)
     r += 1

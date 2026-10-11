@@ -28,6 +28,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import zipfile
 from pathlib import Path
 
 import re
@@ -219,6 +220,34 @@ def static_check(path: Path, max_locations=100):
     return problems
 
 
+def save_with_values(recalced: Path, target: Path):
+    """Replace `target` with the recalculated copy, which carries every
+    formula's answer as well as the formula.
+
+    openpyxl writes formulas with no stored result and relies on the app to
+    calculate on open. Full Excel does; Quick Look, phone and email previews,
+    Numbers and Excel's Protected View for downloaded files do not, and show
+    every price as 0 or blank. LibreOffice's copy keeps the formulas, styles,
+    filters and dropdowns but drops the recalculate-on-open flag, which is put
+    back so Excel still uses its own arithmetic when it can."""
+    tmp = target.with_suffix(".tmp.xlsx")
+    with zipfile.ZipFile(recalced) as zin, \
+            zipfile.ZipFile(tmp, "w", zipfile.ZIP_DEFLATED) as zout:
+        for item in zin.infolist():
+            data = zin.read(item.filename)
+            if item.filename == "xl/workbook.xml":
+                text = data.decode("utf-8")
+                if "fullCalcOnLoad" not in text:
+                    text = text.replace("<calcPr ", '<calcPr fullCalcOnLoad="1" ', 1)
+                data = text.encode("utf-8")
+            elif item.filename == "xl/styles.xml":
+                # LibreOffice writes italics as <i val="true"/>: valid, and
+                # Excel honours it, but Quick Look renders it upright.
+                data = data.replace(b'<i val="true"/>', b"<i/>")
+            zout.writestr(item, data)
+    os.replace(tmp, target)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("workbook")
@@ -226,6 +255,10 @@ def main():
     ap.add_argument("--json", action="store_true")
     ap.add_argument("--keep", action="store_true",
                     help="keep the recalculated copy for inspection")
+    ap.add_argument("--save-values", action="store_true",
+                    help="if every formula evaluates cleanly, replace the "
+                         "workbook with the recalculated copy so previews "
+                         "that do not calculate still show the numbers")
     ap.add_argument("--no-recalc", action="store_true",
                     help="skip LibreOffice and run the static reference check "
                          "only. Weaker: catches broken references, not wrong "
@@ -265,10 +298,12 @@ def main():
 
     recalced = recalculate(path, args.timeout)
     counts, locations, cells = scan(recalced)
+    total = sum(counts.values())
+    if args.save_values and total == 0:
+        save_with_values(recalced, path)
     if not args.keep:
         recalced.unlink(missing_ok=True)
 
-    total = sum(counts.values())
     result = {
         "status": "success" if total == 0 else "errors_found",
         "workbook": str(path),

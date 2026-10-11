@@ -131,7 +131,9 @@ Runs itself every Monday morning, Hong Kong time. Nobody has to do anything.
 6. Workbook   Build VHIS_Compare.xlsx.
 
 7. Verify     Recalculate every formula in LibreOffice. If any cell
-              errors, refuse to publish.
+              errors, refuse to publish. Otherwise publish that
+              calculated copy, so previews that do not calculate
+              (Quick Look, phones, email) show prices instead of 0.
 
 8. Publish    Replace the file at the download link above, and email
               the change report if the email secrets are set.
