@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-28T01:20:22",
+ "generated_at": "2026-10-11T23:24:02",
  "variants": {
   "F00012-01-000-03": {
    "age40": 7671,
@@ -9,116 +9,116 @@
    "prem_date": "20260701"
   },
   "F00013-01-000-06": {
-   "age40": 4494.07,
+   "age40": 4719.52,
    "insurer": "Prudential Hong Kong Limited",
    "level": "Ward (HKD)",
    "plan": "PRUHealth FlexiChoice Medical Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00013-01-001-06": {
-   "age40": 6984.07,
+   "age40": 7473.71,
    "insurer": "Prudential Hong Kong Limited",
    "level": "Ward with SMM 1 (HKD)",
    "plan": "PRUHealth FlexiChoice Medical Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00013-01-002-06": {
-   "age40": 8379.38,
+   "age40": 8966.67,
    "insurer": "Prudential Hong Kong Limited",
    "level": "Ward with SMM 2 (HKD)",
    "plan": "PRUHealth FlexiChoice Medical Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00013-02-000-06": {
-   "age40": 8625.6,
+   "age40": 9057.66,
    "insurer": "Prudential Hong Kong Limited",
    "level": "Semi-private Room (HKD)",
    "plan": "PRUHealth FlexiChoice Medical Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00013-02-001-06": {
-   "age40": 12474.4,
+   "age40": 13348.37,
    "insurer": "Prudential Hong Kong Limited",
    "level": "Semi-private Room with SMM 1 (HKD)",
    "plan": "PRUHealth FlexiChoice Medical Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00013-02-002-06": {
-   "age40": 14344.48,
+   "age40": 15349.34,
    "insurer": "Prudential Hong Kong Limited",
    "level": "Semi-private Room with SMM 2 (HKD)",
    "plan": "PRUHealth FlexiChoice Medical Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00013-03-000-06": {
-   "age40": 15875.1,
+   "age40": 16669.63,
    "insurer": "Prudential Hong Kong Limited",
    "level": "Private Room (HKD)",
    "plan": "PRUHealth FlexiChoice Medical Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00013-03-001-06": {
-   "age40": 25287.55,
+   "age40": 27058.43,
    "insurer": "Prudential Hong Kong Limited",
    "level": "Private Room with SMM (HKD)",
    "plan": "PRUHealth FlexiChoice Medical Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00013-04-000-06": {
-   "age40": 579.88,
+   "age40": 608.97,
    "insurer": "Prudential Hong Kong Limited",
    "level": "Ward (USD)",
    "plan": "PRUHealth FlexiChoice Medical Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00013-04-001-06": {
-   "age40": 901.17,
+   "age40": 964.35,
    "insurer": "Prudential Hong Kong Limited",
    "level": "Ward with SMM 1 (USD)",
    "plan": "PRUHealth FlexiChoice Medical Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00013-04-002-06": {
-   "age40": 1081.21,
+   "age40": 1156.99,
    "insurer": "Prudential Hong Kong Limited",
    "level": "Ward with SMM 2 (USD)",
    "plan": "PRUHealth FlexiChoice Medical Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00013-05-000-06": {
-   "age40": 1112.98,
+   "age40": 1168.73,
    "insurer": "Prudential Hong Kong Limited",
    "level": "Semi-private Room (USD)",
    "plan": "PRUHealth FlexiChoice Medical Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00013-05-001-06": {
-   "age40": 1609.6,
+   "age40": 1722.37,
    "insurer": "Prudential Hong Kong Limited",
    "level": "Semi-private Room with SMM 1 (USD)",
    "plan": "PRUHealth FlexiChoice Medical Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00013-05-002-06": {
-   "age40": 1850.9,
+   "age40": 1980.56,
    "insurer": "Prudential Hong Kong Limited",
    "level": "Semi-private Room with SMM 2 (USD)",
    "plan": "PRUHealth FlexiChoice Medical Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00013-06-000-06": {
-   "age40": 2048.4,
+   "age40": 2150.92,
    "insurer": "Prudential Hong Kong Limited",
    "level": "Private Room (USD)",
    "plan": "PRUHealth FlexiChoice Medical Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00013-06-001-06": {
-   "age40": 3262.91,
+   "age40": 3491.41,
    "insurer": "Prudential Hong Kong Limited",
    "level": "Private Room with SMM (USD)",
    "plan": "PRUHealth FlexiChoice Medical Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00014-01-000-02": {
    "age40": 8878,
@@ -667,130 +667,130 @@
    "prem_date": "20260715"
   },
   "F00026-01-000-03": {
-   "age40": 3471,
+   "age40": 3714,
    "insurer": "Sun Life Hong Kong Limited",
    "level": "Scheme 1",
    "plan": "WeHealth Plus",
-   "prem_date": "20250901"
+   "prem_date": "20261001"
   },
   "F00026-01-001-03": {
-   "age40": 4730,
+   "age40": 5061,
    "insurer": "Sun Life Hong Kong Limited",
    "level": "Scheme 2",
    "plan": "WeHealth Plus",
-   "prem_date": "20250901"
+   "prem_date": "20261001"
   },
   "F00027-01-000-03": {
-   "age40": 6339,
+   "age40": 6972,
    "insurer": "Chubb Life Insurance Hong Kong Limited",
    "level": "Classic (HKD)",
    "plan": "Chubb VHIS - Flexi Plan",
-   "prem_date": "20250401"
+   "prem_date": "20261001"
   },
   "F00027-01-001-03": {
-   "age40": 8009,
+   "age40": 8809,
    "insurer": "Chubb Life Insurance Hong Kong Limited",
    "level": "Classic with Top-up benefit (HKD)",
    "plan": "Chubb VHIS - Flexi Plan",
-   "prem_date": "20250401"
+   "prem_date": "20261001"
   },
   "F00027-02-000-03": {
-   "age40": 7492,
+   "age40": 8241,
    "insurer": "Chubb Life Insurance Hong Kong Limited",
    "level": "Ward (HKD)",
    "plan": "Chubb VHIS - Flexi Plan",
-   "prem_date": "20250401"
+   "prem_date": "20261001"
   },
   "F00027-02-001-03": {
-   "age40": 9392,
+   "age40": 10331,
    "insurer": "Chubb Life Insurance Hong Kong Limited",
    "level": "Ward with Top-up benefit (HKD)",
    "plan": "Chubb VHIS - Flexi Plan",
-   "prem_date": "20250401"
+   "prem_date": "20261001"
   },
   "F00027-03-000-03": {
-   "age40": 10007,
+   "age40": 11007,
    "insurer": "Chubb Life Insurance Hong Kong Limited",
    "level": "Semi-Private (HKD)",
    "plan": "Chubb VHIS - Flexi Plan",
-   "prem_date": "20250401"
+   "prem_date": "20261001"
   },
   "F00027-03-001-03": {
-   "age40": 14749,
+   "age40": 16223,
    "insurer": "Chubb Life Insurance Hong Kong Limited",
    "level": "Semi-Private with Top-up benefit (HKD)",
    "plan": "Chubb VHIS - Flexi Plan",
-   "prem_date": "20250401"
+   "prem_date": "20261001"
   },
   "F00027-04-000-03": {
-   "age40": 18494,
+   "age40": 20343,
    "insurer": "Chubb Life Insurance Hong Kong Limited",
    "level": "Private (HKD)",
    "plan": "Chubb VHIS - Flexi Plan",
-   "prem_date": "20250401"
+   "prem_date": "20261001"
   },
   "F00027-04-001-03": {
-   "age40": 24036,
+   "age40": 26439,
    "insurer": "Chubb Life Insurance Hong Kong Limited",
    "level": "Private with Top-up benefit (HKD)",
    "plan": "Chubb VHIS - Flexi Plan",
-   "prem_date": "20250401"
+   "prem_date": "20261001"
   },
   "F00027-05-000-03": {
-   "age40": 813,
+   "age40": 894,
    "insurer": "Chubb Life Insurance Hong Kong Limited",
    "level": "Classic (USD)",
    "plan": "Chubb VHIS - Flexi Plan",
-   "prem_date": "20250401"
+   "prem_date": "20261001"
   },
   "F00027-05-001-03": {
-   "age40": 1027,
+   "age40": 1129,
    "insurer": "Chubb Life Insurance Hong Kong Limited",
    "level": "Classic with Top-up benefit (USD)",
    "plan": "Chubb VHIS - Flexi Plan",
-   "prem_date": "20250401"
+   "prem_date": "20261001"
   },
   "F00027-06-000-03": {
-   "age40": 961,
+   "age40": 1057,
    "insurer": "Chubb Life Insurance Hong Kong Limited",
    "level": "Ward (USD)",
    "plan": "Chubb VHIS - Flexi Plan",
-   "prem_date": "20250401"
+   "prem_date": "20261001"
   },
   "F00027-06-001-03": {
-   "age40": 1204,
+   "age40": 1324,
    "insurer": "Chubb Life Insurance Hong Kong Limited",
    "level": "Ward with Top-up benefit (USD)",
    "plan": "Chubb VHIS - Flexi Plan",
-   "prem_date": "20250401"
+   "prem_date": "20261001"
   },
   "F00027-07-000-03": {
-   "age40": 1283,
+   "age40": 1411,
    "insurer": "Chubb Life Insurance Hong Kong Limited",
    "level": "Semi-Private (USD)",
    "plan": "Chubb VHIS - Flexi Plan",
-   "prem_date": "20250401"
+   "prem_date": "20261001"
   },
   "F00027-07-001-03": {
-   "age40": 1891,
+   "age40": 2080,
    "insurer": "Chubb Life Insurance Hong Kong Limited",
    "level": "Semi-Private with Top-up benefit (USD)",
    "plan": "Chubb VHIS - Flexi Plan",
-   "prem_date": "20250401"
+   "prem_date": "20261001"
   },
   "F00027-08-000-03": {
-   "age40": 2371,
+   "age40": 2608,
    "insurer": "Chubb Life Insurance Hong Kong Limited",
    "level": "Private (USD)",
    "plan": "Chubb VHIS - Flexi Plan",
-   "prem_date": "20250401"
+   "prem_date": "20261001"
   },
   "F00027-08-001-03": {
-   "age40": 3082,
+   "age40": 3390,
    "insurer": "Chubb Life Insurance Hong Kong Limited",
    "level": "Private with Top-up benefit (USD)",
    "plan": "Chubb VHIS - Flexi Plan",
-   "prem_date": "20250401"
+   "prem_date": "20261001"
   },
   "F00028-01-000-02": {
    "age40": 4368,
@@ -1962,116 +1962,116 @@
    "prem_date": "20250416"
   },
   "F00050-01-000-04": {
-   "age40": 18895.2,
+   "age40": 19992,
    "insurer": "Prudential Hong Kong Limited",
    "level": "HKD0 Deductible (Asia)",
    "plan": "PRUHealth VHIS VIP Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00050-02-000-04": {
-   "age40": 7228.8,
+   "age40": 7648.8,
    "insurer": "Prudential Hong Kong Limited",
    "level": "HKD20,000 Deductible (Asia)",
    "plan": "PRUHealth VHIS VIP Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00050-03-000-04": {
-   "age40": 5836.8,
+   "age40": 6176,
    "insurer": "Prudential Hong Kong Limited",
    "level": "HKD50,000 Deductible (Asia)",
    "plan": "PRUHealth VHIS VIP Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00050-04-000-04": {
-   "age40": 2361.9,
+   "age40": 2499,
    "insurer": "Prudential Hong Kong Limited",
    "level": "USD0 Deductible (Asia)",
    "plan": "PRUHealth VHIS VIP Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00050-05-000-04": {
-   "age40": 903.6,
+   "age40": 956.1,
    "insurer": "Prudential Hong Kong Limited",
    "level": "USD2,500 Deductible (Asia)",
    "plan": "PRUHealth VHIS VIP Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00050-06-000-04": {
-   "age40": 729.6,
+   "age40": 772,
    "insurer": "Prudential Hong Kong Limited",
    "level": "USD6,250 Deductible (Asia)",
    "plan": "PRUHealth VHIS VIP Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00050-07-000-01": {
-   "age40": 4387.2,
+   "age40": 4642.4,
    "insurer": "Prudential Hong Kong Limited",
    "level": "HKD96,000 Deductible (Asia)",
    "plan": "PRUHealth VHIS VIP Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00050-08-000-01": {
-   "age40": 548.4,
+   "age40": 580.3,
    "insurer": "Prudential Hong Kong Limited",
    "level": "USD12,000 Deductible (Asia)",
    "plan": "PRUHealth VHIS VIP Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00050-09-000-01": {
-   "age40": 20784,
+   "age40": 21990.4,
    "insurer": "Prudential Hong Kong Limited",
    "level": "HKD0 Deductible (Worldwide except USA)",
    "plan": "PRUHealth VHIS VIP Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00050-10-000-01": {
-   "age40": 7951.2,
+   "age40": 8412.8,
    "insurer": "Prudential Hong Kong Limited",
    "level": "HKD20,000 Deductible (Worldwide except USA)",
    "plan": "PRUHealth VHIS VIP Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00050-11-000-01": {
-   "age40": 6420,
+   "age40": 6792.8,
    "insurer": "Prudential Hong Kong Limited",
    "level": "HKD50,000 Deductible (Worldwide except USA)",
    "plan": "PRUHealth VHIS VIP Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00050-12-000-01": {
-   "age40": 4825.6,
+   "age40": 5106.4,
    "insurer": "Prudential Hong Kong Limited",
    "level": "HKD96,000 Deductible (Worldwide except USA)",
    "plan": "PRUHealth VHIS VIP Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00050-13-000-01": {
-   "age40": 2598,
+   "age40": 2748.8,
    "insurer": "Prudential Hong Kong Limited",
    "level": "USD0 Deductible (Worldwide except USA)",
    "plan": "PRUHealth VHIS VIP Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00050-14-000-01": {
-   "age40": 993.9,
+   "age40": 1051.6,
    "insurer": "Prudential Hong Kong Limited",
    "level": "USD2,500 Deductible (Worldwide except USA)",
    "plan": "PRUHealth VHIS VIP Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00050-15-000-01": {
-   "age40": 802.5,
+   "age40": 849.1,
    "insurer": "Prudential Hong Kong Limited",
    "level": "USD6,250 Deductible (Worldwide except USA)",
    "plan": "PRUHealth VHIS VIP Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00050-16-000-01": {
-   "age40": 603.2,
+   "age40": 638.3,
    "insurer": "Prudential Hong Kong Limited",
    "level": "USD12,000 Deductible (Worldwide except USA)",
    "plan": "PRUHealth VHIS VIP Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00051-01-000-03": {
    "age40": 6721,
@@ -2438,39 +2438,39 @@
    "prem_date": "20251229"
   },
   "F00061-01-000-01": {
-   "age40": 7371,
+   "age40": 7519,
    "insurer": "Asia Insurance Company, Limited",
    "level": "Plan 1",
    "plan": "Asia iCare",
-   "prem_date": "20211122"
+   "prem_date": "20261001"
   },
   "F00061-01-001-01": {
-   "age40": 9639,
+   "age40": 9832,
    "insurer": "Asia Insurance Company, Limited",
    "level": "Plan 1A with SMM",
    "plan": "Asia iCare",
-   "prem_date": "20211122"
+   "prem_date": "20261001"
   },
   "F00061-02-000-01": {
-   "age40": 5055,
+   "age40": 5157,
    "insurer": "Asia Insurance Company, Limited",
    "level": "Plan 2",
    "plan": "Asia iCare",
-   "prem_date": "20211122"
+   "prem_date": "20261001"
   },
   "F00061-02-001-01": {
-   "age40": 6345,
+   "age40": 6472,
    "insurer": "Asia Insurance Company, Limited",
    "level": "Plan 2A with SMM",
    "plan": "Asia iCare",
-   "prem_date": "20211122"
+   "prem_date": "20261001"
   },
   "F00061-02-002-01": {
-   "age40": 5974,
+   "age40": 6094,
    "insurer": "Asia Insurance Company, Limited",
    "level": "Plan 2B with SMM",
    "plan": "Asia iCare",
-   "prem_date": "20211122"
+   "prem_date": "20261001"
   },
   "F00062-01-000-02": {
    "age40": 13861,
@@ -2795,46 +2795,46 @@
    "prem_date": "20250602"
   },
   "F00068-01-000-01": {
-   "age40": 5166.85,
+   "age40": 5441.43,
    "insurer": "Prudential Hong Kong Limited",
    "level": "Ward with SMM (HKD)",
    "plan": "PRUHealth VHIS EasyChoice Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00068-02-000-01": {
-   "age40": 9873.73,
+   "age40": 10397.79,
    "insurer": "Prudential Hong Kong Limited",
    "level": "Semi-private Room with SMM (HKD)",
    "plan": "PRUHealth VHIS EasyChoice Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00068-03-000-01": {
-   "age40": 20020.42,
+   "age40": 21082.25,
    "insurer": "Prudential Hong Kong Limited",
    "level": "Private Room with SMM (HKD)",
    "plan": "PRUHealth VHIS EasyChoice Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00068-04-000-01": {
-   "age40": 666.69,
+   "age40": 702.12,
    "insurer": "Prudential Hong Kong Limited",
    "level": "Ward with SMM (USD)",
    "plan": "PRUHealth VHIS EasyChoice Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00068-05-000-01": {
-   "age40": 1274.03,
+   "age40": 1341.65,
    "insurer": "Prudential Hong Kong Limited",
    "level": "Semi-private Room with SMM (USD)",
    "plan": "PRUHealth VHIS EasyChoice Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00068-06-000-01": {
-   "age40": 2583.28,
+   "age40": 2720.29,
    "insurer": "Prudential Hong Kong Limited",
    "level": "Private Room with SMM (USD)",
    "plan": "PRUHealth VHIS EasyChoice Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "F00069-01-000-02": {
    "age40": 9822,
@@ -3305,70 +3305,70 @@
    "plan": "AIA Voluntary Health Insurance Privilege Ultra Scheme",
    "prem_date": "20260715"
   },
-  "F00075-01-000-01": {
+  "F00075-01-000-02": {
    "age40": 12650,
    "insurer": "Chubb Life Insurance Hong Kong Limited",
    "level": "HKD0 Deductible (Asia)",
    "plan": "Chubb VHIS - Prime Plan",
    "prem_date": "20240416"
   },
-  "F00075-02-000-01": {
+  "F00075-02-000-02": {
    "age40": 6617,
    "insurer": "Chubb Life Insurance Hong Kong Limited",
    "level": "HKD25,000 Deductible (Asia)",
    "plan": "Chubb VHIS - Prime Plan",
    "prem_date": "20240416"
   },
-  "F00075-03-000-01": {
+  "F00075-03-000-02": {
    "age40": 5617,
    "insurer": "Chubb Life Insurance Hong Kong Limited",
    "level": "HKD50,000 Deductible (Asia)",
    "plan": "Chubb VHIS - Prime Plan",
    "prem_date": "20240416"
   },
-  "F00075-04-000-01": {
+  "F00075-04-000-02": {
    "age40": 4496,
    "insurer": "Chubb Life Insurance Hong Kong Limited",
    "level": "HKD100,000 Deductible (Asia)",
    "plan": "Chubb VHIS - Prime Plan",
    "prem_date": "20240416"
   },
-  "F00075-05-000-01": {
+  "F00075-05-000-02": {
    "age40": 3702,
    "insurer": "Chubb Life Insurance Hong Kong Limited",
    "level": "HKD150,000 Deductible (Asia)",
    "plan": "Chubb VHIS - Prime Plan",
    "prem_date": "20240416"
   },
-  "F00075-06-000-01": {
+  "F00075-06-000-02": {
    "age40": 21736,
    "insurer": "Chubb Life Insurance Hong Kong Limited",
    "level": "HKD0 Deductible (Worldwide excluding USA)",
    "plan": "Chubb VHIS - Prime Plan",
    "prem_date": "20240416"
   },
-  "F00075-07-000-01": {
+  "F00075-07-000-02": {
    "age40": 13084,
    "insurer": "Chubb Life Insurance Hong Kong Limited",
    "level": "HKD25,000 Deductible (Worldwide excluding USA)",
    "plan": "Chubb VHIS - Prime Plan",
    "prem_date": "20240416"
   },
-  "F00075-08-000-01": {
+  "F00075-08-000-02": {
    "age40": 10167,
    "insurer": "Chubb Life Insurance Hong Kong Limited",
    "level": "HKD50,000 Deductible (Worldwide excluding USA)",
    "plan": "Chubb VHIS - Prime Plan",
    "prem_date": "20240416"
   },
-  "F00075-09-000-01": {
+  "F00075-09-000-02": {
    "age40": 8555,
    "insurer": "Chubb Life Insurance Hong Kong Limited",
    "level": "HKD100,000 Deductible (Worldwide excluding USA)",
    "plan": "Chubb VHIS - Prime Plan",
    "prem_date": "20240416"
   },
-  "F00075-10-000-01": {
+  "F00075-10-000-02": {
    "age40": 7560,
    "insurer": "Chubb Life Insurance Hong Kong Limited",
    "level": "HKD150,000 Deductible (Worldwide excluding USA)",
@@ -3922,11 +3922,11 @@
    "prem_date": "20260101"
   },
   "S00026-01-000-02": {
-   "age40": 3388.92,
+   "age40": 3562.52,
    "insurer": "Prudential Hong Kong Limited",
    "level": "Standard Plan",
    "plan": "PRUHealth CoreChoice Medical Plan",
-   "prem_date": "20251001"
+   "prem_date": "20261001"
   },
   "S00027-01-000-02": {
    "age40": 2895,
@@ -4041,11 +4041,11 @@
    "prem_date": "20211201"
   },
   "S00044-01-000-03": {
-   "age40": 3634,
+   "age40": 4179,
    "insurer": "Chubb Life Insurance Hong Kong Limited",
    "level": "Standard Plan",
    "plan": "Chubb VHIS - Standard Plan",
-   "prem_date": "20250401"
+   "prem_date": "20261001"
   },
   "S00045-01-000-01": {
    "age40": 2075,
