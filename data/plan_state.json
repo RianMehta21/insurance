@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-11T23:24:02",
+ "generated_at": "2026-11-02T01:59:34",
  "variants": {
   "F00012-01-000-03": {
    "age40": 7671,
@@ -1787,39 +1787,39 @@
    "prem_date": "20260202"
   },
   "F00046-01-000-02": {
-   "age40": 13875,
+   "age40": 15263,
    "insurer": "Liberty International Insurance Limited",
    "level": "Flexi Plan (Premium)",
    "plan": "Liberty Insurance VHIS Series - Flexi Plan (Premium)",
-   "prem_date": "20210701"
+   "prem_date": "20261101"
   },
   "F00047-01-000-02": {
-   "age40": 4857,
+   "age40": 5343,
    "insurer": "Liberty International Insurance Limited",
    "level": "Flexi Plan (Classic)",
    "plan": "Liberty Insurance VHIS Series - Flexi Plan (Classic)",
-   "prem_date": "20210701"
+   "prem_date": "20261101"
   },
   "F00047-01-001-02": {
-   "age40": 5828,
+   "age40": 6411,
    "insurer": "Liberty International Insurance Limited",
    "level": "Flexi Plan (Classic with SMM)",
    "plan": "Liberty Insurance VHIS Series - Flexi Plan (Classic)",
-   "prem_date": "20210701"
+   "prem_date": "20261101"
   },
   "F00048-01-000-02": {
-   "age40": 7354,
+   "age40": 8090,
    "insurer": "Liberty International Insurance Limited",
    "level": "Flexi Plan (Plus)",
    "plan": "Liberty Insurance VHIS Series - Flexi Plan (Plus)",
-   "prem_date": "20210701"
+   "prem_date": "20261101"
   },
   "F00048-01-001-02": {
-   "age40": 8825,
+   "age40": 9708,
    "insurer": "Liberty International Insurance Limited",
    "level": "Flexi Plan (Plus with SMM)",
    "plan": "Liberty Insurance VHIS Series - Flexi Plan (Plus)",
-   "prem_date": "20210701"
+   "prem_date": "20261101"
   },
   "F00049-01-000-03": {
    "age40": 10926,
@@ -3859,11 +3859,11 @@
    "prem_date": "20190401"
   },
   "S00017-01-000-02": {
-   "age40": 2767,
+   "age40": 3044,
    "insurer": "Liberty International Insurance Limited",
    "level": "Standard Plan",
    "plan": "Liberty Insurance Standard VHIS Plan",
-   "prem_date": "20210701"
+   "prem_date": "20261101"
   },
   "S00018-01-000-02": {
    "age40": 2351,
